@@ -66,12 +66,12 @@ const reqStatusStyle = {
 
     <div class="mt-7 grid gap-6 lg:grid-cols-2">
       <!-- codes -->
-      <div class="rounded-2xl border border-ink/[0.07] bg-white p-6 shadow-soft">
+      <div class="min-w-0 rounded-2xl border border-ink/[0.07] bg-white p-6 shadow-soft">
         <h2 class="font-display text-lg text-forest-950">Access codes</h2>
         <p class="mt-1 text-sm text-forest-900/55">Share a code with verified investors to unlock the data room.</p>
 
         <div class="mt-4 flex gap-2">
-          <input v-model="newLabel" type="text" placeholder="Label (e.g. DFI round, Jane Doe)" class="flex-1 rounded-xl border border-ink/12 bg-sand-50/60 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forest-600" @keyup.enter="createCode" />
+          <input v-model="newLabel" type="text" placeholder="Label (e.g. DFI round, Jane Doe)" class="min-w-0 flex-1 rounded-xl border border-ink/12 bg-sand-50/60 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forest-600" @keyup.enter="createCode" />
           <button class="btn-primary !py-2.5 shrink-0" :disabled="creating" @click="createCode">
             <Icon :name="creating ? 'lucide:loader-circle' : 'lucide:plus'" class="h-4 w-4" :class="creating && 'animate-spin'" /> Generate
           </button>
@@ -98,7 +98,7 @@ const reqStatusStyle = {
       </div>
 
       <!-- requests -->
-      <div class="rounded-2xl border border-ink/[0.07] bg-white p-6 shadow-soft">
+      <div class="min-w-0 rounded-2xl border border-ink/[0.07] bg-white p-6 shadow-soft">
         <h2 class="font-display text-lg text-forest-950">Access requests</h2>
         <p class="mt-1 text-sm text-forest-900/55">Investors who requested data-room access from the website.</p>
 

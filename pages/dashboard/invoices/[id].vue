@@ -100,7 +100,7 @@ function printInvoice() {
         </div>
 
         <!-- items -->
-        <div class="mt-9 overflow-hidden rounded-xl border border-ink/[0.08]">
+        <div class="mt-9 overflow-x-auto rounded-xl border border-ink/[0.08]">
           <table class="w-full text-sm">
             <thead>
               <tr class="bg-sand-50/70 text-left text-[0.68rem] font-semibold uppercase tracking-widest2 text-forest-900/45">
