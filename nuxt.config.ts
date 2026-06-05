@@ -2,7 +2,10 @@
 // Delivered by Savlicon Technology & Digital Solutions — savlicon.co.ke
 // (server routes: /sitemap.xml)
 
-// Cloudflare Pages sets CF_PAGES=1 during its build; we also honour NITRO_PRESET.
+// This app deploys to Cloudflare PAGES (not a Workers project — a Workers build emits an
+// `ASSETS` binding, which Pages reserves, and would also skip the KV store below).
+// A Pages build sets CF_PAGES=1 automatically; to force it anywhere else (or to be explicit),
+// set the build env var NITRO_PRESET=cloudflare-pages. Both paths select the Pages preset + KV.
 const isCloudflare = !!process.env.CF_PAGES || (process.env.NITRO_PRESET || '').includes('cloudflare')
 
 export default defineNuxtConfig({

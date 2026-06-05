@@ -41,11 +41,20 @@ In the Cloudflare dashboard → **Storage & Databases → KV → Create namespac
 
 ## Step 2 — Create the Pages project
 
-Dashboard → **Workers & Pages → Create → Pages → Connect to Git**, pick the repo, then set:
+> ⚠️ **Use the Pages flow, not Workers.** Dashboard → **Workers & Pages → Create**, then pick the
+> **Pages** tab → **Connect to Git**. Do **not** use the Workers "Import a repository" flow — that builds a
+> Worker with a reserved `ASSETS` binding and fails with *"The name 'ASSETS' is reserved in Pages projects."*
+> A Pages project auto-publishes a folder and has **no deploy command**.
+
+Pick the repo, then set:
 
 - **Framework preset:** None (or Nuxt)
 - **Build command:** `npm run build`
 - **Build output directory:** `dist`
+- **Deploy command:** leave **empty** (Pages publishes `dist` automatically — never `npx wrangler deploy`)
+
+A Pages build sets `CF_PAGES=1`, which makes the app build the Pages bundle (`dist/_worker.js`) and use KV.
+If you ever build somewhere that doesn't set it, add a build variable `NITRO_PRESET=cloudflare-pages`.
 
 ## Step 3 — Bind KV + set environment variables
 
@@ -89,18 +98,19 @@ Sign in to `/dashboard` and:
 npm i -g wrangler
 wrangler login
 
-# create the namespaces (note the printed ids)
+# create the namespaces (once), then bind them in the dashboard (Step 3)
 wrangler kv namespace create KYUL_DB
 wrangler kv namespace create KYUL_UPLOADS
-# paste the two ids into wrangler.toml
 
 # build for Cloudflare and deploy
 CF_PAGES=1 npm run build          # Windows PowerShell: $env:CF_PAGES='1'; npm run build
 wrangler pages deploy dist --project-name kyul-group-portal
 ```
 
-`wrangler.toml` in the project already declares the bindings and `pages_build_output_dir = "dist"`; just fill
-in the namespace ids. Set the secret once with `wrangler pages secret put NUXT_SESSION_SECRET`.
+KV bindings, the compatibility flag, and the build output directory all come from the Pages dashboard
+(Steps 2–3). This repo intentionally ships **no `wrangler.toml`**: when one is present, Cloudflare uses it as
+the sole source of truth and ignores the dashboard bindings (and it would require real namespace IDs committed
+to git). Set the session secret once with `wrangler pages secret put NUXT_SESSION_SECRET`.
 
 ---
 
@@ -112,6 +122,20 @@ in the namespace ids. Set the secret once with `wrangler pages secret put NUXT_S
 - **Backups:** export the KV namespaces periodically (`wrangler kv key list` / `get`) — that's your data.
 - **No KV?** The same build also runs on any **Node host** (`node .output/server/index.mjs`) using the file
   store — see *Node / VPS* below if you ever move off the edge.
+
+---
+
+## Troubleshooting
+
+- **`The name 'ASSETS' is reserved in Pages projects` (deploy fails after a successful build).**
+  The project was created as a **Workers** build (it runs `npx wrangler deploy` and emits `.output/.../wrangler.json`
+  with an `ASSETS` binding) instead of a **Pages** project. Recreate it via the **Pages** tab (Step 2): build
+  output directory `dist`, no deploy command. Pages publishes `dist/` directly and never uses an `ASSETS` binding.
+- **`npm ci` fails with `EUSAGE ... lock file ... does not satisfy`.** `package.json` and `package-lock.json`
+  drifted. Run `npm install` locally and commit the updated `package-lock.json`.
+- **Build can't find the output / publishes the wrong files.** Confirm **Build output directory = `dist`**.
+- **App deploys but 500s at runtime / data doesn't persist.** The KV bindings (`KYUL_DB`, `KYUL_UPLOADS`) or the
+  `nodejs_compat` flag are missing — re-check Step 3. Without them the store can't initialise.
 
 ---
 
