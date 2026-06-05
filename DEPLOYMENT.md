@@ -1,32 +1,31 @@
-# Deploying the Kyul Group Portal — free on Cloudflare
+# Deploying the Kyul Group Portal on Cloudflare
 
-This app runs **free** on Cloudflare's edge — the only thing you pay for is the **domain** (annually).
-It uses **Cloudflare Pages** for hosting and **Workers KV** for the data store *and* file uploads. KV keeps
-you on Cloudflare's **no-credit-card** free tier (unlike R2, which needs a card on file).
+This app runs on Cloudflare's edge. It uses **Cloudflare Pages** for hosting and **Workers KV** for the data
+store *and* file uploads.
 
-> The code already adapts itself: when Cloudflare sets `CF_PAGES=1` during the build, it switches to the
+> The code adapts itself: when Cloudflare sets `CF_PAGES=1` during the build, it switches to the
 > `cloudflare-pages` preset and the KV bindings automatically. Locally it keeps using the file store, so
 > `npm run dev` is unchanged.
 
 ---
 
-## Free-tier limits (plenty for a corporate portal)
+## Service limits
 
-| Resource | Free allowance |
+| Resource | Allowance |
 | --- | --- |
 | Pages requests | Unlimited static; 100,000 Functions invocations/day |
 | Workers KV reads | 100,000 / day |
 | Workers KV writes | 1,000 / day (admin edits only — very low volume) |
 | KV storage | 1 GB (uploads ≤ 25 MB each) |
-| TLS, CDN, DDoS | Included, free |
+| TLS, CDN, DDoS | Included |
 
 ---
 
 ## What you need
 
-1. A **Cloudflare account** (free, no card).
-2. A **domain** — register one through **Cloudflare Registrar** at wholesale price (this is the only cost),
-   or use a domain you already own and add it to Cloudflare.
+1. A **Cloudflare account**.
+2. A **domain** — register one through **Cloudflare Registrar**, or use a domain you already own and add it
+   to Cloudflare.
 3. The project in a **Git repo** (GitHub/GitLab) for the easiest "push to deploy" flow.
 
 ---
@@ -73,7 +72,7 @@ In the new Pages project → **Settings**:
 
 - Trigger a deploy (push to the repo, or **Retry deployment**). The first request seeds the data store.
 - **Custom domains → Set up a custom domain** → enter your domain. If the domain is on Cloudflare, DNS and
-  free TLS are configured automatically.
+  TLS are configured automatically.
 
 ## Step 5 — Secure it
 
@@ -81,8 +80,6 @@ Sign in to `/dashboard` and:
 
 - Change the seed passwords for `admin@kyulgroup.com` and `it@savlicon.co.ke`.
 - Delete the demo data-room code (`KYUL-IR-2026`) and issue your own.
-
-That's it — **$0/month hosting**, you only renew the domain each year.
 
 ---
 
@@ -111,19 +108,18 @@ in the namespace ids. Set the secret once with `wrangler pages secret put NUXT_S
 
 - **Uploads** are capped at 25 MB (KV value limit). The seeded company PDFs are served as static Pages
   assets (no limit concern). If you later need large/many files, switch `KYUL_UPLOADS` to an **R2 bucket**
-  (10 GB free, but R2 requires a card on file) and change `server/utils/uploads.js` to the R2 API.
+  (10 GB storage; R2 requires a card on file) and change `server/utils/uploads.js` to the R2 API.
 - **Backups:** export the KV namespaces periodically (`wrangler kv key list` / `get`) — that's your data.
 - **No KV?** The same build also runs on any **Node host** (`node .output/server/index.mjs`) using the file
   store — see *Node / VPS* below if you ever move off the edge.
 
 ---
 
-## Appendix — Node / VPS hosting (if you ever leave the edge)
+## Appendix — Node / VPS hosting
 
 A normal `npm run build` (without `CF_PAGES`) produces a Node server in `.output/`, using the on-disk store
-(`.data/`). Run it with `node .output/server/index.mjs` behind Nginx/PM2 on any small VPS, and set
-`NUXT_SESSION_SECRET`. Keep `.data/` on a persistent disk and back it up. (This was the previous default; the
-Cloudflare path above is the free option.)
+(`.data/`). Run it with `node .output/server/index.mjs` behind Nginx/PM2 on any VPS, and set
+`NUXT_SESSION_SECRET`. Keep `.data/` on a persistent disk and back it up.
 
 ---
 
