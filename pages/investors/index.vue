@@ -57,14 +57,14 @@ const publicDocs = computed(() => (docsData.value || []).filter((d) => !d.restri
     <section class="shell py-20 md:py-24">
       <SectionHeading eyebrow="Performance" title="Consolidated Group performance." lede="Illustrative consolidated figures. Audited statements are available in the secure investor data room." />
       <div class="mt-12 grid gap-6 lg:grid-cols-12">
-        <div class="rounded-2xl border border-ink/[0.07] bg-white p-6 shadow-soft sm:p-8 lg:col-span-7">
+        <div class="min-w-0 rounded-2xl border border-ink/[0.07] bg-white p-6 shadow-soft sm:p-8 lg:col-span-7">
           <div class="flex items-baseline justify-between">
             <p class="text-sm font-medium text-forest-900/60">Group turnover · KSh millions</p>
             <span class="pill !border-forest-200 !bg-forest-50 !text-forest-700"><Icon name="lucide:trending-up" class="h-3.5 w-3.5" /> +59% YoY</span>
           </div>
           <div class="mt-6"><ChartArea :data="group.turnover" :height="280" suffix="M" color="#2d5d4b" /></div>
         </div>
-        <div class="rounded-2xl border border-ink/[0.07] bg-white p-6 shadow-soft sm:p-8 lg:col-span-5">
+        <div class="min-w-0 rounded-2xl border border-ink/[0.07] bg-white p-6 shadow-soft sm:p-8 lg:col-span-5">
           <p class="text-sm font-medium text-forest-900/60">Revenue mix by company · FY2025</p>
           <div class="mt-6"><ChartDonut :segments="revenueMix" center-value="KSh 510M" center-label="Group" /></div>
         </div>
@@ -88,13 +88,13 @@ const publicDocs = computed(() => (docsData.value || []).filter((d) => !d.restri
     <!-- Documents -->
     <section class="shell py-20 md:py-24">
       <div class="grid gap-12 lg:grid-cols-12 lg:gap-16">
-        <div class="lg:col-span-5">
+        <div class="min-w-0 lg:col-span-5">
           <SectionHeading eyebrow="Document library" title="Corporate & governance documents." lede="Public materials are available below. Financial statements and confidential documents are released to verified investors in the secure data room." />
           <NuxtLink to="/investors/data-room" class="mt-8 inline-flex items-center gap-2 rounded-full bg-forest-950 px-5 py-3 text-sm font-semibold text-paper transition hover:bg-forest-900">
             <Icon name="lucide:lock" class="h-4 w-4" /> Enter the data room
           </NuxtLink>
         </div>
-        <div class="lg:col-span-7">
+        <div class="min-w-0 lg:col-span-7">
           <ul class="divide-y divide-ink/[0.07] overflow-hidden rounded-2xl border border-ink/[0.07] bg-white shadow-soft">
             <li v-for="(d, i) in publicDocs" :key="d.id" v-reveal="i * 50">
               <a :href="d.fileUrl || '#'" :target="d.fileUrl ? '_blank' : undefined" class="group flex items-center gap-4 px-5 py-4 transition hover:bg-sand-50/60">

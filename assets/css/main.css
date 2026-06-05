@@ -17,6 +17,10 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    /* Safety net against accidental horizontal scroll on mobile.
+       `clip` (not `hidden`) avoids creating a scroll container, so it
+       doesn't break position: sticky or scroll-based UI. */
+    overflow-x: clip;
   }
 
   body {

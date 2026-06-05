@@ -74,8 +74,20 @@ In the new Pages project → **Settings**:
 
 | Name | Value |
 | --- | --- |
-| `NUXT_SESSION_SECRET` | a long random string (mark **Encrypt**) — e.g. run `openssl rand -hex 32` |
+| `NUXT_SESSION_SECRET` | a long random string (mark **Encrypt**) — generate one with the snippet below |
 | `NUXT_PUBLIC_SITE_URL` | `https://www.kyulgroup.com` (your domain) |
+
+Generate the secret value (needs nothing installed):
+
+```powershell
+# Windows PowerShell
+[Convert]::ToHexString([System.Security.Cryptography.RandomNumberGenerator]::GetBytes(32)).ToLower()
+```
+
+```bash
+# macOS / Linux / Git Bash
+openssl rand -hex 32
+```
 
 ## Step 4 — Deploy & add the domain
 
