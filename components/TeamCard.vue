@@ -10,7 +10,7 @@ const sub = computed(() => (props.person.name ? roleText.value : ''))
 </script>
 
 <template>
-  <div v-reveal="(index % 3) * 80" class="group rounded-2xl border border-ink/[0.07] bg-white p-6 shadow-soft transition-all duration-400 hover:shadow-card">
+  <div v-reveal="(index % 3) * 80" class="group min-w-0 rounded-2xl border border-ink/[0.07] bg-white p-6 shadow-soft transition-all duration-400 hover:shadow-card">
     <div class="flex items-center gap-4">
       <img v-if="person.photo" :src="person.photo" :alt="heading" class="h-14 w-14 shrink-0 rounded-full object-cover" />
       <span
