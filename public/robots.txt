@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /investors/data-room
+
+Sitemap: https://www.kyulgroup.com/sitemap.xml

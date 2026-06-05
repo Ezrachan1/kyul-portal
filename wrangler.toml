@@ -1,0 +1,21 @@
+# Cloudflare Pages configuration for the Kyul Group Portal.
+# Bindings can be declared here OR in the Pages dashboard (Settings → Functions).
+# Replace the KV namespace id after you create it (see DEPLOYMENT.md).
+
+name = "kyul-group-portal"
+compatibility_date = "2024-11-01"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = "dist"
+
+# Data store (users, content, invoices, settings, …)
+[[kv_namespaces]]
+binding = "KYUL_DB"
+id = "REPLACE_WITH_YOUR_DB_KV_NAMESPACE_ID"
+
+# Uploaded files (team photos, documents) — KV keeps it on the no-card free tier.
+[[kv_namespaces]]
+binding = "KYUL_UPLOADS"
+id = "REPLACE_WITH_YOUR_UPLOADS_KV_NAMESPACE_ID"
+
+# Set NUXT_SESSION_SECRET as an encrypted variable in the Pages dashboard
+# (Settings → Environment variables) — do not commit it here.

@@ -1,0 +1,26 @@
+{
+  "name": "kyul-portal",
+  "private": true,
+  "type": "module",
+  "description": "Kyul Group Inc. — Public Corporate Portal (Layer 1). Built by Savlicon.",
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "nuxt": "^3.14.1592",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0"
+  },
+  "devDependencies": {
+    "@iconify-json/lucide": "^1.2.18",
+    "@nuxt/icon": "^1.10.2",
+    "@nuxtjs/tailwindcss": "^6.12.2",
+    "@vueuse/core": "^11.3.0",
+    "@vueuse/nuxt": "^11.3.0",
+    "tailwindcss": "^3.4.15"
+  }
+}

@@ -1,0 +1,181 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===========================================================================
+   Kyul Group — Design System base
+   =========================================================================== */
+@layer base {
+  :root {
+    --shell-x: clamp(1.25rem, 5vw, 4rem);
+    --accent: #2d5d4b;       /* overridden per-subsidiary */
+    --accent-ink: #143029;
+    --accent-soft: #f1f6f3;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-paper text-ink font-sans antialiased;
+    font-feature-settings: 'ss01', 'cv05';
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display text-forest-950;
+    font-optical-sizing: auto;
+    letter-spacing: -0.015em;
+  }
+
+  ::selection {
+    background: #143029;
+    color: #f2e8c9;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* tasteful scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #cdbf9b transparent;
+  }
+}
+
+@layer components {
+  .shell {
+    width: 100%;
+    max-width: 78rem;
+    margin-inline: auto;
+    padding-inline: var(--shell-x);
+  }
+  .shell-wide {
+    width: 100%;
+    max-width: 88rem;
+    margin-inline: auto;
+    padding-inline: var(--shell-x);
+  }
+
+  /* Small uppercase tracked label */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-[0.72rem] font-semibold uppercase tracking-widest2 text-gold-700;
+  }
+  .eyebrow::before {
+    content: '';
+    @apply inline-block h-px w-7 bg-gold-500/70;
+  }
+  .eyebrow--plain::before { display: none; }
+
+  /* Section heading rhythm */
+  .h-display {
+    @apply font-display leading-[1.04] tracking-tightish;
+  }
+
+  /* Buttons */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold
+           transition-all duration-300 ease-out-expo focus-visible:outline-offset-2 disabled:opacity-50 disabled:pointer-events-none;
+  }
+  .btn-primary {
+    @apply btn bg-forest-800 text-paper shadow-soft hover:bg-forest-900 hover:shadow-card hover:-translate-y-0.5;
+  }
+  .btn-gold {
+    @apply btn bg-gold-300 text-forest-950 hover:bg-gold-200 hover:-translate-y-0.5 shadow-soft;
+  }
+  .btn-outline {
+    @apply btn border border-forest-900/20 text-forest-900 hover:border-forest-900/50 hover:bg-forest-900/[0.04];
+  }
+  .btn-ghost {
+    @apply btn text-forest-800 hover:bg-forest-900/[0.05];
+  }
+  .btn-on-dark {
+    @apply btn border border-white/25 text-paper hover:bg-white/10 hover:border-white/50;
+  }
+
+  .card {
+    @apply rounded-2xl border border-ink/[0.07] bg-white shadow-soft;
+  }
+
+  .hairline { @apply border-ink/[0.09]; }
+
+  /* Animated text link */
+  .link-underline {
+    @apply relative inline-block;
+  }
+  .link-underline::after {
+    content: '';
+    @apply absolute left-0 -bottom-0.5 h-px w-full origin-right scale-x-0 bg-current transition-transform duration-300 ease-out-expo;
+  }
+  .link-underline:hover::after { @apply origin-left scale-x-100; }
+
+  /* Tag / pill */
+  .pill {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-ink/10 bg-white/70 px-3 py-1 text-xs font-medium text-forest-800;
+  }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+
+  /* Long-form editorial content */
+  .prose-kyul { @apply text-forest-900/80 leading-relaxed; }
+  .prose-kyul p { @apply mb-5; }
+  .prose-kyul h2 { @apply font-display text-2xl md:text-3xl text-forest-950 mt-12 mb-4; }
+  .prose-kyul h3 { @apply font-display text-xl text-forest-950 mt-9 mb-3; }
+  .prose-kyul ul { @apply mb-5 space-y-2 pl-1; }
+  .prose-kyul li { @apply relative pl-6; }
+  .prose-kyul li::before {
+    content: '';
+    @apply absolute left-0 top-2.5 h-1.5 w-1.5 rounded-full bg-gold-400;
+  }
+  .prose-kyul a { @apply text-forest-700 underline decoration-gold-400/60 underline-offset-2 hover:text-forest-900; }
+  .prose-kyul blockquote {
+    @apply my-8 border-l-2 border-gold-400 pl-6 font-display text-xl italic text-forest-900;
+  }
+
+  /* Scroll reveal — paired with v-reveal directive */
+  .reveal { opacity: 0; transform: translateY(18px); }
+  .reveal-in { opacity: 1; transform: none; transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1); }
+}
+
+/* Route transition */
+.page-enter-active, .page-leave-active { transition: opacity .32s ease, transform .32s ease; }
+.page-enter-from { opacity: 0; transform: translateY(8px); }
+.page-leave-to { opacity: 0; transform: translateY(-6px); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1 !important; transform: none !important; }
+  *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+}
+
+/* ===========================================================================
+   Print — invoices & documents
+   =========================================================================== */
+@media print {
+  .no-print { display: none !important; }
+  body { background: #fff; }
+  /* Print only the invoice sheet, free of dashboard chrome */
+  body * { visibility: hidden; }
+  .print-sheet, .print-sheet * { visibility: visible; }
+  .print-sheet {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    max-width: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+  }
+  .print-sheet .h-1\.5 { display: none; }
+  @page { margin: 14mm; }
+}
