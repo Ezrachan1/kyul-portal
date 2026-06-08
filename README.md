@@ -37,10 +37,14 @@ manage invoices, news, leadership, documents, the data room, submissions and use
 
 **Roles:** `super-admin` (Savlicon/IT — hidden from the company admin), `admin`, `editor`, `finance`, `viewer`.
 
-> **Seed logins** (change in production):
-> · Admin — `admin@kyulgroup.com` / `KyulAdmin#2026`
-> · Super-admin (Savlicon/IT) — `it@savlicon.co.ke` / `Savlicon#Super2026`
+> **Built-in accounts** (passwords are **not** stored in the repo):
+> · Admin — `admin@kyulgroup.com`
+> · Super-admin (Savlicon/IT) — `it@savlicon.co.ke`
 > · Investor data-room demo code — `KYUL-IR-2026` (admins can generate their own).
+>
+> Passwords are read on first run from `NUXT_SEED_ADMIN_PASSWORD` / `NUXT_SEED_SUPERADMIN_PASSWORD`
+> (see `.env.example`). If unset, a random one is generated and printed to the server log once.
+> **Change them after first sign-in.**
 
 ---
 

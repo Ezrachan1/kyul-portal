@@ -24,13 +24,32 @@ export async function verifyPassword(password, salt, hash) {
 
 const nowIso = () => new Date().toISOString()
 
+// Seed passwords come from env (NUXT_SEED_ADMIN_PASSWORD / NUXT_SEED_SUPERADMIN_PASSWORD).
+// If none is configured, a strong random one is generated and printed to the server log
+// once — so there are NO plaintext default credentials living in the repo.
+function randomPassword() {
+  const b = crypto.getRandomValues(new Uint8Array(10))
+  return 'Kyul-' + Array.from(b, (x) => x.toString(16).padStart(2, '0')).join('')
+}
+function seedPassword(value, email) {
+  const v = value && String(value).trim()
+  if (v) return v
+  const pw = randomPassword()
+  console.warn(
+    `[kyul:seed] No seed password set for ${email} — generated a temporary one: ${pw}\n` +
+      `            Set NUXT_SEED_ADMIN_PASSWORD / NUXT_SEED_SUPERADMIN_PASSWORD, then change it after first sign-in.`,
+  )
+  return pw
+}
+
 // ── Seeds ──────────────────────────────────────────────────────────────────
 const SEEDS = {
   users: async () => {
     const now = nowIso()
+    const cfg = useRuntimeConfig()
     return [
-      { id: uid(), name: 'Savlicon IT Support', email: 'it@savlicon.co.ke', role: 'super-admin', ...(await hashPassword('Savlicon#Super2026')), active: true, system: true, createdAt: now },
-      { id: uid(), name: 'Group Administrator', email: 'admin@kyulgroup.com', role: 'admin', ...(await hashPassword('KyulAdmin#2026')), active: true, createdAt: now },
+      { id: uid(), name: 'Savlicon IT Support', email: 'it@savlicon.co.ke', role: 'super-admin', ...(await hashPassword(seedPassword(cfg.seedSuperadminPassword, 'it@savlicon.co.ke'))), active: true, system: true, createdAt: now },
+      { id: uid(), name: 'Group Administrator', email: 'admin@kyulgroup.com', role: 'admin', ...(await hashPassword(seedPassword(cfg.seedAdminPassword, 'admin@kyulgroup.com'))), active: true, createdAt: now },
     ]
   },
 

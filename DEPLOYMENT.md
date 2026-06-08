@@ -75,7 +75,13 @@ In the new Pages project → **Settings**:
 | Name | Value |
 | --- | --- |
 | `NUXT_SESSION_SECRET` | a long random string (mark **Encrypt**) — generate one with the snippet below |
+| `NUXT_SEED_ADMIN_PASSWORD` | first-run password for `admin@kyulgroup.com` (mark **Encrypt**) |
+| `NUXT_SEED_SUPERADMIN_PASSWORD` | first-run password for `it@savlicon.co.ke` (mark **Encrypt**) |
 | `NUXT_PUBLIC_SITE_URL` | `https://www.kyulgroup.com` (your domain) |
+
+> The two `NUXT_SEED_*` passwords are applied **only when the data store is first created**. Set them
+> *before* the first visit. If they're unset, a random password is generated and printed once to the
+> deployment log (Workers logs). Change both after first sign-in either way.
 
 Generate the secret value (needs nothing installed):
 

@@ -23,6 +23,11 @@ export default defineNuxtConfig({
   runtimeConfig: {
     // Override in production via NUXT_SESSION_SECRET
     sessionSecret: 'kyul-group-portal-dev-secret-change-me',
+    // First-run seed passwords — set via NUXT_SEED_ADMIN_PASSWORD / NUXT_SEED_SUPERADMIN_PASSWORD.
+    // Left blank here on purpose: no plaintext credentials in the repo. If unset at seed time,
+    // a random password is generated and logged once (see server/utils/db.js).
+    seedAdminPassword: '',
+    seedSuperadminPassword: '',
     public: {
       siteUrl: 'https://www.kyulgroup.com',
     },
