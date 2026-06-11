@@ -45,7 +45,7 @@ const filtered = computed(() => (active.value === 'All' ? articles.value : artic
     <CtaBand
       eyebrow="Stay informed"
       title="Follow the Group’s journey."
-      text="From county infrastructure to investment milestones — keep up with what Kyul is building."
+      text="From county infrastructure to investment milestones, keep up with what Kyul is building."
       :primary="{ label: 'Contact the Group', to: '/contact' }"
       :secondary="{ label: 'Investor relations', to: '/investors' }"
     />

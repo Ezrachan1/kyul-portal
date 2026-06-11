@@ -1,7 +1,7 @@
 // Auto-imported formatting helpers
 
 export function kes(amount, { decimals = 0 } = {}) {
-  if (amount === null || amount === undefined || amount === '') return '—'
+  if (amount === null || amount === undefined || amount === '') return 'N/A'
   const n = Number(amount)
   if (Number.isNaN(n)) return String(amount)
   return (
@@ -15,7 +15,7 @@ export function kes(amount, { decimals = 0 } = {}) {
 
 export function num(value, decimals = 0) {
   const n = Number(value)
-  if (Number.isNaN(n)) return '—'
+  if (Number.isNaN(n)) return 'N/A'
   return n.toLocaleString('en-KE', {
     minimumFractionDigits: decimals,
     maximumFractionDigits: decimals,

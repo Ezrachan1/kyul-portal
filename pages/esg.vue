@@ -4,7 +4,7 @@ import { group } from '~/data/group'
 useSeoMeta({
   title: 'Sustainability & ESG',
   description:
-    'Kyul Group’s approach to environmental stewardship, social impact and governance — formal jobs, NEMA-compliant delivery and investor-grade transparency.',
+    'Kyul Group’s approach to environmental stewardship, social impact and governance: formal jobs, NEMA-compliant delivery and investor-grade transparency.',
 })
 
 const commitments = [
@@ -22,7 +22,7 @@ const commitments = [
     <PageHero
       size="lg"
       eyebrow="Sustainability & ESG"
-      title="Returns — and the resilience we leave behind."
+      title="Returns, and the resilience we leave behind."
       :lede="group.esg.lede"
       :crumbs="[{ label: 'Home', to: '/' }, { label: 'Sustainability' }]"
     />
@@ -47,7 +47,7 @@ const commitments = [
     <!-- commitments -->
     <section class="border-y border-ink/[0.06] bg-sand-50/70 py-20 md:py-24">
       <div class="shell">
-        <SectionHeading eyebrow="Our commitments" title="Sustainability, built into delivery." lede="ESG isn’t a report we publish once a year — it’s engineered into how every Kyul project is originated, built and governed." />
+        <SectionHeading eyebrow="Our commitments" title="Sustainability, built into delivery." lede="ESG isn’t a report we publish once a year. It’s engineered into how every Kyul project is originated, built and governed." />
         <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           <div v-for="(c, i) in commitments" :key="i" v-reveal="(i % 3) * 70" class="flex gap-4 rounded-2xl border border-ink/[0.07] bg-white p-6 shadow-soft">
             <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-forest-50 text-forest-700"><Icon :name="c.icon" class="h-5 w-5" /></span>

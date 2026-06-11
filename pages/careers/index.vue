@@ -6,7 +6,7 @@ const settings = useSettings()
 
 useSeoMeta({
   title: 'Careers',
-  description: 'Build your career with Kyul Group — open roles across engineering, design, trade, development, investment and Group services.',
+  description: 'Build your career with Kyul Group: open roles across engineering, design, trade, development, investment and Group services.',
 })
 
 const filters = computed(() => [
@@ -64,7 +64,7 @@ const perks = [
         <div class="grid gap-4">
           <JobCard v-for="(j, i) in filtered" :key="j.slug" :job="j" :index="i" />
         </div>
-        <p v-if="!filtered.length" class="py-12 text-center text-forest-900/50">No open roles in this company right now — check back soon.</p>
+        <p v-if="!filtered.length" class="py-12 text-center text-forest-900/50">No open roles in this company right now. Check back soon.</p>
       </div>
     </section>
 

@@ -5,7 +5,7 @@ import { subsidiaries } from '~/data/subsidiaries'
 useSeoMeta({
   title: 'About the Group',
   description:
-    'Kyul Group Inc. is the apex holding and governance entity of the Kyul corporate family — strategy, brand and oversight across six specialist companies in Eastern Africa.',
+    'Kyul Group Inc. is the apex holding and governance entity of the Kyul corporate family: strategy, brand and oversight across six specialist companies in Eastern Africa.',
 })
 
 const opcos = subsidiaries.filter((s) => s.slug !== 'holdings')
@@ -35,7 +35,7 @@ const { data: leadership } = await useFetch('/api/team?entity=group', { default:
         <div class="lg:col-span-7">
           <p v-reveal class="font-display text-2xl leading-snug text-forest-950 sm:text-[1.7rem]">{{ group.narrative }}</p>
           <p v-reveal="120" class="mt-6 leading-relaxed text-forest-900/70">
-            The Group operates across infrastructure, agribusiness, mining, manufacturing and real estate — a deliberate
+            The Group operates across infrastructure, agribusiness, mining, manufacturing and real estate, a deliberate
             diversification that makes Kyul resilient and lets each company reinforce the others.
           </p>
         </div>

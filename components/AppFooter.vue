@@ -20,7 +20,7 @@ const year = 2026
             {{ site.tagline }}
           </p>
           <p class="mt-5 max-w-sm text-sm leading-relaxed text-paper/55">
-            An integrated project delivery and investment group — originating, designing, financing, building and
+            An integrated project delivery and investment group, originating, designing, financing, building and
             operating bankable projects across Eastern Africa.
           </p>
 

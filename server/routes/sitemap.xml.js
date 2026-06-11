@@ -4,7 +4,8 @@ import { jobs } from '~/data/careers'
 import { site } from '~/data/site'
 
 export default defineEventHandler((event) => {
-  const base = site.url.replace(/\/$/, '')
+  // Same source as canonical/OG: NUXT_PUBLIC_SITE_URL (falls back to data/site.js).
+  const base = (useRuntimeConfig(event).public.siteUrl || site.url).replace(/\/$/, '')
 
   const staticRoutes = [
     { loc: '/', priority: '1.0', freq: 'weekly' },

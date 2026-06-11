@@ -42,7 +42,7 @@ export default defineNuxtConfig({
     pageTransition: { name: 'page', mode: 'out-in' },
     head: {
       htmlAttrs: { lang: 'en' },
-      titleTemplate: (t) => (t ? `${t} · Kyul Group Inc.` : 'Kyul Group Inc. — Building Africa’s Future. Together.'),
+      titleTemplate: (t) => (t ? `${t} · Kyul Group Inc.` : 'Kyul Group Inc. · Building Africa’s Future. Together.'),
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -55,11 +55,9 @@ export default defineNuxtConfig({
         },
         { property: 'og:type', content: 'website' },
         { property: 'og:site_name', content: 'Kyul Group Inc.' },
-        { property: 'og:image', content: '/og-image.png' },
         { property: 'og:image:width', content: '1200' },
         { property: 'og:image:height', content: '630' },
         { name: 'twitter:card', content: 'summary_large_image' },
-        { name: 'twitter:image', content: '/og-image.png' },
       ],
       link: [
         { rel: 'icon', href: '/favicon.ico', sizes: '32x32' },

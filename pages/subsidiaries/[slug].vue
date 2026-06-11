@@ -22,7 +22,7 @@ const subContact = computed(() => settings.value?.subsidiaryContacts?.[route.par
 useSeoMeta({
   title: () => sub.value.name,
   description: () => sub.value.summary,
-  ogTitle: () => `${sub.value.name} — Kyul Group`,
+  ogTitle: () => `${sub.value.name} · Kyul Group`,
   ogDescription: () => sub.value.summary,
 })
 

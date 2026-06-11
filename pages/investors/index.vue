@@ -7,7 +7,7 @@ import { site } from '~/data/site'
 useSeoMeta({
   title: 'Investor Relations',
   description:
-    'Kyul Group is structured for institutional and diaspora investors — clean ownership, ring-fenced SPVs and consolidated, audited reporting. Begin your due diligence here.',
+    'Kyul Group is structured for institutional and diaspora investors: clean ownership, ring-fenced SPVs and consolidated, audited reporting. Begin your due diligence here.',
 })
 
 const bySlug = (s) => subsidiaries.find((x) => x.slug === s)

@@ -7,6 +7,22 @@
 <script setup>
 import { site } from '~/data/site'
 
+const route = useRoute()
+// Single source of truth for the public URL: NUXT_PUBLIC_SITE_URL (falls back to data/site.js).
+const base = (useRuntimeConfig().public.siteUrl || site.url).replace(/\/$/, '')
+const canonical = computed(() => base + route.path)
+const ogImage = `${base}/og-image.png`
+
+// Canonical + absolute OG/Twitter URLs so search and social line up with the live domain.
+useHead({
+  link: [{ rel: 'canonical', href: canonical }],
+  meta: [
+    { property: 'og:url', content: canonical },
+    { property: 'og:image', content: ogImage },
+    { name: 'twitter:image', content: ogImage },
+  ],
+})
+
 // Organisation structured data (SEO / AEO)
 useHead({
   script: [
@@ -17,8 +33,8 @@ useHead({
         '@type': 'Corporation',
         name: 'Kyul Group Inc.',
         slogan: site.tagline,
-        url: site.url,
-        logo: `${site.url}/icon-512.png`,
+        url: base,
+        logo: `${base}/icon-512.png`,
         description:
           'Integrated project delivery and investment group operating across infrastructure, agribusiness, mining, manufacturing and real estate in Eastern Africa.',
         address: {

@@ -1,4 +1,4 @@
-// Global site configuration — Kyul Group Inc.
+// Global site configuration - Kyul Group Inc.
 export const site = {
   name: 'Kyul Group Inc.',
   shortName: 'Kyul Group',
@@ -34,7 +34,7 @@ export const site = {
     { label: 'YouTube', icon: 'lucide:youtube', href: 'https://www.youtube.com/' },
   ],
 
-  // Delivery partner — required credit
+  // Delivery partner - required credit
   builtBy: {
     name: 'Savlicon',
     full: 'Savlicon Technology & Digital Solutions',

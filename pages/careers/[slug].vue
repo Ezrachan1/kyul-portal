@@ -33,7 +33,7 @@ async function apply() {
         type: 'application',
         name: app.name,
         email: app.email,
-        subject: `Application — ${job.value.title}`,
+        subject: `Application for ${job.value.title}`,
         message: app.note || '',
         source: `Careers: ${job.value.title}`,
         entity: job.value.entity === 'group' ? null : job.value.entity,

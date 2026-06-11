@@ -5,7 +5,7 @@ import { group } from '~/data/group'
 useSeoMeta({
   title: 'Our Companies',
   description:
-    'The six operating companies of Kyul Group — Engineering, Ventures, Enterprises, Projects, Investment and Holdings — forming one integrated value chain.',
+    'The six operating companies of Kyul Group (Engineering, Ventures, Enterprises, Projects, Investment and Holdings), forming one integrated value chain.',
 })
 </script>
 
@@ -14,7 +14,7 @@ useSeoMeta({
     <PageHero
       eyebrow="The companies"
       title="Six specialists. One Group."
-      lede="Each company leads in its own discipline — and together they form a continuous chain from concept to cashflow, coordinated under a single governance structure."
+      lede="Each company leads in its own discipline, and together they form a continuous chain from concept to cashflow, coordinated under a single governance structure."
       :crumbs="[{ label: 'Home', to: '/' }, { label: 'Companies' }]"
     />
 
@@ -24,17 +24,17 @@ useSeoMeta({
         <div v-reveal>
           <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-forest-50 text-forest-700"><Icon name="lucide:crown" class="h-5 w-5" /></span>
           <h3 class="mt-4 font-display text-lg text-forest-950">Kyul Group Inc.</h3>
-          <p class="mt-1.5 text-sm leading-relaxed text-forest-900/65">The ultimate parent and brand — strategy, policy and board-level oversight of the entire Group.</p>
+          <p class="mt-1.5 text-sm leading-relaxed text-forest-900/65">The ultimate parent and brand: strategy, policy and board-level oversight of the entire Group.</p>
         </div>
         <div v-reveal="90">
           <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-forest-50 text-forest-700"><Icon name="lucide:layers" class="h-5 w-5" /></span>
           <h3 class="mt-4 font-display text-lg text-forest-950">Kyul Holdings Ltd.</h3>
-          <p class="mt-1.5 text-sm leading-relaxed text-forest-900/65">The sub-holding vehicle — owns equity in the five operating companies and runs shared services and treasury.</p>
+          <p class="mt-1.5 text-sm leading-relaxed text-forest-900/65">The sub-holding vehicle that owns equity in the five operating companies and runs shared services and treasury.</p>
         </div>
         <div v-reveal="180">
           <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-forest-50 text-forest-700"><Icon name="lucide:building-2" class="h-5 w-5" /></span>
           <h3 class="mt-4 font-display text-lg text-forest-950">Operating companies</h3>
-          <p class="mt-1.5 text-sm leading-relaxed text-forest-900/65">Five delivery specialists. No company holds shares in another — keeping ownership clean and risk ring-fenced.</p>
+          <p class="mt-1.5 text-sm leading-relaxed text-forest-900/65">Five delivery specialists. No company holds shares in another, keeping ownership clean and risk ring-fenced.</p>
         </div>
       </div>
     </section>
@@ -57,7 +57,7 @@ useSeoMeta({
 
     <CtaBand
       title="Looking for a specific capability?"
-      text="Tell us about your project or partnership — we’ll route it to the right company in the Group."
+      text="Tell us about your project or partnership, and we’ll route it to the right company in the Group."
       :primary="{ label: 'Contact the Group', to: '/contact' }"
       :secondary="{ label: 'Investor relations', to: '/investors' }"
     />

@@ -7,8 +7,8 @@ import { site } from '~/data/site'
 useSeoMeta({
   title: 'Building Africa’s Future. Together.',
   description:
-    'Kyul Group Inc. is an integrated project delivery and investment group — originating, designing, financing, building and operating bankable projects across Eastern Africa.',
-  ogTitle: 'Kyul Group Inc. — Building Africa’s Future. Together.',
+    'Kyul Group Inc. is an integrated project delivery and investment group that originates, designs, finances, builds and operates bankable projects across Eastern Africa.',
+  ogTitle: 'Kyul Group Inc. · Building Africa’s Future. Together.',
   ogDescription: 'An integrated project delivery and investment group across Eastern Africa.',
 })
 
@@ -30,7 +30,7 @@ const heroStats = group.stats.slice(0, 3)
             Building Africa’s<br class="hidden sm:block" /> Future. <span class="italic text-forest-700">Together.</span>
           </h1>
           <p v-reveal="150" class="mt-7 max-w-xl text-lg leading-relaxed text-forest-900/70">
-            One Group, six specialist companies, and a single thread of accountability — from the first feasibility
+            One Group, six specialist companies, and a single thread of accountability, from the first feasibility
             study to a completed, revenue-generating asset.
           </p>
           <div v-reveal="220" class="mt-9 flex flex-wrap gap-3">
@@ -114,7 +114,7 @@ const heroStats = group.stats.slice(0, 3)
           <SectionHeading
             eyebrow="The companies"
             title="Six specialists. One value chain."
-            lede="Each company is a leader in its field — and a link in a continuous chain from concept to cashflow."
+            lede="Each company is a leader in its field, and a link in a continuous chain from concept to cashflow."
           />
           <NuxtLink to="/subsidiaries" class="btn-outline hidden shrink-0 md:inline-flex">View all companies</NuxtLink>
         </div>
@@ -146,7 +146,7 @@ const heroStats = group.stats.slice(0, 3)
         align="center"
         eyebrow="Where we operate"
         title="Five high-growth sectors"
-        lede="Diversified by design — so the Group is resilient, and our companies reinforce one another."
+        lede="Diversified by design, so the Group is resilient, and our companies reinforce one another."
       />
       <div class="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
         <div
@@ -169,7 +169,7 @@ const heroStats = group.stats.slice(0, 3)
           <SectionHeading
             eyebrow="Investor relations"
             title="Investment-ready, by design."
-            lede="Clean ownership through Kyul Holdings, ring-fenced project SPVs and consolidated, audited reporting — the transparency institutional and diaspora investors expect."
+            lede="Clean ownership through Kyul Holdings, ring-fenced project SPVs and consolidated, audited reporting: the transparency institutional and diaspora investors expect."
           />
           <div v-reveal="200" class="mt-8 flex flex-wrap gap-3">
             <NuxtLink to="/investors" class="btn-primary">Investor relations<Icon name="lucide:arrow-right" class="h-4 w-4" /></NuxtLink>

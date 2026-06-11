@@ -79,12 +79,12 @@ const SEEDS = {
     )
     const REAL = [
       { title: 'Kyul Company Profile (2016)', type: 'PDF', size: '18 MB', category: 'Corporate', restricted: false, fileUrl: '/docs/kyul-company-profile-2016.pdf' },
-      { title: 'Kyul Engineering — Company Profile', type: 'PDF', size: '12 MB', category: 'Corporate', restricted: false, fileUrl: '/docs/kyul-engineering-company-profile.pdf' },
-      { title: 'Certificate of Incorporation — Kyul Engineering', type: 'PDF', size: '365 KB', category: 'Governance', restricted: true, fileUrl: '/docs/incorporation-certificate-kyul-engineering.pdf' },
-      { title: 'KRA PIN Certificate — Kyul Engineering', type: 'PDF', size: '220 KB', category: 'Compliance', restricted: true, fileUrl: '/docs/kyul-engineering-pin.pdf' },
-      { title: 'NCA Registration — Builders Works', type: 'PDF', size: '428 KB', category: 'Compliance', restricted: true, fileUrl: '/docs/nca-builders.pdf' },
-      { title: 'NCA Registration — Road Works', type: 'PDF', size: '559 KB', category: 'Compliance', restricted: true, fileUrl: '/docs/nca-road-works.pdf' },
-      { title: 'NCA Registration — Water Works', type: 'PDF', size: '388 KB', category: 'Compliance', restricted: true, fileUrl: '/docs/nca-water-works.pdf' },
+      { title: 'Kyul Engineering Company Profile', type: 'PDF', size: '12 MB', category: 'Corporate', restricted: false, fileUrl: '/docs/kyul-engineering-company-profile.pdf' },
+      { title: 'Certificate of Incorporation (Kyul Engineering)', type: 'PDF', size: '365 KB', category: 'Governance', restricted: true, fileUrl: '/docs/incorporation-certificate-kyul-engineering.pdf' },
+      { title: 'KRA PIN Certificate (Kyul Engineering)', type: 'PDF', size: '220 KB', category: 'Compliance', restricted: true, fileUrl: '/docs/kyul-engineering-pin.pdf' },
+      { title: 'NCA Registration (Builders Works)', type: 'PDF', size: '428 KB', category: 'Compliance', restricted: true, fileUrl: '/docs/nca-builders.pdf' },
+      { title: 'NCA Registration (Road Works)', type: 'PDF', size: '559 KB', category: 'Compliance', restricted: true, fileUrl: '/docs/nca-road-works.pdf' },
+      { title: 'NCA Registration (Water Works)', type: 'PDF', size: '388 KB', category: 'Compliance', restricted: true, fileUrl: '/docs/nca-water-works.pdf' },
       { title: 'NSSF Compliance Certificate', type: 'PDF', size: '132 KB', category: 'Compliance', restricted: true, fileUrl: '/docs/nssf-certificate.pdf' },
       { title: 'Company Search (CR12)', type: 'PDF', size: '47 KB', category: 'Governance', restricted: true, fileUrl: '/docs/company-search-cr12.pdf' },
       { title: 'Project Compliance Certificate', type: 'PDF', size: '265 KB', category: 'Compliance', restricted: true, fileUrl: '/docs/project-compliance.pdf' },

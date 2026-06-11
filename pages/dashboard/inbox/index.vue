@@ -142,7 +142,7 @@ async function remove(row) {
             <div v-if="selected.meta?.link"><dt class="text-xs text-forest-900/45">CV / Portfolio</dt><dd class="truncate text-sm"><a :href="selected.meta.link" target="_blank" class="text-forest-700 underline">{{ selected.meta.link }}</a></dd></div>
           </dl>
 
-          <p class="mt-5 whitespace-pre-line text-sm leading-relaxed text-forest-900/75">{{ selected.message || '—' }}</p>
+          <p class="mt-5 whitespace-pre-line text-sm leading-relaxed text-forest-900/75">{{ selected.message || 'No message' }}</p>
 
           <a :href="`mailto:${selected.email}?subject=Re: ${encodeURIComponent(selected.subject || 'Your enquiry to Kyul Group')}`" class="btn-primary mt-7 !py-2.5"><Icon name="lucide:reply" class="h-4 w-4" /> Reply by email</a>
         </div>

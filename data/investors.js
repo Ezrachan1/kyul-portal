@@ -1,4 +1,4 @@
-// Investor Relations — highlights, documents, governance, data room
+// Investor Relations - highlights, documents, governance, data room
 export const investors = {
   lede:
     'Kyul Group is structured for the institutional and diaspora investor: clean ownership, ring-fenced SPVs and consolidated, audited reporting. This is where you begin your due diligence.',
@@ -11,10 +11,10 @@ export const investors = {
   ],
 
   thesis: [
-    { title: 'Integrated delivery', text: 'A single Group originates, designs, funds, builds and supplies every project — compressing timelines and removing interface risk.', icon: 'lucide:workflow' },
+    { title: 'Integrated delivery', text: 'A single Group originates, designs, funds, builds and supplies every project, compressing timelines and removing interface risk.', icon: 'lucide:workflow' },
     { title: 'Clean ownership', text: 'All equity flows through Kyul Holdings. No cross-shareholding. Due diligence is simple and the corporate veil is intact.', icon: 'lucide:git-branch' },
     { title: 'Ring-fenced risk', text: 'Each project sits in its own SPV. Investor equity is insulated from unrelated venture risk.', icon: 'lucide:shield-check' },
-    { title: 'Audited transparency', text: 'Consolidated annual audit, quarterly reporting and a secure investor data room — built for institutional scrutiny.', icon: 'lucide:file-check-2' },
+    { title: 'Audited transparency', text: 'Consolidated annual audit, quarterly reporting and a secure investor data room, built for institutional scrutiny.', icon: 'lucide:file-check-2' },
   ],
 
   // Public, downloadable documents
@@ -28,7 +28,7 @@ export const investors = {
   // Items behind the secure data room (SSO/password)
   dataRoom: [
     { title: 'Consolidated Audited Financial Statements 2025', type: 'PDF', size: '3.6 MB', category: 'Financials' },
-    { title: 'Management Accounts — Q4 2025', type: 'PDF', size: '1.2 MB', category: 'Financials' },
+    { title: 'Management Accounts (Q4 2025)', type: 'PDF', size: '1.2 MB', category: 'Financials' },
     { title: 'Cap Table & Share Register (Kyul Holdings)', type: 'XLSX', size: '180 KB', category: 'Governance' },
     { title: 'SPV Structure & Inter-company Loan Schedule', type: 'PDF', size: '900 KB', category: 'Governance' },
     { title: 'Project Pipeline & Capital Deployment Plan', type: 'PDF', size: '2.1 MB', category: 'Strategy' },

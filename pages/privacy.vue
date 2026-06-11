@@ -12,7 +12,7 @@ useSeoMeta({
     <PageHero
       eyebrow="Legal"
       title="Privacy & Cookies"
-      lede="How we collect, use and protect your information — in line with Kenya’s Data Protection Act (2019)."
+      lede="How we collect, use and protect your information, in line with Kenya’s Data Protection Act (2019)."
       :crumbs="[{ label: 'Home', to: '/' }, { label: 'Privacy & Cookies' }]"
     />
 
@@ -28,8 +28,8 @@ useSeoMeta({
 
         <h2>2. Information we collect</h2>
         <ul>
-          <li>Information you provide through enquiry, RFP and job-application forms — such as your name, email, phone number and message.</li>
-          <li>Limited technical information — such as your browser type and pages visited — collected through analytics, where you have consented.</li>
+          <li>Information you provide through enquiry, RFP and job-application forms, such as your name, email, phone number and message.</li>
+          <li>Limited technical information (such as your browser type and pages visited) collected through analytics, where you have consented.</li>
         </ul>
 
         <h2>3. How we use your information</h2>

@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
       id: uid(),
       title: String(b.title).slice(0, 240),
       type: (b.type || 'PDF').toUpperCase(),
-      size: b.size || '—',
+      size: b.size || 'N/A',
       category: b.category || 'Corporate',
       restricted: !!b.restricted,
       fileUrl: b.fileUrl || '',

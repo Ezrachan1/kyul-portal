@@ -1,4 +1,4 @@
-// Centralised careers portal — roles across all Kyul companies
+// Centralised careers portal - roles across all Kyul companies
 export const jobs = [
   {
     slug: 'site-engineer-eldoret',

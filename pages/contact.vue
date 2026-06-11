@@ -4,7 +4,7 @@ import { subsidiaries } from '~/data/subsidiaries'
 
 useSeoMeta({
   title: 'Contact',
-  description: 'Contact Kyul Group Inc. in Eldoret, Kenya — general enquiries, investor relations, media and a directory of all six companies.',
+  description: 'Contact Kyul Group Inc. in Eldoret, Kenya: general enquiries, investor relations, media and a directory of all six companies.',
 })
 
 const settings = useSettings()
@@ -21,7 +21,7 @@ const channels = computed(() => [
     <PageHero
       eyebrow="Contact"
       title="Let’s start a conversation."
-      lede="Whether you’re an investor, a partner, a client or a future colleague — reach the right part of the Group below."
+      lede="Whether you’re an investor, a partner, a client or a future colleague, reach the right part of the Group below."
       :crumbs="[{ label: 'Home', to: '/' }, { label: 'Contact' }]"
     />
 
@@ -49,7 +49,7 @@ const channels = computed(() => [
           <!-- map -->
           <div class="mt-5 overflow-hidden rounded-2xl border border-ink/[0.07] shadow-soft">
             <iframe
-              title="Kyul Group HQ — Eldoret, Kenya"
+              title="Kyul Group HQ, Eldoret, Kenya"
               class="h-64 w-full grayscale-[0.2]"
               loading="lazy"
               src="https://www.openstreetmap.org/export/embed.html?bbox=35.22%2C0.48%2C35.33%2C0.56&layer=mapnik&marker=0.5143%2C35.2698"

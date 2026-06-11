@@ -11,7 +11,7 @@ const wordSize = computed(() => (props.size === 'lg' ? 'text-[1.5rem]' : 'text-[
 </script>
 
 <template>
-  <NuxtLink :to="to" class="group inline-flex items-center gap-2.5" aria-label="Kyul Group — home">
+  <NuxtLink :to="to" class="group inline-flex items-center gap-2.5" aria-label="Kyul Group home">
     <KyulMark :class="[markSize, 'shrink-0 transition-transform duration-500 ease-out-expo group-hover:-rotate-[4deg]']" />
     <span class="flex flex-col leading-none">
       <span class="font-display tracking-tightish" :class="wordSize">
