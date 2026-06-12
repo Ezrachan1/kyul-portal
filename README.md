@@ -1,4 +1,4 @@
-# Kyul Group Inc. — Public Corporate Portal
+# Kyul Group Inc. - Public Corporate Portal
 
 **Layer 1 of the Kyul Group Unified Digital Ecosystem.**
 Delivered by **Savlicon Technology & Digital Solutions** · [savlicon.co.ke](https://savlicon.co.ke)
