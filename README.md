@@ -5,7 +5,7 @@ Delivered by **Savlicon Technology & Digital Solutions** · [savlicon.co.ke](htt
 Reference: `SAV-KGI-2025-001`
 
 A professional, SEO-optimised, multi-entity web presence that establishes Kyul Group Inc. as the
-definitive parent brand, with dedicated sub-portals for each of the six operating companies — plus a
+definitive parent brand, with dedicated sub-portals for each of the six operating companies, plus a
 secure, **role-based Group Portal** (admin console) backed by a lightweight Nitro API, so the team can
 manage invoices, news, leadership, documents, the data room, submissions and user accounts.
 
@@ -16,7 +16,7 @@ manage invoices, news, leadership, documents, the data room, submissions and use
 **Public corporate portal**
 - **Group hub** — homepage, narrative, vision/mission, values, sectors, the "Concept to Cashflow" model.
 - **About** — governance & ownership structure, leadership, history, why-Kyul.
-- **Six subsidiary sub-portals** (`/subsidiaries/[slug]`) — Engineering, Ventures, Enterprises, Projects,
+- **Six subsidiary sub-portals** (`/subsidiaries/[slug]`) - Engineering, Ventures, Enterprises, Projects,
   Investment, Holdings — each with its own brand accent, logo, services, portfolio, team and RFP form.
 - **Investor Relations** — financial highlights, performance charts, document library (real PDFs), and a
   **secure data room** behind an access gate.
