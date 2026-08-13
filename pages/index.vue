@@ -7,7 +7,7 @@ import { site } from '~/data/site'
 useSeoMeta({
   title: 'Building Africa’s Future. Together.',
   description:
-    'Kyul Group Inc. is an integrated project delivery and investment group that originates, designs, finances, builds and operates bankable projects across Eastern Africa.',
+    'Kyul Group Inc. is an integrated project delivery and investment group that originates, finances, builds and operates bankable projects across Eastern Africa.',
   ogTitle: 'Kyul Group Inc. · Building Africa’s Future. Together.',
   ogDescription: 'An integrated project delivery and investment group across Eastern Africa.',
 })

@@ -5,7 +5,7 @@ import { subsidiaries } from '~/data/subsidiaries'
 useSeoMeta({
   title: 'About the Group',
   description:
-    'Kyul Group Inc. is the apex holding and governance entity of the Kyul corporate family: strategy, brand and oversight across six specialist companies in Eastern Africa.',
+    'Kyul Group Inc. is the apex holding and governance entity of the Kyul family: strategy, brand and oversight across six specialist companies in Eastern Africa.',
 })
 
 const opcos = subsidiaries.filter((s) => s.slug !== 'holdings')

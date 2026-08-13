@@ -9,9 +9,16 @@ const { data: all } = await useFetch('/api/news', { default: () => [] })
 const entity = computed(() => (article.value.entity ? subsidiaryBySlug(article.value.entity) : null))
 const related = computed(() => (all.value || []).filter((a) => a.slug !== article.value.slug).slice(0, 3))
 
+// CMS excerpts can run to 400 chars; search engines want meta descriptions ≤160.
+const metaDescription = computed(() => {
+  const s = String(article.value.excerpt || '')
+  if (!s) return undefined // fall back to the site-wide default
+  return s.length > 160 ? s.slice(0, 157).replace(/\s+\S*$/, '') + '…' : s
+})
+
 useSeoMeta({
   title: () => article.value.title,
-  description: () => article.value.excerpt,
+  description: () => metaDescription.value,
   ogType: 'article',
   ogTitle: () => article.value.title,
   ogDescription: () => article.value.excerpt,

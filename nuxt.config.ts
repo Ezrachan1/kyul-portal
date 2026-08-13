@@ -51,7 +51,7 @@ export default defineNuxtConfig({
         {
           name: 'description',
           content:
-            'Kyul Group Inc. is an integrated project delivery and investment group operating across infrastructure, agribusiness, mining, manufacturing and real estate in Eastern Africa.',
+            'Kyul Group is an integrated project delivery and investment group across infrastructure, agribusiness, mining, manufacturing and real estate in Eastern Africa.',
         },
         { property: 'og:type', content: 'website' },
         { property: 'og:site_name', content: 'Kyul Group Inc.' },
