@@ -62,7 +62,7 @@ async function save() {
   }
 }
 
-const inputCls = 'w-full rounded-xl border border-ink/12 bg-sand-50/60 px-3.5 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forest-600'
+const inputCls = 'w-full rounded-xl border border-ink/[0.12] bg-sand-50/60 px-3.5 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forest-600'
 const lbl = 'mb-1.5 block text-sm font-medium text-forest-900'
 </script>
 

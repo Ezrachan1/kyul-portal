@@ -37,6 +37,7 @@ const perks = [
 
     <!-- perks -->
     <section class="shell py-16 md:py-20">
+      <h2 class="sr-only">Why join Kyul</h2>
       <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         <div v-for="(p, i) in perks" :key="p.title" v-reveal="i * 70" class="rounded-2xl border border-ink/[0.07] bg-white p-6 shadow-soft">
           <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-forest-50 text-forest-700"><Icon :name="p.icon" class="h-5 w-5" /></span>
@@ -55,8 +56,9 @@ const perks = [
         <div class="mb-9 mt-8 flex flex-wrap gap-2">
           <button
             v-for="f in filters" :key="f.key"
-            class="rounded-full border px-4 py-2 text-sm font-medium transition"
-            :class="active === f.key ? 'border-forest-950 bg-forest-950 text-paper' : 'border-ink/12 text-forest-900/70 hover:border-forest-900/40 hover:text-forest-950'"
+            class="chip min-h-10"
+            :class="{ 'chip-active': active === f.key }"
+            :aria-pressed="active === f.key"
             @click="active = f.key"
           >{{ f.label }}</button>
         </div>
@@ -64,13 +66,13 @@ const perks = [
         <div class="grid gap-4">
           <JobCard v-for="(j, i) in filtered" :key="j.slug" :job="j" :index="i" />
         </div>
-        <p v-if="!filtered.length" class="py-12 text-center text-forest-900/50">No open roles in this company right now. Check back soon.</p>
+        <p v-if="!filtered.length" class="py-12 text-center text-forest-900/70">No open roles in this company right now. Check back soon.</p>
       </div>
     </section>
 
     <!-- speculative -->
     <section class="shell py-16 md:py-20">
-      <div v-reveal class="flex flex-col items-start justify-between gap-6 rounded-3xl border border-ink/[0.07] bg-white p-8 shadow-soft md:flex-row md:items-center md:p-12">
+      <div v-reveal class="flex flex-col items-start justify-between gap-6 rounded-2xl border border-ink/[0.07] bg-white p-8 shadow-soft md:flex-row md:items-center md:p-12">
         <div>
           <h2 class="h-display text-2xl text-forest-950">Don’t see your role?</h2>
           <p class="mt-2 max-w-xl text-forest-900/65">We’re always glad to hear from exceptional people. Send us your CV and tell us where you’d add value.</p>

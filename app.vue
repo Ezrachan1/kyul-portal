@@ -37,6 +37,15 @@ useHead({
         logo: `${base}/icon-512.png`,
         description:
           'Integrated project delivery and investment group operating across infrastructure, agribusiness, mining, manufacturing and real estate in Eastern Africa.',
+        foundingDate: String(site.founded),
+        contactPoint: [
+          {
+            '@type': 'ContactPoint',
+            telephone: site.contact.phone,
+            email: site.contact.email,
+            contactType: 'customer service',
+          },
+        ],
         address: {
           '@type': 'PostalAddress',
           addressLocality: 'Eldoret',

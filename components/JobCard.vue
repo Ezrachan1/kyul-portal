@@ -7,6 +7,8 @@ const props = defineProps({
 const entity = computed(() => (props.job.entity === 'group' ? null : subsidiaryBySlug(props.job.entity)))
 const entityName = computed(() => (entity.value ? entity.value.short : 'Kyul Group'))
 const accent = computed(() => (entity.value ? entity.value.accent : '#bd9038'))
+// Raw accents fail AA for text on white — label text uses the dark-safe ink variant.
+const accentText = computed(() => (entity.value ? entity.value.accentInk : '#825a29'))
 </script>
 
 <template>
@@ -17,12 +19,12 @@ const accent = computed(() => (entity.value ? entity.value.accent : '#bd9038'))
   >
     <div class="min-w-0">
       <div class="flex flex-wrap items-center gap-2">
-        <span class="inline-flex items-center gap-1.5 text-[0.7rem] font-semibold uppercase tracking-widest2" :style="{ color: accent }">
+        <span class="inline-flex items-center gap-1.5 text-[0.7rem] font-semibold uppercase tracking-widest2" :style="{ color: accentText }">
           <span class="h-1.5 w-1.5 rounded-full" :style="{ background: accent }" />
           {{ entityName }}
         </span>
         <span class="text-forest-900/30">·</span>
-        <span class="text-xs text-forest-900/55">{{ job.department }}</span>
+        <span class="text-xs text-forest-900/70">{{ job.department }}</span>
       </div>
       <h3 class="mt-2 font-display text-xl text-forest-950">{{ job.title }}</h3>
       <p class="mt-1.5 max-w-xl text-sm leading-relaxed text-forest-900/65">{{ job.summary }}</p>

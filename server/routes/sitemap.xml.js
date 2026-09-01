@@ -25,6 +25,7 @@ export default defineEventHandler(async (event) => {
     { loc: '/', priority: '1.0', freq: 'weekly' },
     { loc: '/about', priority: '0.8', freq: 'monthly' },
     { loc: '/subsidiaries', priority: '0.9', freq: 'monthly' },
+    { loc: '/projects', priority: '0.8', freq: 'weekly' },
     { loc: '/investors', priority: '0.8', freq: 'monthly' },
     { loc: '/news', priority: '0.7', freq: 'weekly', lastmod: newestArticle },
     { loc: '/careers', priority: '0.7', freq: 'weekly' },

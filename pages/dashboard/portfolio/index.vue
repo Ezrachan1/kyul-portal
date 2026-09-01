@@ -11,8 +11,31 @@ const modal = ref(false)
 const editingId = ref(null)
 const error = ref('')
 
-const blank = () => ({ entity: 'engineering', name: '', client: '', location: '', value: '', year: '', scope: '', sector: '', status: '' })
+const blank = () => ({ entity: 'engineering', name: '', client: '', location: '', value: '', year: '', scope: '', sector: '', status: '', image: '' })
 const form = reactive(blank())
+
+// Project photo — shown on /projects cards and the homepage featured project.
+const { upload } = useUpload()
+const fileEl = ref(null)
+const uploading = ref(false)
+async function onPhoto(e) {
+  const file = e.target.files?.[0]
+  e.target.value = ''
+  if (!file) return
+  if (!/^image\//.test(file.type)) {
+    error.value = 'Please choose an image file.'
+    return
+  }
+  uploading.value = true
+  error.value = ''
+  try {
+    form.image = await upload(file)
+  } catch (err) {
+    error.value = err?.message || 'Upload failed.'
+  } finally {
+    uploading.value = false
+  }
+}
 
 const current = computed(() => subsidiaryBySlug(entity.value))
 const label = computed(() => current.value?.portfolioLabel || 'Portfolio')
@@ -36,7 +59,7 @@ function openNew() {
 }
 function openEdit(p) {
   editingId.value = p.id
-  Object.assign(form, { entity: p.entity, name: p.name, client: p.client, location: p.location, value: p.value, year: p.year, scope: p.scope, sector: p.sector, status: p.status })
+  Object.assign(form, { entity: p.entity, name: p.name, client: p.client, location: p.location, value: p.value, year: p.year, scope: p.scope, sector: p.sector, status: p.status, image: p.image || '' })
   error.value = ''
   modal.value = true
 }
@@ -66,7 +89,7 @@ async function remove(id) {
   rows.value = rows.value.filter((r) => r.id !== id)
   confirmId.value = null
 }
-const inputCls = 'w-full rounded-xl border border-ink/12 bg-sand-50/60 px-3.5 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forest-600'
+const inputCls = 'w-full rounded-xl border border-ink/[0.12] bg-sand-50/60 px-3.5 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forest-600'
 </script>
 
 <template>
@@ -82,7 +105,7 @@ const inputCls = 'w-full rounded-xl border border-ink/12 bg-sand-50/60 px-3.5 py
     <div class="mt-6 flex flex-wrap items-end gap-4">
       <div>
         <label class="mb-1.5 block text-xs font-semibold uppercase tracking-widest2 text-forest-900/45">Company</label>
-        <select v-model="entity" class="w-full max-w-xs rounded-xl border border-ink/12 bg-white px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forest-600">
+        <select v-model="entity" class="w-full max-w-xs rounded-xl border border-ink/[0.12] bg-white px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forest-600">
           <option v-for="s in subsidiaries" :key="s.slug" :value="s.slug">{{ s.name }}</option>
         </select>
       </div>
@@ -93,6 +116,8 @@ const inputCls = 'w-full rounded-xl border border-ink/12 bg-sand-50/60 px-3.5 py
     <div v-else class="mt-5 overflow-hidden rounded-2xl border border-ink/[0.07] bg-white shadow-soft">
       <ul class="divide-y divide-ink/[0.05]">
         <li v-for="p in rows" :key="p.id" class="flex items-center gap-4 px-5 py-4">
+          <img v-if="p.image" :src="p.image" alt="" class="h-10 w-14 shrink-0 rounded-lg object-cover ring-1 ring-ink/10" />
+          <span v-else class="flex h-10 w-14 shrink-0 items-center justify-center rounded-lg bg-sand-100 text-forest-900/30"><Icon name="lucide:image" class="h-4 w-4" /></span>
           <div class="min-w-0 flex-1">
             <p class="truncate text-sm font-medium text-forest-950">{{ p.name }}</p>
             <p class="truncate text-xs text-forest-900/50">{{ [p.client, p.location, p.value, p.year].filter(Boolean).join(' · ') }}</p>
@@ -126,6 +151,21 @@ const inputCls = 'w-full rounded-xl border border-ink/12 bg-sand-50/60 px-3.5 py
         <div>
           <label class="mb-1.5 block text-sm font-medium text-forest-900">Scope</label>
           <textarea v-model="form.scope" rows="2" :class="[inputCls, 'resize-y']" placeholder="Short scope description" />
+        </div>
+        <div>
+          <label class="mb-1.5 block text-sm font-medium text-forest-900">Project photo <span class="text-forest-900/40">(optional — shown on the public Projects page)</span></label>
+          <div class="flex items-center gap-3">
+            <img v-if="form.image" :src="form.image" alt="Project photo preview" class="h-16 w-24 rounded-lg object-cover ring-1 ring-ink/10" />
+            <span v-else class="flex h-16 w-24 items-center justify-center rounded-lg border border-dashed border-ink/15 bg-sand-50/60 text-forest-900/30"><Icon name="lucide:image" class="h-5 w-5" /></span>
+            <div class="flex flex-col gap-1.5">
+              <button type="button" class="btn-outline !px-4 !py-2 text-xs" :disabled="uploading" @click="fileEl?.click()">
+                <Icon v-if="uploading" name="lucide:loader-circle" class="h-3.5 w-3.5 animate-spin" />
+                {{ uploading ? 'Uploading…' : form.image ? 'Replace photo' : 'Upload photo' }}
+              </button>
+              <button v-if="form.image" type="button" class="text-left text-xs font-medium text-red-600 hover:underline" @click="form.image = ''">Remove photo</button>
+            </div>
+            <input ref="fileEl" type="file" accept="image/*" class="hidden" @change="onPhoto" />
+          </div>
         </div>
         <p v-if="error" class="text-sm text-red-600">{{ error }}</p>
         <div class="flex justify-end gap-2 pt-2"><button type="button" class="btn-outline" @click="modal = false">Cancel</button><button type="submit" class="btn-primary">{{ editingId ? 'Save changes' : 'Add item' }}</button></div>

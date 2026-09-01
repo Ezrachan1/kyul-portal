@@ -1,5 +1,6 @@
 <script setup>
 import { subsidiaryBySlug } from '~/data/subsidiaries'
+import { site } from '~/data/site'
 
 const route = useRoute()
 const { data: article, error } = await useFetch(`/api/news/${route.params.slug}`)
@@ -23,6 +24,32 @@ useSeoMeta({
   ogTitle: () => article.value.title,
   ogDescription: () => article.value.excerpt,
 })
+
+// NewsArticle structured data (SEO/AEO) — same base logic as app.vue.
+const base = (useRuntimeConfig().public.siteUrl || site.url).replace(/\/$/, '')
+const articleLd = computed(() => {
+  const a = article.value
+  if (!a) return null
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'NewsArticle',
+    headline: a.title,
+    datePublished: a.date,
+    dateModified: a.updatedAt || a.date,
+    author: { '@type': 'Organization', name: a.author || 'Kyul Group Inc.' },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Kyul Group Inc.',
+      logo: `${base}/icon-512.png`,
+    },
+    ...(metaDescription.value ? { description: metaDescription.value } : {}),
+    mainEntityOfPage: base + route.path,
+  }
+})
+useHead(() => {
+  if (!articleLd.value) return {}
+  return { script: [{ type: 'application/ld+json', innerHTML: JSON.stringify(articleLd.value) }] }
+})
 </script>
 
 <template>
@@ -30,7 +57,7 @@ useSeoMeta({
     <!-- header -->
     <header class="border-b border-ink/[0.06] bg-sand-50/60">
       <div class="shell max-w-prose2 py-14 md:py-20">
-        <nav class="mb-7 flex items-center gap-2 text-xs text-forest-900/45">
+        <nav class="mb-7 flex items-center gap-2 text-xs text-forest-900/70">
           <NuxtLink to="/news" class="transition hover:text-forest-900">News & Insights</NuxtLink>
           <Icon name="lucide:chevron-right" class="h-3 w-3" />
           <span class="truncate text-forest-900/70">{{ article.category }}</span>
@@ -40,7 +67,7 @@ useSeoMeta({
           <NuxtLink v-if="entity" :to="`/subsidiaries/${entity.slug}`" class="text-xs font-semibold" :style="{ color: entity.accentInk }">{{ entity.name }}</NuxtLink>
         </div>
         <h1 class="h-display mt-5 text-3xl text-balance text-forest-950 sm:text-4xl lg:text-[2.9rem]">{{ article.title }}</h1>
-        <div class="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-forest-900/55">
+        <div class="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-forest-900/70">
           <span class="flex items-center gap-1.5"><Icon name="lucide:user" class="h-4 w-4" /> {{ article.author }}</span>
           <span class="h-1 w-1 rounded-full bg-forest-900/25" />
           <span class="flex items-center gap-1.5"><Icon name="lucide:calendar" class="h-4 w-4" /> {{ formatDate(article.date) }}</span>
@@ -51,7 +78,7 @@ useSeoMeta({
     </header>
 
     <!-- body -->
-    <div class="shell max-w-prose2 py-14 md:py-18">
+    <div class="shell max-w-prose2 py-14 md:py-20">
       <div class="prose-kyul text-lg">
         <template v-for="(b, i) in article.body" :key="i">
           <h2 v-if="b.type === 'h2'">{{ b.text }}</h2>

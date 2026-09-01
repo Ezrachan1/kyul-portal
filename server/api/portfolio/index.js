@@ -21,6 +21,7 @@ export default defineEventHandler(async (event) => {
       scope: String(b.scope || '').slice(0, 400),
       sector: String(b.sector || '').slice(0, 80),
       status: String(b.status || '').slice(0, 60),
+      image: String(b.image || '').slice(0, 500),
       order: Number(b.order) || 0,
       createdAt: new Date().toISOString(),
     }

@@ -94,7 +94,7 @@ async function remove(id) {
 
     <div class="mt-6">
       <label class="mb-1.5 block text-xs font-semibold uppercase tracking-widest2 text-forest-900/45">Company / Board</label>
-      <select v-model="entity" class="w-full max-w-sm rounded-xl border border-ink/12 bg-white px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forest-600">
+      <select v-model="entity" class="w-full max-w-sm rounded-xl border border-ink/[0.12] bg-white px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forest-600">
         <option v-for="e in ENTITIES" :key="e.slug" :value="e.slug">{{ e.name }}</option>
       </select>
     </div>
@@ -128,22 +128,22 @@ async function remove(id) {
         <div class="flex items-center gap-4">
           <img v-if="form.photo" :src="form.photo" alt="" class="h-16 w-16 rounded-full object-cover" />
           <span v-else class="flex h-16 w-16 items-center justify-center rounded-full bg-sand-100 text-forest-900/30"><Icon name="lucide:user" class="h-7 w-7" /></span>
-          <label class="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-ink/12 bg-white px-4 py-2.5 text-sm font-medium text-forest-800 transition hover:bg-sand-50">
+          <label class="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-ink/[0.12] bg-white px-4 py-2.5 text-sm font-medium text-forest-800 transition hover:bg-sand-50">
             <Icon :name="uploading ? 'lucide:loader-circle' : 'lucide:upload'" class="h-4 w-4" :class="uploading && 'animate-spin'" /> {{ uploading ? 'Uploading…' : 'Upload photo' }}
             <input type="file" accept="image/*" class="hidden" @change="onPhoto" />
           </label>
         </div>
         <div>
           <label class="mb-1.5 block text-sm font-medium text-forest-900">Full name</label>
-          <input v-model="form.name" type="text" class="w-full rounded-xl border border-ink/12 bg-sand-50/60 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forest-600" placeholder="e.g. Jane Kiprop" />
+          <input v-model="form.name" type="text" class="w-full rounded-xl border border-ink/[0.12] bg-sand-50/60 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forest-600" placeholder="e.g. Jane Kiprop" />
         </div>
         <div>
           <label class="mb-1.5 block text-sm font-medium text-forest-900">Role / Title</label>
-          <input v-model="form.title" type="text" class="w-full rounded-xl border border-ink/12 bg-sand-50/60 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forest-600" placeholder="e.g. Managing Director" />
+          <input v-model="form.title" type="text" class="w-full rounded-xl border border-ink/[0.12] bg-sand-50/60 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forest-600" placeholder="e.g. Managing Director" />
         </div>
         <div>
           <label class="mb-1.5 block text-sm font-medium text-forest-900">Bio</label>
-          <textarea v-model="form.bio" rows="3" class="w-full resize-y rounded-xl border border-ink/12 bg-sand-50/60 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forest-600" />
+          <textarea v-model="form.bio" rows="3" class="w-full resize-y rounded-xl border border-ink/[0.12] bg-sand-50/60 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forest-600" />
         </div>
         <p v-if="error" class="text-sm text-red-600">{{ error }}</p>
         <div class="flex justify-end gap-2 pt-2"><button type="button" class="btn-outline" @click="modal = false">Cancel</button><button type="submit" class="btn-primary">{{ editingId ? 'Save changes' : 'Add member' }}</button></div>

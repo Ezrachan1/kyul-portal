@@ -41,7 +41,7 @@ const channels = computed(() => [
           <div class="mt-5 grid gap-3 sm:grid-cols-2">
             <a v-for="c in channels" :key="c.label" :href="c.href" class="group rounded-2xl border border-ink/[0.07] bg-white p-5 shadow-soft transition hover:-translate-y-0.5 hover:shadow-card">
               <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-forest-50 text-forest-700"><Icon :name="c.icon" class="h-5 w-5" /></span>
-              <p class="mt-3 text-xs font-semibold uppercase tracking-widest2 text-forest-900/45">{{ c.label }}</p>
+              <p class="mt-3 text-xs font-semibold uppercase tracking-widest2 text-forest-900/70">{{ c.label }}</p>
               <p class="mt-1 truncate text-sm font-medium text-forest-800 group-hover:text-forest-950">{{ c.value }}</p>
             </a>
           </div>

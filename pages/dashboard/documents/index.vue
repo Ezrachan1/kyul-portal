@@ -102,7 +102,7 @@ async function remove(id) {
     </div>
 
     <div class="mt-6 flex flex-wrap gap-1.5">
-      <button v-for="s in ['all', 'public', 'restricted']" :key="s" class="rounded-full border px-3.5 py-1.5 text-sm font-medium capitalize transition" :class="scope === s ? 'border-forest-950 bg-forest-950 text-paper' : 'border-ink/12 bg-white text-forest-900/70 hover:border-forest-900/40'" @click="scope = s">{{ s === 'restricted' ? 'Data room' : s }}</button>
+      <button v-for="s in ['all', 'public', 'restricted']" :key="s" class="rounded-full border px-3.5 py-1.5 text-sm font-medium capitalize transition" :class="scope === s ? 'border-forest-950 bg-forest-950 text-paper' : 'border-ink/[0.12] bg-white text-forest-900/70 hover:border-forest-900/40'" @click="scope = s">{{ s === 'restricted' ? 'Data room' : s }}</button>
     </div>
 
     <div class="mt-5 overflow-hidden rounded-2xl border border-ink/[0.07] bg-white shadow-soft">
@@ -136,31 +136,31 @@ async function remove(id) {
       <form class="space-y-4" @submit.prevent="save">
         <div>
           <label class="mb-1.5 block text-sm font-medium text-forest-900">Title</label>
-          <input v-model="form.title" type="text" class="w-full rounded-xl border border-ink/12 bg-sand-50/60 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forest-600" />
+          <input v-model="form.title" type="text" class="w-full rounded-xl border border-ink/[0.12] bg-sand-50/60 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forest-600" />
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
             <label class="mb-1.5 block text-sm font-medium text-forest-900">Category</label>
-            <select v-model="form.category" class="w-full rounded-xl border border-ink/12 bg-sand-50/60 px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forest-600">
+            <select v-model="form.category" class="w-full rounded-xl border border-ink/[0.12] bg-sand-50/60 px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forest-600">
               <option v-for="c in CATEGORIES" :key="c">{{ c }}</option>
             </select>
           </div>
           <div>
             <label class="mb-1.5 block text-sm font-medium text-forest-900">Type</label>
-            <input v-model="form.type" type="text" class="w-full rounded-xl border border-ink/12 bg-sand-50/60 px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forest-600" />
+            <input v-model="form.type" type="text" class="w-full rounded-xl border border-ink/[0.12] bg-sand-50/60 px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forest-600" />
           </div>
         </div>
         <div>
           <label class="mb-1.5 block text-sm font-medium text-forest-900">File</label>
           <div class="flex items-center gap-3">
-            <label class="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-ink/12 bg-white px-4 py-2.5 text-sm font-medium text-forest-800 transition hover:bg-sand-50">
+            <label class="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-ink/[0.12] bg-white px-4 py-2.5 text-sm font-medium text-forest-800 transition hover:bg-sand-50">
               <Icon :name="uploading ? 'lucide:loader-circle' : 'lucide:upload'" class="h-4 w-4" :class="uploading && 'animate-spin'" />
               {{ uploading ? 'Uploading…' : 'Upload file' }}
               <input type="file" class="hidden" @change="onFile" />
             </label>
             <span v-if="form.fileUrl" class="truncate text-xs text-forest-700">{{ form.fileUrl }}</span>
           </div>
-          <input v-model="form.fileUrl" type="text" placeholder="or paste a file URL" class="mt-2 w-full rounded-xl border border-ink/12 bg-sand-50/60 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forest-600" />
+          <input v-model="form.fileUrl" type="text" placeholder="or paste a file URL" class="mt-2 w-full rounded-xl border border-ink/[0.12] bg-sand-50/60 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forest-600" />
         </div>
         <label class="flex items-center gap-3 rounded-xl border border-ink/[0.08] bg-sand-50/50 px-4 py-3">
           <input v-model="form.restricted" type="checkbox" class="h-4 w-4 rounded border-ink/30 text-forest-700 focus:ring-forest-600" />

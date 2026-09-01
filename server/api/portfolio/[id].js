@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
   if (event.method === 'PATCH') {
     const b = await readBody(event)
     const patch = {}
-    for (const k of ['entity', 'name', 'client', 'location', 'value', 'year', 'scope', 'sector', 'status']) {
+    for (const k of ['entity', 'name', 'client', 'location', 'value', 'year', 'scope', 'sector', 'status', 'image']) {
       if (typeof b[k] !== 'undefined') patch[k] = b[k]
     }
     if (typeof b.order !== 'undefined') patch.order = Number(b.order) || 0

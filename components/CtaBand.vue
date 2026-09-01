@@ -5,6 +5,7 @@ defineProps({
   text: { type: String, default: '' },
   primary: { type: Object, default: () => ({ label: 'Contact us', to: '/contact' }) },
   secondary: { type: Object, default: null },
+  tertiary: { type: Object, default: null },
 })
 </script>
 
@@ -21,7 +22,8 @@ defineProps({
         <p v-if="text" class="mt-5 text-lg leading-relaxed text-paper/70">{{ text }}</p>
         <div class="mt-9 flex flex-wrap gap-3">
           <NuxtLink :to="primary.to" class="btn-gold">{{ primary.label }}<Icon name="lucide:arrow-right" class="h-4 w-4" /></NuxtLink>
-          <NuxtLink v-if="secondary" :to="secondary.to" class="btn-on-dark">{{ secondary.label }}</NuxtLink>
+          <NuxtLink v-if="secondary" :to="secondary.to" class="btn-on-dark">{{ secondary.label }}<Icon name="lucide:arrow-right" class="h-4 w-4" /></NuxtLink>
+          <NuxtLink v-if="tertiary" :to="tertiary.to" class="btn-on-dark">{{ tertiary.label }}<Icon name="lucide:arrow-right" class="h-4 w-4" /></NuxtLink>
         </div>
       </div>
     </div>

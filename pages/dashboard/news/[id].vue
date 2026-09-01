@@ -77,7 +77,7 @@ async function save() {
   }
 }
 
-const inputCls = 'w-full rounded-xl border border-ink/12 bg-white px-3.5 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forest-600'
+const inputCls = 'w-full rounded-xl border border-ink/[0.12] bg-white px-3.5 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forest-600'
 </script>
 
 <template>
@@ -104,7 +104,7 @@ const inputCls = 'w-full rounded-xl border border-ink/12 bg-white px-3.5 py-2.5 
           <div class="mt-4 space-y-3">
             <div v-for="(b, i) in form.body" :key="i" class="rounded-xl border border-ink/[0.07] bg-sand-50/40 p-3">
               <div class="mb-2 flex items-center gap-2">
-                <select v-model="b.type" class="rounded-lg border border-ink/12 bg-white px-2.5 py-1.5 text-xs font-medium outline-none focus:ring-2 focus:ring-forest-600">
+                <select v-model="b.type" class="rounded-lg border border-ink/[0.12] bg-white px-2.5 py-1.5 text-xs font-medium outline-none focus:ring-2 focus:ring-forest-600">
                   <option v-for="t in BLOCK_TYPES" :key="t.value" :value="t.value">{{ t.label }}</option>
                 </select>
                 <div class="ml-auto flex items-center gap-1">

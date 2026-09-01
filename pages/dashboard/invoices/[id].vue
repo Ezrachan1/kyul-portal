@@ -40,7 +40,7 @@ function printInvoice() {
       <NuxtLink to="/dashboard/invoices" class="inline-flex items-center gap-1.5 text-sm text-forest-900/55 transition hover:text-forest-900"><Icon name="lucide:arrow-left" class="h-4 w-4" /> All invoices</NuxtLink>
       <div class="flex flex-wrap items-center gap-2">
         <div class="relative">
-          <select :value="inv.status" class="appearance-none rounded-full border border-ink/12 bg-white py-2 pl-4 pr-9 text-sm font-medium capitalize outline-none transition focus:ring-2 focus:ring-forest-600" @change="setStatus($event.target.value)">
+          <select :value="inv.status" class="appearance-none rounded-full border border-ink/[0.12] bg-white py-2 pl-4 pr-9 text-sm font-medium capitalize outline-none transition focus:ring-2 focus:ring-forest-600" @change="setStatus($event.target.value)">
             <option value="draft">Draft</option>
             <option value="pending">Pending</option>
             <option value="paid">Paid</option>
@@ -50,7 +50,7 @@ function printInvoice() {
         </div>
         <button v-if="inv.status !== 'paid'" class="btn-outline !py-2.5" @click="setStatus('paid')"><Icon name="lucide:check-circle-2" class="h-4 w-4" /> Mark paid</button>
         <button class="btn-primary !py-2.5" @click="printInvoice"><Icon name="lucide:printer" class="h-4 w-4" /> Print / PDF</button>
-        <button class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-ink/12 text-forest-900/45 transition hover:border-red-200 hover:bg-red-50 hover:text-red-500" aria-label="Delete invoice" @click="confirmDelete = true"><Icon name="lucide:trash-2" class="h-4 w-4" /></button>
+        <button class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-ink/[0.12] text-forest-900/45 transition hover:border-red-200 hover:bg-red-50 hover:text-red-500" aria-label="Delete invoice" @click="confirmDelete = true"><Icon name="lucide:trash-2" class="h-4 w-4" /></button>
       </div>
     </div>
 
@@ -59,7 +59,7 @@ function printInvoice() {
       <p class="text-sm text-red-800">Delete invoice {{ inv.number }}? This cannot be undone.</p>
       <div class="flex gap-2">
         <button class="rounded-full bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700" @click="doDelete">Delete</button>
-        <button class="rounded-full border border-ink/12 bg-white px-4 py-2 text-sm font-medium" @click="confirmDelete = false">Cancel</button>
+        <button class="rounded-full border border-ink/[0.12] bg-white px-4 py-2 text-sm font-medium" @click="confirmDelete = false">Cancel</button>
       </div>
     </div>
 

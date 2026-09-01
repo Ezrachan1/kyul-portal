@@ -7,6 +7,10 @@ useSeoMeta({
   description:
     'The six operating companies of Kyul Group (Engineering, Ventures, Enterprises, Projects, Investment and Holdings), forming one integrated value chain.',
 })
+
+// Cards read as the value chain (01 Originates → 06 Governs), matching their numbering.
+const chainOrder = group.valueChain.steps.map((s) => s.slug)
+const companies = chainOrder.map((slug) => subsidiaries.find((s) => s.slug === slug)).filter(Boolean)
 </script>
 
 <template>
@@ -42,7 +46,7 @@ useSeoMeta({
     <!-- companies grid -->
     <section class="shell pb-8">
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        <SubsidiaryCard v-for="(s, i) in subsidiaries" :key="s.slug" :sub="s" :index="i" />
+        <SubsidiaryCard v-for="(s, i) in companies" :key="s.slug" :sub="s" :index="i" />
       </div>
     </section>
 
@@ -51,7 +55,7 @@ useSeoMeta({
       <div class="pointer-events-none absolute inset-0 opacity-[0.05] bg-grain" />
       <div class="shell relative">
         <SectionHeading tone="paper" align="center" eyebrow="How they work together" :title="group.valueChain.title" :lede="group.valueChain.lede" />
-        <div class="mt-14"><ValueChain /></div>
+        <div class="mt-14"><ValueChain tone="paper" /></div>
       </div>
     </section>
 

@@ -157,6 +157,31 @@ to git). Set the session secret once with `wrangler pages secret put NUXT_SESSIO
 
 ---
 
+## Analytics & conversion tracking (no code required)
+
+Use Cloudflare's built-in, cookieless **Web Analytics** — it needs no consent banner changes and
+adds no client code to the repo:
+
+1. Cloudflare dashboard → the Pages project → **Metrics / Web Analytics** → enable. Cloudflare
+   auto-injects its beacon into every page on the next deploy.
+2. Page views, referrers, top paths, and Core Web Vitals appear in the dashboard. Treat visits to
+   `/contact`, `/investors/data-room` and `/dashboard/login` as conversion proxies — every real
+   conversion (contact/RFP submission, data-room access request, application) is also captured
+   first-party in the portal's own **Inbox** and **Data Room requests** (admin dashboard), which is
+   the authoritative conversion record.
+3. If a full event-analytics product is ever wanted (custom events, funnels), prefer a
+   consent-free EU-hostable option (e.g. Plausible/Umami) added as a single deferred script in
+   `nuxt.config.ts` `app.head.script` — keep it out of the repo until the client picks a provider.
+
+**SEO note:** `/sitemap.xml` is served dynamically (never prerender it) so news published through
+the CMS appears in the sitemap immediately. After each major content change, no action is needed;
+after the FIRST deploy, submit `https://www.kyulgroup.com/sitemap.xml` in Google Search Console and
+Bing Webmaster Tools. The Cloudflare **AI-crawler block** (Security → Bots) currently disallows
+ChatGPT/Claude/Perplexity crawlers — decide deliberately whether to allow them for AI-search
+visibility (`ai-train=no` can be kept while allowing search/reference use).
+
+---
+
 ## Appendix — Node / VPS hosting
 
 A normal `npm run build` (without `CF_PAGES`) produces a Node server in `.output/`, using the on-disk store

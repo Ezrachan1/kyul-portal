@@ -8,7 +8,40 @@ useSeoMeta({
 
 const { data: articles } = await useFetch('/api/news', { default: () => [] })
 const active = ref('All')
-const filtered = computed(() => (active.value === 'All' ? articles.value : articles.value.filter((a) => a.category === active.value)))
+
+const list = computed(() => {
+  const src = active.value === 'All' ? articles.value : articles.value.filter((a) => a.category === active.value)
+  return [...src].sort((a, b) => new Date(b.date) - new Date(a.date))
+})
+
+const featured = computed(() => list.value.find((a) => a.featured) || list.value[0] || null)
+const rest = computed(() => list.value.filter((a) => a.slug !== featured.value?.slug))
+
+const shortDate = (iso) => formatDate(iso, { day: 'numeric', month: 'short', year: 'numeric' })
+
+// Art-directed panel built from palette tokens only; the combo varies by
+// category so the featured card reads differently as filters change.
+const PANEL_TINTS = [
+  { glow: 'rgba(94, 144, 121, 0.5)', from: '#dbe9e1', to: '#b9d3c6' }, // forest 400 / 100 / 200
+  { glow: 'rgba(217, 185, 98, 0.35)', from: '#f4f0e6', to: '#eae3d3' }, // gold 300 / sand 100 / 200
+  { glow: 'rgba(141, 182, 164, 0.5)', from: '#f1f6f3', to: '#dbe9e1' }, // forest 300 / 50 / 100
+  { glow: 'rgba(205, 166, 70, 0.3)', from: '#f2e8c9', to: '#f4f0e6' }, // gold 400 / 100 / sand 100
+]
+const tintFor = (cat) => {
+  let h = 0
+  for (const ch of String(cat || '')) h = (h * 31 + ch.charCodeAt(0)) % 997
+  return PANEL_TINTS[h % PANEL_TINTS.length]
+}
+const panelStyle = computed(() => {
+  const t = tintFor(featured.value?.category)
+  return {
+    background: [
+      `radial-gradient(85% 75% at 88% 10%, ${t.glow}, transparent 62%)`,
+      'radial-gradient(42% 34% at 10% 94%, rgba(217, 185, 98, 0.14), transparent 72%)',
+      `linear-gradient(150deg, ${t.from}, ${t.to})`,
+    ].join(', '),
+  }
+})
 </script>
 
 <template>
@@ -21,25 +54,107 @@ const filtered = computed(() => (active.value === 'All' ? articles.value : artic
     />
 
     <section class="shell py-16 md:py-20">
-      <!-- filters -->
-      <div class="mb-10 flex flex-wrap gap-2">
+      <!-- category filter -->
+      <div
+        class="-mx-[var(--shell-x)] flex gap-2 overflow-x-auto px-[var(--shell-x)] py-1.5 md:mx-0 md:flex-wrap md:px-0"
+        role="group"
+        aria-label="Filter news by category"
+      >
         <button
           v-for="c in categories" :key="c"
-          class="rounded-full border px-4 py-2 text-sm font-medium transition"
-          :class="active === c ? 'border-forest-950 bg-forest-950 text-paper' : 'border-ink/12 text-forest-900/70 hover:border-forest-900/40 hover:text-forest-950'"
+          type="button"
+          class="chip min-h-10 shrink-0"
+          :class="active === c && 'chip-active'"
+          :aria-pressed="active === c"
           @click="active = c"
         >{{ c }}</button>
       </div>
+      <p class="sr-only" aria-live="polite">{{ list.length }} articles in {{ active === 'All' ? 'all categories' : active }}</p>
 
-      <TransitionGroup
-        tag="div" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
-        enter-active-class="transition duration-400 ease-out-expo" enter-from-class="opacity-0 translate-y-3"
-        leave-active-class="absolute" leave-to-class="opacity-0"
-      >
-        <ArticleCard v-for="(a, i) in filtered" :key="a.slug" :article="a" :index="i" />
-      </TransitionGroup>
+      <!-- min-height keeps the CTA band from jumping while filters swap content -->
+      <div class="mt-10 min-h-[24rem] md:mt-12">
+        <!-- featured article: 60/40 editorial split -->
+        <Transition name="feat" mode="out-in">
+          <article v-if="featured" :key="featured.slug" v-reveal class="grid gap-8 lg:grid-cols-5 lg:gap-12">
+            <NuxtLink
+              :to="`/news/${featured.slug}`"
+              tabindex="-1"
+              aria-hidden="true"
+              class="group relative block aspect-[16/10] min-w-0 overflow-hidden rounded-[1.5rem] shadow-soft lg:col-span-3 lg:aspect-auto lg:min-h-[24rem]"
+            >
+              <div
+                class="absolute inset-0 transition-transform duration-700 ease-out-expo group-hover:scale-[1.03]"
+                :style="panelStyle"
+              >
+                <TopoContours tone="ink" :opacity="0.07" />
+              </div>
+              <span class="eyebrow absolute left-6 top-6 sm:left-8 sm:top-8">{{ featured.category }}</span>
+              <div class="absolute inset-x-6 bottom-6 sm:inset-x-8 sm:bottom-8">
+                <KyulLine :node="6" />
+              </div>
+            </NuxtLink>
 
-      <p v-if="!filtered.length" class="py-16 text-center text-forest-900/50">No articles in this category yet.</p>
+            <div class="flex min-w-0 flex-col justify-center lg:col-span-2">
+              <p class="text-[0.65rem] font-semibold uppercase tracking-widest2 text-forest-900/70">
+                {{ featured.category }} · {{ formatDate(featured.date) }}
+              </p>
+              <h2 class="mt-4 font-display text-2xl leading-snug tracking-tightish text-balance md:text-3xl">
+                <NuxtLink
+                  :to="`/news/${featured.slug}`"
+                  class="transition-colors duration-300 hover:text-forest-700"
+                >{{ featured.title }}</NuxtLink>
+              </h2>
+              <p class="mt-4 leading-relaxed text-forest-900/70 line-clamp-3">{{ featured.excerpt }}</p>
+              <p class="mt-5 text-sm text-forest-900/70">{{ featured.author }} · {{ featured.readingTime }} min read</p>
+              <NuxtLink
+                :to="`/news/${featured.slug}`"
+                class="link-underline mt-7 inline-flex items-center gap-1.5 self-start py-2.5 text-sm font-semibold text-forest-800"
+              >
+                Read<Icon name="lucide:arrow-right" class="h-4 w-4" />
+              </NuxtLink>
+            </div>
+          </article>
+        </Transition>
+
+        <!-- remaining articles: editorial hairline rows -->
+        <TransitionGroup
+          v-if="rest.length"
+          tag="div" class="relative mt-12 grid gap-x-8 gap-y-10 md:mt-16 md:grid-cols-2 lg:grid-cols-3"
+          enter-active-class="transition duration-400 ease-out-expo" enter-from-class="opacity-0 translate-y-3"
+          leave-active-class="absolute" leave-to-class="opacity-0"
+        >
+          <NuxtLink
+            v-for="(a, i) in rest" :key="a.slug"
+            v-reveal="(i % 3) * 80"
+            :to="`/news/${a.slug}`"
+            class="hairline group flex min-w-0 flex-col border-t pt-6"
+          >
+            <p class="text-[0.65rem] font-semibold uppercase tracking-widest2 text-forest-900/70">
+              {{ shortDate(a.date) }} · {{ a.category }}
+            </p>
+            <h3 class="mt-3 font-display text-xl leading-snug tracking-tightish transition-colors duration-300 group-hover:text-forest-700">
+              {{ a.title }}
+            </h3>
+            <p class="mt-3 text-sm leading-relaxed text-forest-900/70 line-clamp-2">{{ a.excerpt }}</p>
+            <span class="mt-auto inline-flex items-center gap-1.5 pt-5 text-sm font-semibold text-forest-800">
+              Read
+              <Icon name="lucide:arrow-right" class="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </span>
+          </NuxtLink>
+        </TransitionGroup>
+
+        <!-- empty filter state -->
+        <div v-if="!list.length" class="rounded-2xl border border-dashed border-ink/15 px-6 py-20 text-center">
+          <p class="text-forest-900/70">No articles in this category yet.</p>
+          <button
+            type="button"
+            class="link-underline mt-4 inline-flex items-center gap-1.5 py-2.5 text-sm font-semibold text-forest-800"
+            @click="active = 'All'"
+          >
+            Show all articles<Icon name="lucide:rotate-ccw" class="h-3.5 w-3.5" />
+          </button>
+        </div>
+      </div>
     </section>
 
     <CtaBand
@@ -51,3 +166,19 @@ const filtered = computed(() => (active.value === 'All' ? articles.value : artic
     />
   </div>
 </template>
+
+<style scoped>
+.feat-enter-active {
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.feat-leave-active {
+  transition: opacity 0.15s ease;
+}
+.feat-enter-from {
+  opacity: 0;
+  transform: translateY(10px);
+}
+.feat-leave-to {
+  opacity: 0;
+}
+</style>

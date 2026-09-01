@@ -41,10 +41,10 @@ const { data: leadership } = await useFetch('/api/team?entity=group', { default:
         </div>
         <div class="lg:col-span-5">
           <div v-reveal="100" class="rounded-2xl border border-ink/[0.07] bg-forest-950 p-7 text-paper shadow-card">
-            <h3 class="flex items-center gap-2 text-[0.72rem] font-semibold uppercase tracking-widest2 text-gold-300"><Icon name="lucide:eye" class="h-4 w-4" /> Vision</h3>
+            <h2 class="flex items-center gap-2 text-[0.72rem] font-semibold uppercase tracking-widest2 text-gold-300"><Icon name="lucide:eye" class="h-4 w-4" /> Vision</h2>
             <p class="mt-3 font-display text-xl leading-snug">{{ group.vision }}</p>
             <div class="my-6 h-px bg-paper/10" />
-            <h3 class="flex items-center gap-2 text-[0.72rem] font-semibold uppercase tracking-widest2 text-gold-300"><Icon name="lucide:flag" class="h-4 w-4" /> Mission</h3>
+            <h2 class="flex items-center gap-2 text-[0.72rem] font-semibold uppercase tracking-widest2 text-gold-300"><Icon name="lucide:flag" class="h-4 w-4" /> Mission</h2>
             <p class="mt-3 leading-relaxed text-paper/80">{{ group.mission }}</p>
           </div>
         </div>
@@ -70,7 +70,7 @@ const { data: leadership } = await useFetch('/api/team?entity=group', { default:
       <SectionHeading eyebrow="Governance & structure" title="Clean ownership, by design." :lede="group.governance.lede" />
 
       <!-- structure diagram -->
-      <div v-reveal class="mt-14 rounded-3xl border border-ink/[0.07] bg-white p-8 shadow-soft md:p-12">
+      <div v-reveal class="mt-14 rounded-2xl border border-ink/[0.07] bg-white p-8 shadow-soft md:p-12">
         <div class="flex flex-col items-center">
           <div class="w-full max-w-xs rounded-2xl bg-forest-950 px-6 py-5 text-center text-paper shadow-card">
             <p class="text-[0.65rem] font-semibold uppercase tracking-widest2 text-gold-300/80">Parent & Brand</p>
@@ -78,16 +78,16 @@ const { data: leadership } = await useFetch('/api/team?entity=group', { default:
           </div>
           <div class="h-8 w-px bg-ink/15" />
           <div class="w-full max-w-xs rounded-2xl border-2 border-forest-900/15 bg-forest-50 px-6 py-5 text-center">
-            <p class="text-[0.65rem] font-semibold uppercase tracking-widest2 text-forest-700/70">Sub-Holding</p>
+            <p class="text-[0.65rem] font-semibold uppercase tracking-widest2 text-forest-700">Sub-Holding</p>
             <p class="mt-1 font-display text-lg text-forest-950">Kyul Holdings Ltd.</p>
-            <p class="mt-1 text-xs text-forest-900/55">Owns equity in the five operating companies</p>
+            <p class="mt-1 text-xs text-forest-900/70">Owns equity in the five operating companies</p>
           </div>
           <div class="h-8 w-px bg-ink/15" />
           <div class="grid w-full grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
             <div v-for="o in opcos" :key="o.slug" class="rounded-xl border border-ink/[0.08] bg-white px-4 py-4 text-center shadow-soft">
               <span class="mx-auto block h-2 w-2 rounded-full" :style="{ background: o.accent }" />
               <p class="mt-2 text-sm font-semibold text-forest-950">{{ o.short }}</p>
-              <p class="mt-0.5 text-[0.68rem] text-forest-900/50">{{ o.arm.replace(' Arm', '') }}</p>
+              <p class="mt-0.5 text-[0.68rem] text-forest-900/70">{{ o.arm.replace(' Arm', '') }}</p>
             </div>
           </div>
         </div>
@@ -109,7 +109,7 @@ const { data: leadership } = await useFetch('/api/team?entity=group', { default:
         <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           <TeamCard v-for="(m, i) in leadership" :key="m.id || i" :person="m" :index="i" accent="#2d5d4b" />
         </div>
-        <p class="mt-6 text-xs text-forest-900/45">Named board appointments are confirmed in the Group’s governance documentation, available to investors on request.</p>
+        <p class="mt-6 text-xs text-forest-900/70">Named board appointments are confirmed in the Group’s governance documentation, available to investors on request.</p>
       </div>
     </section>
 

@@ -1,6 +1,8 @@
 <script setup>
 const props = defineProps({
   accent: { type: String, default: '#2d5d4b' },
+  // Raw subsidiary accents fail AA for text-on-color — buttons use the dark ink variant.
+  accentInk: { type: String, default: '#143029' },
   subjects: { type: Array, default: () => ['General enquiry', 'Partnership', 'Media', 'Investor relations'] },
   cta: { type: String, default: 'Send enquiry' },
   compact: { type: Boolean, default: false },
@@ -8,6 +10,9 @@ const props = defineProps({
   source: { type: String, default: '' },
   entity: { type: String, default: null },
 })
+
+const uid = useId()
+const fid = (k) => `${uid}-${k}`
 
 const form = reactive({ name: '', email: '', org: '', subject: props.subjects[0], message: '' })
 const submitted = ref(false)
@@ -55,11 +60,11 @@ async function submit() {
       enter-active-class="transition duration-400 ease-out-expo" enter-from-class="opacity-0 translate-y-2"
     >
       <div
-        v-if="submitted" key="done"
+        v-if="submitted" key="done" role="status"
         class="flex flex-col items-center rounded-2xl border border-ink/[0.07] bg-white p-10 text-center shadow-soft"
       >
-        <span class="flex h-14 w-14 items-center justify-center rounded-full" :style="{ background: `${accent}1a`, color: accent }">
-          <Icon name="lucide:check" class="h-7 w-7" />
+        <span class="flex h-14 w-14 items-center justify-center rounded-full" :style="{ background: `${accent}1a`, color: accentInk }">
+          <Icon name="lucide:check" class="h-7 w-7" aria-hidden="true" />
         </span>
         <h3 class="mt-5 font-display text-2xl text-forest-950">Thank you, {{ form.name.split(' ')[0] }}.</h3>
         <p class="mt-2 max-w-md text-forest-900/65">
@@ -71,65 +76,76 @@ async function submit() {
       <form v-else key="form" class="rounded-2xl border border-ink/[0.07] bg-white p-6 shadow-soft sm:p-8" novalidate @submit.prevent="submit">
         <div class="grid gap-5" :class="!compact && 'sm:grid-cols-2'">
           <div>
-            <label class="mb-1.5 block text-sm font-medium text-forest-900">Full name</label>
+            <label :for="fid('name')" class="mb-1.5 block text-sm font-medium text-forest-900">Full name</label>
             <input
+              :id="fid('name')"
               v-model="form.name" type="text" autocomplete="name"
-              class="w-full rounded-xl border border-ink/12 bg-sand-50/60 px-4 py-3 text-sm text-forest-950 outline-none transition focus:border-transparent focus:ring-2"
+              :aria-invalid="errors.name ? 'true' : undefined"
+              :aria-describedby="errors.name ? fid('name-err') : undefined"
+              class="w-full rounded-xl border border-ink/[0.12] bg-sand-50/60 px-4 py-3 text-sm text-forest-950 outline-none transition focus:border-transparent focus:ring-2"
               :style="{ '--tw-ring-color': accent }" placeholder="Your name"
             />
-            <p v-if="errors.name" class="mt-1.5 text-xs text-red-600">{{ errors.name }}</p>
+            <p v-if="errors.name" :id="fid('name-err')" role="alert" class="mt-1.5 text-xs text-red-600">{{ errors.name }}</p>
           </div>
           <div>
-            <label class="mb-1.5 block text-sm font-medium text-forest-900">Email</label>
+            <label :for="fid('email')" class="mb-1.5 block text-sm font-medium text-forest-900">Email</label>
             <input
+              :id="fid('email')"
               v-model="form.email" type="email" autocomplete="email"
-              class="w-full rounded-xl border border-ink/12 bg-sand-50/60 px-4 py-3 text-sm text-forest-950 outline-none transition focus:border-transparent focus:ring-2"
+              :aria-invalid="errors.email ? 'true' : undefined"
+              :aria-describedby="errors.email ? fid('email-err') : undefined"
+              class="w-full rounded-xl border border-ink/[0.12] bg-sand-50/60 px-4 py-3 text-sm text-forest-950 outline-none transition focus:border-transparent focus:ring-2"
               :style="{ '--tw-ring-color': accent }" placeholder="you@company.com"
             />
-            <p v-if="errors.email" class="mt-1.5 text-xs text-red-600">{{ errors.email }}</p>
+            <p v-if="errors.email" :id="fid('email-err')" role="alert" class="mt-1.5 text-xs text-red-600">{{ errors.email }}</p>
           </div>
           <div>
-            <label class="mb-1.5 block text-sm font-medium text-forest-900">Organisation <span class="text-forest-900/40">(optional)</span></label>
+            <label :for="fid('org')" class="mb-1.5 block text-sm font-medium text-forest-900">Organisation <span class="text-forest-900/40">(optional)</span></label>
             <input
+              :id="fid('org')"
               v-model="form.org" type="text" autocomplete="organization"
-              class="w-full rounded-xl border border-ink/12 bg-sand-50/60 px-4 py-3 text-sm text-forest-950 outline-none transition focus:border-transparent focus:ring-2"
+              class="w-full rounded-xl border border-ink/[0.12] bg-sand-50/60 px-4 py-3 text-sm text-forest-950 outline-none transition focus:border-transparent focus:ring-2"
               :style="{ '--tw-ring-color': accent }" placeholder="Company or institution"
             />
           </div>
           <div>
-            <label class="mb-1.5 block text-sm font-medium text-forest-900">Subject</label>
+            <label :for="fid('subject')" class="mb-1.5 block text-sm font-medium text-forest-900">Subject</label>
             <div class="relative">
               <select
+                :id="fid('subject')"
                 v-model="form.subject"
-                class="w-full appearance-none rounded-xl border border-ink/12 bg-sand-50/60 px-4 py-3 text-sm text-forest-950 outline-none transition focus:border-transparent focus:ring-2"
+                class="w-full appearance-none rounded-xl border border-ink/[0.12] bg-sand-50/60 px-4 py-3 text-sm text-forest-950 outline-none transition focus:border-transparent focus:ring-2"
                 :style="{ '--tw-ring-color': accent }"
               >
                 <option v-for="s in subjects" :key="s">{{ s }}</option>
               </select>
-              <Icon name="lucide:chevron-down" class="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-forest-900/40" />
+              <Icon name="lucide:chevron-down" class="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-forest-900/40" aria-hidden="true" />
             </div>
           </div>
         </div>
         <div class="mt-5">
-          <label class="mb-1.5 block text-sm font-medium text-forest-900">Message</label>
+          <label :for="fid('message')" class="mb-1.5 block text-sm font-medium text-forest-900">Message</label>
           <textarea
+            :id="fid('message')"
             v-model="form.message" rows="4"
-            class="w-full resize-y rounded-xl border border-ink/12 bg-sand-50/60 px-4 py-3 text-sm text-forest-950 outline-none transition focus:border-transparent focus:ring-2"
+            :aria-invalid="errors.message ? 'true' : undefined"
+            :aria-describedby="errors.message ? fid('message-err') : undefined"
+            class="w-full resize-y rounded-xl border border-ink/[0.12] bg-sand-50/60 px-4 py-3 text-sm text-forest-950 outline-none transition focus:border-transparent focus:ring-2"
             :style="{ '--tw-ring-color': accent }" placeholder="How can we help?"
           />
-          <p v-if="errors.message" class="mt-1.5 text-xs text-red-600">{{ errors.message }}</p>
+          <p v-if="errors.message" :id="fid('message-err')" role="alert" class="mt-1.5 text-xs text-red-600">{{ errors.message }}</p>
         </div>
-        <p v-if="errors.submit" class="mt-4 flex items-center gap-1.5 text-sm text-red-600"><Icon name="lucide:circle-alert" class="h-4 w-4" /> {{ errors.submit }}</p>
+        <p v-if="errors.submit" role="alert" class="mt-4 flex items-center gap-1.5 text-sm text-red-600"><Icon name="lucide:circle-alert" class="h-4 w-4" aria-hidden="true" /> {{ errors.submit }}</p>
         <div class="mt-6 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <p class="text-xs text-forest-900/50">By submitting, you agree to our <NuxtLink to="/privacy" class="underline underline-offset-2">privacy policy</NuxtLink>.</p>
+          <p class="text-xs text-forest-900/70">By submitting, you agree to our <NuxtLink to="/privacy" class="underline underline-offset-2">privacy policy</NuxtLink>.</p>
           <button
             type="submit" :disabled="sending"
-            class="btn w-full text-paper shadow-soft transition hover:brightness-95 disabled:opacity-60 sm:w-auto"
-            :style="{ background: accent }"
+            class="btn w-full text-paper shadow-soft transition hover:brightness-110 disabled:opacity-60 sm:w-auto"
+            :style="{ background: accentInk }"
           >
-            <Icon v-if="sending" name="lucide:loader-circle" class="h-4 w-4 animate-spin" />
+            <Icon v-if="sending" name="lucide:loader-circle" class="h-4 w-4 animate-spin" aria-hidden="true" />
             {{ sending ? 'Sending…' : cta }}
-            <Icon v-if="!sending" name="lucide:send" class="h-4 w-4" />
+            <Icon v-if="!sending" name="lucide:send" class="h-4 w-4" aria-hidden="true" />
           </button>
         </div>
       </form>

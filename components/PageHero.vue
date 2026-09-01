@@ -1,10 +1,35 @@
 <script setup>
-defineProps({
+import { site } from '~/data/site'
+
+const props = defineProps({
   eyebrow: { type: String, default: '' },
   title: { type: String, required: true },
   lede: { type: String, default: '' },
   crumbs: { type: Array, default: () => [] }, // [{label, to}]
   size: { type: String, default: 'md' }, // 'md' | 'lg'
+})
+
+// BreadcrumbList structured data (SEO/AEO) — same base logic as app.vue.
+const base = (useRuntimeConfig().public.siteUrl || site.url).replace(/\/$/, '')
+useHead(() => {
+  if (!props.crumbs || props.crumbs.length < 2) return {}
+  return {
+    script: [
+      {
+        type: 'application/ld+json',
+        innerHTML: JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'BreadcrumbList',
+          itemListElement: props.crumbs.map((c, i) => ({
+            '@type': 'ListItem',
+            position: i + 1,
+            name: c.label,
+            ...(c.to ? { item: base + c.to } : {}),
+          })),
+        }),
+      },
+    ],
+  }
 })
 </script>
 
@@ -15,9 +40,9 @@ defineProps({
     <div class="pointer-events-none absolute right-0 top-0 h-1 w-full bg-gradient-to-r from-transparent via-gold-500/40 to-transparent" />
 
     <div class="shell relative" :class="size === 'lg' ? 'py-20 md:py-28 lg:py-32' : 'py-16 md:py-22 lg:py-24'">
-      <nav v-if="crumbs.length" class="mb-7 flex flex-wrap items-center gap-2 text-xs text-paper/45" aria-label="Breadcrumb">
+      <nav v-if="crumbs.length" class="mb-5 flex flex-wrap items-center gap-2 text-xs text-paper/60" aria-label="Breadcrumb">
         <template v-for="(c, i) in crumbs" :key="i">
-          <NuxtLink v-if="c.to" :to="c.to" class="transition hover:text-paper/80">{{ c.label }}</NuxtLink>
+          <NuxtLink v-if="c.to" :to="c.to" class="-my-2 py-2 transition hover:text-paper/90">{{ c.label }}</NuxtLink>
           <span v-else class="text-paper/70">{{ c.label }}</span>
           <Icon v-if="i < crumbs.length - 1" name="lucide:chevron-right" class="h-3 w-3 text-paper/30" />
         </template>

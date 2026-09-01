@@ -70,12 +70,12 @@ const features = [
           <div>
             <label class="mb-1.5 block text-sm font-medium text-forest-900">Work email</label>
             <input v-model="email" type="email" autocomplete="username" placeholder="you@kyulgroup.com"
-              class="w-full rounded-xl border border-ink/12 bg-white px-4 py-3 text-sm outline-none transition focus:border-transparent focus:ring-2 focus:ring-forest-600" />
+              class="w-full rounded-xl border border-ink/[0.12] bg-white px-4 py-3 text-sm outline-none transition focus:border-transparent focus:ring-2 focus:ring-forest-600" />
           </div>
           <div>
             <label class="mb-1.5 block text-sm font-medium text-forest-900">Password</label>
             <input v-model="password" type="password" autocomplete="current-password" placeholder="••••••••"
-              class="w-full rounded-xl border border-ink/12 bg-white px-4 py-3 text-sm outline-none transition focus:border-transparent focus:ring-2 focus:ring-forest-600" />
+              class="w-full rounded-xl border border-ink/[0.12] bg-white px-4 py-3 text-sm outline-none transition focus:border-transparent focus:ring-2 focus:ring-forest-600" />
           </div>
           <p v-if="error" class="flex items-center gap-1.5 text-sm text-red-600"><Icon name="lucide:circle-alert" class="h-4 w-4" /> {{ error }}</p>
           <button type="submit" :disabled="busy" class="btn-primary w-full">

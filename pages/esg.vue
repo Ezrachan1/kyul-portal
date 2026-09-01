@@ -30,13 +30,13 @@ const commitments = [
     <!-- pillars -->
     <section class="shell py-20 md:py-24">
       <div class="grid gap-6 lg:grid-cols-3">
-        <div v-for="(p, i) in group.esg.pillars" :key="p.name" v-reveal="i * 90" class="flex flex-col rounded-3xl border border-ink/[0.07] bg-white p-8 shadow-soft">
+        <div v-for="(p, i) in group.esg.pillars" :key="p.name" v-reveal="i * 90" class="flex flex-col rounded-2xl border border-ink/[0.07] bg-white p-8 shadow-soft">
           <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-forest-50 text-forest-700"><Icon :name="p.icon" class="h-6 w-6" /></span>
           <h2 class="mt-5 font-display text-2xl text-forest-950">{{ p.name }}</h2>
           <p class="mt-3 flex-1 leading-relaxed text-forest-900/70">{{ p.text }}</p>
           <dl class="mt-6 space-y-3 border-t border-ink/[0.07] pt-6">
             <div v-for="m in p.metrics" :key="m.label" class="flex items-center justify-between gap-3">
-              <dt class="text-sm text-forest-900/60">{{ m.label }}</dt>
+              <dt class="text-sm text-forest-900/70">{{ m.label }}</dt>
               <dd class="text-right font-display text-base text-forest-950">{{ m.value }}</dd>
             </div>
           </dl>
@@ -65,7 +65,7 @@ const commitments = [
           “We measure success not only in returns, but in the jobs created, the infrastructure built and the communities
           strengthened along the way.”
         </p>
-        <p class="mt-6 text-sm font-medium uppercase tracking-widest2 text-forest-900/50">Office of the Group CEO</p>
+        <p class="mt-6 text-sm font-medium uppercase tracking-widest2 text-forest-900/70">Office of the Group CEO</p>
       </div>
     </section>
 

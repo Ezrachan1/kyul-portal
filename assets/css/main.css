@@ -44,6 +44,12 @@
     outline-offset: 3px;
     border-radius: 2px;
   }
+  /* Forest-green outlines vanish on dark surfaces — go gold there. */
+  .bg-forest-950 :focus-visible,
+  .bg-forest-900 :focus-visible,
+  footer :focus-visible {
+    outline-color: #d9b962;
+  }
 
   /* tasteful scrollbar */
   * {
@@ -121,6 +127,40 @@
   /* Tag / pill */
   .pill {
     @apply inline-flex items-center gap-1.5 rounded-full border border-ink/10 bg-white/70 px-3 py-1 text-xs font-medium text-forest-800;
+  }
+
+  /* Filter chip (projects / news category filters) */
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-ink/15 px-4 py-1.5 text-sm font-medium
+           text-forest-900/70 transition-colors duration-300 hover:border-forest-900/40 hover:text-forest-950;
+  }
+  .chip-active {
+    @apply border-forest-900 bg-forest-950 text-paper hover:border-forest-900 hover:text-paper;
+  }
+
+  /* The signature Kyul line — hairline standing for the value chain */
+  .kyul-line {
+    height: 1px;
+    background: linear-gradient(90deg, rgba(189, 144, 56, 0.65), rgba(18, 32, 28, 0.12) 60%, transparent);
+  }
+  .kyul-line--paper {
+    background: linear-gradient(90deg, rgba(217, 185, 98, 0.7), rgba(248, 245, 238, 0.15) 60%, transparent);
+  }
+  .kyul-line__node {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 7px;
+    height: 7px;
+    border-radius: 9999px;
+    background: #d9b962;
+    box-shadow: 0 0 0 4px rgba(217, 185, 98, 0.18);
+  }
+
+  /* Editorial display numerals (data-as-design stats) */
+  .stat-display {
+    @apply font-display tracking-tightish;
+    font-variant-numeric: lining-nums tabular-nums;
   }
 }
 

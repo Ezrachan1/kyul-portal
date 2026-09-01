@@ -20,7 +20,7 @@ const sub = computed(() => (props.person.name ? roleText.value : ''))
       >{{ person.initials }}</span>
       <div class="min-w-0">
         <h3 class="truncate font-display text-lg text-forest-950">{{ heading }}</h3>
-        <p class="truncate text-sm text-forest-900/55">{{ sub }}</p>
+        <p class="truncate text-sm text-forest-900/70">{{ sub }}</p>
       </div>
     </div>
     <p v-if="person.bio" class="mt-4 text-sm leading-relaxed text-forest-900/65">{{ person.bio }}</p>

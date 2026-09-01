@@ -38,7 +38,7 @@ const accentTint = (hex, alpha) => `${hex}${alpha}`
 
       <div class="shell relative grid items-center gap-12 py-16 md:py-20 lg:grid-cols-12 lg:gap-10 lg:py-24">
         <div class="lg:col-span-7">
-          <nav class="mb-6 flex flex-wrap items-center gap-2 text-xs text-forest-900/45" aria-label="Breadcrumb">
+          <nav class="mb-6 flex flex-wrap items-center gap-2 text-xs text-forest-900/70" aria-label="Breadcrumb">
             <NuxtLink to="/" class="transition hover:text-forest-900">Home</NuxtLink>
             <Icon name="lucide:chevron-right" class="h-3 w-3" />
             <NuxtLink to="/subsidiaries" class="transition hover:text-forest-900">Companies</NuxtLink>
@@ -54,7 +54,7 @@ const accentTint = (hex, alpha) => `${hex}${alpha}`
           <p class="mt-5 max-w-xl text-lg leading-relaxed text-forest-900/70">{{ sub.lede }}</p>
 
           <div class="mt-8 flex flex-wrap gap-3">
-            <a href="#enquire" class="btn text-white shadow-soft transition hover:brightness-95" :style="{ background: sub.accent }">
+            <a href="#enquire" class="btn text-white shadow-soft transition hover:brightness-110" :style="{ background: sub.accentInk }">
               Request a proposal<Icon name="lucide:arrow-right" class="h-4 w-4" />
             </a>
             <NuxtLink to="/subsidiaries" class="btn-outline">All companies</NuxtLink>
@@ -128,7 +128,7 @@ const accentTint = (hex, alpha) => `${hex}${alpha}`
     <section class="shell py-20 md:py-24">
       <SectionHeading eyebrow="Portfolio" :title="sub.portfolioLabel" />
       <div class="mt-10 overflow-hidden rounded-2xl border border-ink/[0.07] bg-white shadow-soft">
-        <div class="hidden grid-cols-12 gap-4 border-b border-ink/[0.07] bg-sand-50/60 px-6 py-3.5 text-[0.7rem] font-semibold uppercase tracking-widest2 text-forest-900/45 md:grid">
+        <div class="hidden grid-cols-12 gap-4 border-b border-ink/[0.07] bg-sand-50/60 px-6 py-3.5 text-[0.7rem] font-semibold uppercase tracking-widest2 text-forest-900/70 md:grid">
           <div class="col-span-4">Project</div>
           <div class="col-span-3">Scope</div>
           <div class="col-span-2">Value</div>
@@ -141,7 +141,7 @@ const accentTint = (hex, alpha) => `${hex}${alpha}`
         >
           <div class="md:col-span-4">
             <p class="font-medium text-forest-950">{{ p.name }}</p>
-            <p class="text-sm text-forest-900/55">{{ p.client }} · {{ p.location }}</p>
+            <p class="text-sm text-forest-900/70">{{ p.client }} · {{ p.location }}</p>
           </div>
           <div class="text-sm text-forest-900/70 md:col-span-3">{{ p.scope }}</div>
           <div class="text-sm font-medium text-forest-900/80 md:col-span-2">{{ p.value }}</div>
@@ -151,7 +151,7 @@ const accentTint = (hex, alpha) => `${hex}${alpha}`
           </div>
         </div>
       </div>
-      <p class="mt-4 text-xs text-forest-900/45">Selected, illustrative engagements. Full references available on request.</p>
+      <p class="mt-4 text-xs text-forest-900/70">Selected, illustrative engagements. Full references available on request.</p>
     </section>
 
     <!-- TEAM -->
@@ -182,6 +182,7 @@ const accentTint = (hex, alpha) => `${hex}${alpha}`
         <div class="lg:col-span-7">
           <EnquiryForm
             :accent="sub.accent"
+            :accent-ink="sub.accentInk"
             cta="Submit enquiry"
             type="rfp"
             :entity="sub.slug"
@@ -207,7 +208,7 @@ const accentTint = (hex, alpha) => `${hex}${alpha}`
                 <span class="h-2 w-2 rounded-full" :style="{ background: o.accent }" />
                 <span class="truncate text-sm font-semibold text-paper">{{ o.short }}</span>
               </span>
-              <span class="mt-1 block truncate text-xs text-paper/45">{{ o.arm }}</span>
+              <span class="mt-1 block truncate text-xs text-paper/60">{{ o.arm }}</span>
             </span>
             <Icon name="lucide:arrow-up-right" class="h-4 w-4 shrink-0 text-paper/30 transition group-hover:text-gold-300" />
           </NuxtLink>

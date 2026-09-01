@@ -25,14 +25,14 @@ const accent = computed(() => {
       <div class="absolute left-5 top-5">
         <span class="pill !border-paper/20 !bg-white/10 !text-paper backdrop-blur">{{ article.category }}</span>
       </div>
-      <KyulMark class="absolute -bottom-6 -right-5 h-28 w-28 opacity-[0.10]" />
+      <KyulMark aria-hidden="true" class="absolute -bottom-6 -right-5 h-28 w-28 opacity-[0.10]" />
       <div class="absolute bottom-5 left-5 right-16">
         <p class="font-display text-lg leading-snug text-paper/95 line-clamp-2">{{ article.title }}</p>
       </div>
     </div>
 
     <div class="flex flex-1 flex-col p-6">
-      <div class="flex items-center gap-3 text-xs text-forest-900/50">
+      <div class="flex items-center gap-3 text-xs text-forest-900/70">
         <span>{{ formatDate(article.date) }}</span>
         <span class="h-1 w-1 rounded-full bg-forest-900/25" />
         <span>{{ article.readingTime }} min read</span>

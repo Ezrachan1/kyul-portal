@@ -92,9 +92,11 @@ export default defineNuxtConfig({
       // Dev server persists to disk (defaults to memory otherwise).
       db: { driver: 'fs', base: '.data/db' },
     },
+    // NOTE: /sitemap.xml must NOT be prerendered — it reads the live news store
+    // (KV in production) so CMS-published articles appear without a rebuild.
     prerender: {
       crawlLinks: false,
-      routes: ['/sitemap.xml'],
+      routes: [],
     },
   },
 })

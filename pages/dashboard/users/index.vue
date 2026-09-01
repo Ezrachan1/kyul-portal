@@ -121,22 +121,22 @@ const roleStyle = {
       <form class="space-y-4" @submit.prevent="save">
         <div>
           <label class="mb-1.5 block text-sm font-medium text-forest-900">Full name</label>
-          <input v-model="form.name" type="text" class="w-full rounded-xl border border-ink/12 bg-sand-50/60 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forest-600" />
+          <input v-model="form.name" type="text" class="w-full rounded-xl border border-ink/[0.12] bg-sand-50/60 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forest-600" />
         </div>
         <div>
           <label class="mb-1.5 block text-sm font-medium text-forest-900">Email</label>
-          <input v-model="form.email" type="email" :disabled="!!editingId" class="w-full rounded-xl border border-ink/12 bg-sand-50/60 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forest-600 disabled:opacity-60" />
+          <input v-model="form.email" type="email" :disabled="!!editingId" class="w-full rounded-xl border border-ink/[0.12] bg-sand-50/60 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forest-600 disabled:opacity-60" />
         </div>
         <div>
           <label class="mb-1.5 block text-sm font-medium text-forest-900">Role</label>
-          <select v-model="form.role" class="w-full rounded-xl border border-ink/12 bg-sand-50/60 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forest-600">
+          <select v-model="form.role" class="w-full rounded-xl border border-ink/[0.12] bg-sand-50/60 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forest-600">
             <option v-for="r in availableRoles" :key="r.value" :value="r.value">{{ r.label }}</option>
           </select>
           <p class="mt-1.5 text-xs text-forest-900/50">{{ ROLES.find((r) => r.value === form.role)?.desc || 'Full system access.' }}</p>
         </div>
         <div>
           <label class="mb-1.5 block text-sm font-medium text-forest-900">{{ editingId ? 'New password (optional)' : 'Password' }}</label>
-          <input v-model="form.password" type="password" :placeholder="editingId ? 'Leave blank to keep current' : 'At least 6 characters'" class="w-full rounded-xl border border-ink/12 bg-sand-50/60 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forest-600" />
+          <input v-model="form.password" type="password" :placeholder="editingId ? 'Leave blank to keep current' : 'At least 6 characters'" class="w-full rounded-xl border border-ink/[0.12] bg-sand-50/60 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forest-600" />
         </div>
         <label v-if="editingId" class="flex items-center gap-3 text-sm text-forest-900/80"><input v-model="form.active" type="checkbox" class="h-4 w-4 rounded border-ink/30 text-forest-700 focus:ring-forest-600" /> Account active</label>
         <p v-if="error" class="text-sm text-red-600">{{ error }}</p>

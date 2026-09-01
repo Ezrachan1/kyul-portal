@@ -71,7 +71,7 @@ const reqStatusStyle = {
         <p class="mt-1 text-sm text-forest-900/55">Share a code with verified investors to unlock the data room.</p>
 
         <div class="mt-4 flex gap-2">
-          <input v-model="newLabel" type="text" placeholder="Label (e.g. DFI round, Jane Doe)" class="min-w-0 flex-1 rounded-xl border border-ink/12 bg-sand-50/60 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forest-600" @keyup.enter="createCode" />
+          <input v-model="newLabel" type="text" placeholder="Label (e.g. DFI round, Jane Doe)" class="min-w-0 flex-1 rounded-xl border border-ink/[0.12] bg-sand-50/60 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forest-600" @keyup.enter="createCode" />
           <button class="btn-primary !py-2.5 shrink-0" :disabled="creating" @click="createCode">
             <Icon :name="creating ? 'lucide:loader-circle' : 'lucide:plus'" class="h-4 w-4" :class="creating && 'animate-spin'" /> Generate
           </button>

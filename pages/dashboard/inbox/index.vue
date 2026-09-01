@@ -74,7 +74,7 @@ async function remove(row) {
       <button
         v-for="t in types" :key="t.key"
         class="rounded-full border px-3.5 py-1.5 text-sm font-medium transition"
-        :class="typeFilter === t.key ? 'border-forest-950 bg-forest-950 text-paper' : 'border-ink/12 bg-white text-forest-900/70 hover:border-forest-900/40'"
+        :class="typeFilter === t.key ? 'border-forest-950 bg-forest-950 text-paper' : 'border-ink/[0.12] bg-white text-forest-900/70 hover:border-forest-900/40'"
         @click="typeFilter = t.key"
       >{{ t.label }}</button>
     </div>
@@ -121,7 +121,7 @@ async function remove(row) {
             </div>
             <div class="flex items-center gap-2">
               <div class="relative">
-                <select :value="selected.status" class="appearance-none rounded-full border border-ink/12 bg-white py-1.5 pl-3 pr-8 text-xs font-medium capitalize outline-none focus:ring-2 focus:ring-forest-600" @change="setStatus(selected, $event.target.value)">
+                <select :value="selected.status" class="appearance-none rounded-full border border-ink/[0.12] bg-white py-1.5 pl-3 pr-8 text-xs font-medium capitalize outline-none focus:ring-2 focus:ring-forest-600" @change="setStatus(selected, $event.target.value)">
                   <option value="new">New</option>
                   <option value="read">Read</option>
                   <option value="in-progress">In progress</option>
@@ -129,7 +129,7 @@ async function remove(row) {
                 </select>
                 <Icon name="lucide:chevron-down" class="pointer-events-none absolute right-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-forest-900/40" />
               </div>
-              <button class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-ink/12 text-forest-900/45 transition hover:border-red-200 hover:bg-red-50 hover:text-red-500" aria-label="Delete" @click="remove(selected)"><Icon name="lucide:trash-2" class="h-4 w-4" /></button>
+              <button class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-ink/[0.12] text-forest-900/45 transition hover:border-red-200 hover:bg-red-50 hover:text-red-500" aria-label="Delete" @click="remove(selected)"><Icon name="lucide:trash-2" class="h-4 w-4" /></button>
             </div>
           </div>
 

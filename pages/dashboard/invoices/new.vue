@@ -72,7 +72,7 @@ async function save() {
 }
 
 const inputCls =
-  'w-full rounded-xl border border-ink/12 bg-white px-3.5 py-2.5 text-sm outline-none transition focus:border-transparent focus:ring-2 focus:ring-forest-600'
+  'w-full rounded-xl border border-ink/[0.12] bg-white px-3.5 py-2.5 text-sm outline-none transition focus:border-transparent focus:ring-2 focus:ring-forest-600'
 </script>
 
 <template>

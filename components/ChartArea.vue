@@ -98,7 +98,7 @@ const last = computed(() => pts.value[pts.value.length - 1])
     <!-- markers -->
     <g v-for="(p, i) in pts" :key="`p${i}`">
       <circle :cx="p.x" :cy="p.y" r="3" :fill="color" />
-      <text :x="p.x" :y="H - 12" text-anchor="middle" class="fill-forest-900/50" style="font-size: 12px">{{ p.label }}</text>
+      <text :x="p.x" :y="H - 12" text-anchor="middle" class="fill-forest-900/50" style="font-size: 12px">{{ p.label ?? p.year }}</text>
     </g>
 
     <!-- last value callout -->

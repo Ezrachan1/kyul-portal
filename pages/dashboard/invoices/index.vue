@@ -53,7 +53,7 @@ const countFor = (s) => (s === 'all' ? invoices.value.length : invoices.value.fi
         <button
           v-for="t in tabs" :key="t"
           class="inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-sm font-medium capitalize transition"
-          :class="status === t ? 'border-forest-950 bg-forest-950 text-paper' : 'border-ink/12 bg-white text-forest-900/70 hover:border-forest-900/40'"
+          :class="status === t ? 'border-forest-950 bg-forest-950 text-paper' : 'border-ink/[0.12] bg-white text-forest-900/70 hover:border-forest-900/40'"
           @click="status = t"
         >
           {{ t }}
@@ -63,7 +63,7 @@ const countFor = (s) => (s === 'all' ? invoices.value.length : invoices.value.fi
       <div class="relative lg:w-72">
         <Icon name="lucide:search" class="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-forest-900/35" />
         <input v-model="search" type="text" placeholder="Search client or number…"
-          class="w-full rounded-full border border-ink/12 bg-white py-2.5 pl-10 pr-4 text-sm outline-none transition focus:border-transparent focus:ring-2 focus:ring-forest-600" />
+          class="w-full rounded-full border border-ink/[0.12] bg-white py-2.5 pl-10 pr-4 text-sm outline-none transition focus:border-transparent focus:ring-2 focus:ring-forest-600" />
       </div>
     </div>
 
