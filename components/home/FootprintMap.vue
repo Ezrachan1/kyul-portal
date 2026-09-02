@@ -5,37 +5,34 @@
 const MAP_W = 400
 const MAP_H = 480
 
-// Hand-authored simplified Kenya outline, projected from rough lat/lon anchors
-// (x = (lon − 33.5) × 47, y = (5.4 − lat) × 45.5): Ilemi apex, Ethiopia border,
-// Mandera tip, the long Somalia diagonal, coast past Lamu/Mombasa, the Tanzania
-// line with the Kilimanjaro notch, the Lake Victoria bite and the Uganda border.
+// Kenya's actual boundary — Natural Earth 50m (world-atlas), mainland ring
+// projected plate-carrée into this 400x480 viewBox (Kenya straddles the
+// equator, so the projection is effectively undistorted) and lightly
+// simplified to ~200 points. Regenerate via scratch script if ever needed.
 const KENYA =
-  'M23 54 L85 18 L120 43 C160 62 190 78 211 82 L261 86 C300 80 350 70 395 65 ' +
-  'L352 284 L378 321 C362 335 352 342 348 349 C332 366 318 378 310 391 ' +
-  'C302 404 296 417 290 430 L268 458 L196 400 L193 382 L21 291 ' +
-  'C30 288 42 275 52 264 L59 250 C50 246 32 243 24 241 L23 237 L28 225 ' +
-  'C38 210 44 202 48 195 L45 132 Z'
+  'M23 302.3L22.8 294.6L23.9 275.4L23.8 258.5L24.7 250L28.9 244.7L30.8 240.8L32.2 235.3L34.5 230.9L39.4 227.3L40.2 225.3L45.5 219.3L48.7 211.5L51.1 208.9L54 206.4L56 205.2L59.5 203.9L62.3 203.1L62.9 201.2L62.1 196.5L63.2 194.8L65 191.7L67.1 188.7L69 186.8L70.1 184.8L70.6 181.4L70.7 179.1L70.6 175.1L70.1 166.2L67.9 158.8L66.4 150.5L67.4 147.7L65.6 142.8L63.4 141.4L61.6 136.9L60.2 132.7L53.5 128L50.4 119.3L47.1 117.3L45.3 108.7L45 106.3L46.9 97.7L46.6 95.7L44.7 93.9L39.1 92.1L34.6 88.5L35.4 86L33.2 85.1L26.1 70.4L35.1 61.6L44 52.7L55.7 41.4L66.3 31L75.4 22L83.5 14L83.4 17.5L84.5 18.8L86.1 19.6L88.5 18.7L90.4 17.5L92.5 17.2L104.8 20.5L106.7 23.5L106.7 26.6L107.2 28.9L106.2 31.1L105.2 38L105.6 44.4L109.2 49L112.4 52.7L115 57.8L117.1 59.5L119.6 60.2L128.1 60.5L140.6 60.8L152.5 61.1L156.2 61.9L167.2 68.9L177.3 75.3L185.9 80.8L194.2 86.2L202.4 91.4L208.6 95.8L214.9 97.1L224.8 97.8L231.8 98L238.2 99.8L247.8 101.5L254.8 102.4L259.1 103.3L271.1 104.4L273 103.8L278.3 98.9L284.2 91.1L286.6 86.8L294.1 82.5L307.5 76.6L317 72.3L327.5 68.1L332.3 71.8L338.9 77.6L341.7 80.6L344.1 81.9L347.8 82.7L352.1 82.7L354.5 82.6L359.3 81.8L370.7 81.1L377.2 81.2L371.8 89L365.2 98.4L353.1 115.6L344 124.7L336.9 131.6L336.5 140.4L336.5 159.2L336.6 196.5L336.8 234L336.9 271.4L336.9 290.1L336.9 296.4L343 304.3L349.1 311.9L356.9 322.1L361.1 327.5L361.9 329.4L361.5 333L355.2 340.6L349.9 344.1L342.7 345.7L340.6 345.4L337.7 344.3L336.6 346.2L335.8 349L334.2 348.4L333.7 352.7L334.5 355.1L333.4 358.5L329.9 361.4L329.6 363.9L322.1 370.5L311.5 371.2L305.9 374.5L303.4 377.1L301.5 382.9L302.3 391.8L299.2 398.6L298.8 402L293.2 406.4L290.8 410.5L289 414.7L287.4 416.5L285.5 425.8L282.9 431.4L282.3 433.3L281.7 435L279.7 438.3L278.5 440.6L277.5 442.1L270.9 456.5L265.8 463.1L262 462.3L259.3 464.8L257.7 465.4L254.3 463L247.5 458.1L240.7 453.1L233.9 448.3L227 443.3L220.3 438.4L213.4 433.6L206.6 428.6L199.8 423.7L195.8 420.8L194.1 419.2L192.6 415.8L190.1 413.8L188 413.6L187.4 411.4L188.2 409L190.7 404.5L190.9 401.8L190.4 398.8L189.6 394L184.5 390.4L175.1 385.1L165.5 379.9L156.1 374.5L146.6 369.3L137.2 364L127.6 358.7L118.2 353.4L108.8 348.2L99.3 342.9L89.9 337.6L80.3 332.3L70.9 327L61.5 321.8L52 316.4L42.6 311.2L33 305.9L29.5 303.9L26.3 302.3Z'
 
-// Lake Turkana — the long desert lake tilting south-south-east from the border.
+// Lake Turkana — stylized lens anchored to the lake's real projected extents.
 const LAKE_TURKANA =
-  'M120 39 C130 60 140 100 146 137 C140 142 134 141 130 134 C120 105 114 68 112 45 C114 40 117 38 120 39 Z'
+  'M116.9 60.2C127 74 138 118 142.6 149.9C139 153 134.5 152 131.5 147C119 128 110.5 86 111.5 66C112.5 61.5 114.5 59.3 116.9 60.2Z'
 
 // Positions share the outline's projection — relative geography, not survey data.
 // tip: which way the tooltip hangs so it never leaves the viewport at 375px.
+// Positions are county seats projected with the same transform as the outline.
 // Notes only restate the legend (active projects / regional presence) plus the
 // region name — per-county service claims live in the admin-managed portfolio.
 const locations = [
-  { id: 'turkana', name: 'Turkana', x: 99, y: 104, note: 'Regional presence', regional: true, tip: 'start' },
-  { id: 'west-pokot', name: 'West Pokot', x: 76, y: 189, note: 'Active projects · Rift Valley', tip: 'start' },
-  { id: 'elgeyo-marakwet', name: 'Elgeyo-Marakwet', x: 97, y: 213, note: 'Active projects · Rift Valley', tip: 'center' },
-  { id: 'bungoma', name: 'Bungoma', x: 50, y: 220, note: 'Active projects · Western', tip: 'start' },
-  { id: 'uasin-gishu', name: 'Uasin Gishu', x: 83, y: 224, note: 'Group HQ · County infrastructure', hq: true, tip: 'start' },
-  { id: 'kakamega', name: 'Kakamega', x: 59, y: 233, note: 'Active projects · Western', tip: 'start' },
-  { id: 'nandi', name: 'Nandi', x: 75, y: 240, note: 'Active projects · Rift Valley', tip: 'start' },
-  { id: 'kisumu', name: 'Kisumu', x: 57, y: 252, note: 'Active projects · Nyanza', tip: 'start' },
-  { id: 'nakuru', name: 'Nakuru', x: 121, y: 259, note: 'Active projects · Rift Valley', tip: 'center' },
-  { id: 'machakos', name: 'Machakos', x: 177, y: 315, note: 'Regional presence', regional: true, tip: 'center' },
-  { id: 'mombasa', name: 'Mombasa', x: 290, y: 430, note: 'Regional presence', regional: true, tip: 'end' },
+  { id: 'turkana', name: 'Turkana', x: 98.3, y: 119.3, note: 'Regional presence', regional: true, tip: 'start' },
+  { id: 'west-pokot', name: 'West Pokot', x: 77, y: 202.7, note: 'Active projects · Rift Valley', tip: 'start' },
+  { id: 'elgeyo-marakwet', name: 'Elgeyo-Marakwet', x: 94.3, y: 228, note: 'Active projects · Rift Valley', tip: 'center' },
+  { id: 'bungoma', name: 'Bungoma', x: 52.1, y: 232.5, note: 'Active projects · Western', tip: 'start' },
+  { id: 'uasin-gishu', name: 'Uasin Gishu', x: 83.6, y: 234.7, note: 'Group HQ · County infrastructure', hq: true, tip: 'start' },
+  { id: 'kakamega', name: 'Kakamega', x: 60.5, y: 245.3, note: 'Active projects · Western', tip: 'start' },
+  { id: 'nandi', name: 'Nandi', x: 76.1, y: 248.9, note: 'Active projects · Rift Valley', tip: 'start' },
+  { id: 'kisumu', name: 'Kisumu', x: 61, y: 261.7, note: 'Active projects · Nyanza', tip: 'start' },
+  { id: 'nakuru', name: 'Nakuru', x: 119.1, y: 271.1, note: 'Active projects · Rift Valley', tip: 'center' },
+  { id: 'machakos', name: 'Machakos', x: 171.9, y: 325.2, note: 'Regional presence', regional: true, tip: 'center' },
+  { id: 'mombasa', name: 'Mombasa', x: 278.5, y: 437.5, note: 'Regional presence', regional: true, tip: 'end' },
 ]
 
 const root = ref(null)
