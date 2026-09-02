@@ -15,23 +15,20 @@ const blank = () => ({ entity: 'engineering', name: '', client: '', location: ''
 const form = reactive(blank())
 
 // Project photo — shown on /projects cards and the homepage featured project.
-const { upload } = useUpload()
+const { uploadImage } = useUpload()
 const fileEl = ref(null)
 const uploading = ref(false)
 async function onPhoto(e) {
   const file = e.target.files?.[0]
   e.target.value = ''
   if (!file) return
-  if (!/^image\//.test(file.type)) {
-    error.value = 'Please choose an image file.'
-    return
-  }
   uploading.value = true
   error.value = ''
   try {
-    form.image = await upload(file)
+    // Resized and re-encoded in the browser, so phone photos upload quickly.
+    form.image = await uploadImage(file, { maxEdge: 1920 })
   } catch (err) {
-    error.value = err?.message || 'Upload failed.'
+    error.value = err?.data?.statusMessage || err?.message || 'Upload failed.'
   } finally {
     uploading.value = false
   }

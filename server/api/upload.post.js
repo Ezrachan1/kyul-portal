@@ -28,9 +28,19 @@ export default defineEventHandler(async (event) => {
 
   let ext = (body.name && body.name.includes('.') ? '.' + body.name.split('.').pop() : '').toLowerCase()
   if (!ext && mime) ext = MIME_EXT[mime] || ''
-  if (!OK.includes(ext)) throw createError({ statusCode: 400, statusMessage: 'Unsupported file type.' })
+  if (!OK.includes(ext)) {
+    throw createError({
+      statusCode: 400,
+      statusMessage:
+        'Unsupported file type. Images must be JPG, PNG, WebP or GIF (iPhone HEIC photos need converting first); documents must be PDF, XLSX, DOCX or CSV.',
+    })
+  }
 
-  const bytes = Uint8Array.from(atob(base64), (c) => c.charCodeAt(0))
+  // Plain loop, not Uint8Array.from(..., cb): the callback form runs one call
+  // per byte, which overruns the edge runtime's CPU budget on large files.
+  const bin = atob(base64)
+  const bytes = new Uint8Array(bin.length)
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i)
   if (!bytes.length) throw createError({ statusCode: 400, statusMessage: 'Empty file.' })
   if (bytes.length > 25 * 1024 * 1024) throw createError({ statusCode: 413, statusMessage: 'File too large (max 25MB).' })
 

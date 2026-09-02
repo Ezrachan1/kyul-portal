@@ -40,14 +40,14 @@ function openEdit(m) {
   error.value = ''
   modal.value = true
 }
-const { upload } = useUpload()
+const { uploadImage } = useUpload()
 async function onPhoto(e) {
   const file = e.target.files?.[0]
   if (!file) return
   uploading.value = true
   error.value = ''
   try {
-    form.photo = await upload(file)
+    form.photo = await uploadImage(file, { maxEdge: 900 })
   } catch (err) {
     error.value = err?.data?.statusMessage || err?.message || 'Upload failed.'
   } finally {
