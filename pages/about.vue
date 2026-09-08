@@ -1,6 +1,7 @@
 <script setup>
-import { group } from '~/data/group'
 import { subsidiaries } from '~/data/subsidiaries'
+
+const { c, group } = useContent()
 
 useSeoMeta({
   title: 'About the Group',
@@ -18,9 +19,10 @@ const { data: leadership } = await useFetch('/api/team?entity=group', { default:
   <div>
     <PageHero
       size="lg"
-      eyebrow="About the Group"
-      title="The apex of the Kyul corporate family."
+      :eyebrow="c('about.hero.eyebrow')"
+      :title="c('about.hero.title')"
       :lede="group.intro"
+      :image="c('about.hero.image')"
       :crumbs="[{ label: 'Home', to: '/' }, { label: 'The Group' }]"
     >
       <template #actions>
@@ -35,8 +37,7 @@ const { data: leadership } = await useFetch('/api/team?entity=group', { default:
         <div class="lg:col-span-7">
           <p v-reveal class="font-display text-2xl leading-snug text-forest-950 sm:text-[1.7rem]">{{ group.narrative }}</p>
           <p v-reveal="120" class="mt-6 leading-relaxed text-forest-900/70">
-            The Group operates across infrastructure, agribusiness, mining, manufacturing and real estate, a deliberate
-            diversification that makes Kyul resilient and lets each company reinforce the others.
+            {{ c('about.narrative.extra') }}
           </p>
         </div>
         <div class="lg:col-span-5">
@@ -54,7 +55,7 @@ const { data: leadership } = await useFetch('/api/team?entity=group', { default:
     <!-- Values -->
     <section class="border-y border-ink/[0.06] bg-sand-50/70 py-20 md:py-24">
       <div class="shell">
-        <SectionHeading eyebrow="What we stand for" title="Five values, lived on every project." />
+        <SectionHeading :eyebrow="c('about.values.eyebrow')" :title="c('about.values.title')" />
         <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           <div v-for="(v, i) in group.values" :key="v.name" v-reveal="(i % 3) * 70" class="rounded-2xl border border-ink/[0.07] bg-white p-6 shadow-soft">
             <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-forest-50 text-forest-700"><Icon :name="v.icon" class="h-5 w-5" /></span>
@@ -67,7 +68,7 @@ const { data: leadership } = await useFetch('/api/team?entity=group', { default:
 
     <!-- Governance + structure -->
     <section id="governance" class="shell scroll-mt-24 py-20 md:py-24">
-      <SectionHeading eyebrow="Governance & structure" title="Clean ownership, by design." :lede="group.governance.lede" />
+      <SectionHeading :eyebrow="c('about.governance.eyebrow')" :title="c('about.governance.title')" :lede="group.governance.lede" />
 
       <!-- structure diagram -->
       <div v-reveal class="mt-14 rounded-2xl border border-ink/[0.07] bg-white p-8 shadow-soft md:p-12">
@@ -105,17 +106,17 @@ const { data: leadership } = await useFetch('/api/team?entity=group', { default:
     <!-- Leadership -->
     <section id="leadership" class="scroll-mt-24 border-y border-ink/[0.06] bg-sand-50/70 py-20 md:py-24">
       <div class="shell">
-        <SectionHeading eyebrow="Leadership" title="The Board & Group executive." lede="Kyul Group Inc. is governed by its Board of Directors, with each subsidiary led by its own managing director and technical board." />
+        <SectionHeading :eyebrow="c('about.leadership.eyebrow')" :title="c('about.leadership.title')" :lede="c('about.leadership.lede')" />
         <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           <TeamCard v-for="(m, i) in leadership" :key="m.id || i" :person="m" :index="i" accent="#2d5d4b" />
         </div>
-        <p class="mt-6 text-xs text-forest-900/70">Named board appointments are confirmed in the Group’s governance documentation, available to investors on request.</p>
+        <p class="mt-6 text-xs text-forest-900/70">{{ c('about.leadership.note') }}</p>
       </div>
     </section>
 
     <!-- History -->
     <section class="shell py-20 md:py-24">
-      <SectionHeading eyebrow="Our journey" title="From a single practice to an integrated Group." />
+      <SectionHeading :eyebrow="c('about.history.eyebrow')" :title="c('about.history.title')" />
       <div class="mt-14 grid gap-x-10 gap-y-8 md:grid-cols-2">
         <div v-for="(h, i) in group.history" :key="h.year" v-reveal="(i % 2) * 80" class="flex gap-5">
           <div class="flex flex-col items-center">
@@ -133,7 +134,7 @@ const { data: leadership } = await useFetch('/api/team?entity=group', { default:
     <!-- Advantages -->
     <section class="border-t border-ink/[0.06] bg-forest-950 py-20 text-paper md:py-24">
       <div class="shell">
-        <SectionHeading tone="paper" eyebrow="Why Kyul" title="What sets the Group apart." />
+        <SectionHeading tone="paper" :eyebrow="c('about.why.eyebrow')" :title="c('about.why.title')" />
         <div class="mt-12 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
           <div v-for="(a, i) in group.advantages" :key="a.title" v-reveal="(i % 3) * 70" class="border-l border-paper/15 pl-5">
             <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-white/5 text-gold-300"><Icon :name="a.icon" class="h-5 w-5" /></span>
@@ -145,8 +146,8 @@ const { data: leadership } = await useFetch('/api/team?entity=group', { default:
     </section>
 
     <CtaBand
-      title="Build with a Group that thinks long term."
-      text="Partner with us, invest with us, or join the team shaping Eastern Africa’s next decade."
+      :title="c('about.cta.title')"
+      :text="c('about.cta.text')"
       :primary="{ label: 'Contact us', to: '/contact' }"
       :secondary="{ label: 'Sustainability', to: '/esg' }"
     />

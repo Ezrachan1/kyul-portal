@@ -1,14 +1,13 @@
 <script setup>
 // "Concept to Cashflow" — the Group's signature journey (01 Originates → 06 Governs).
 // tone='ink' sits on light canvases (default); tone='paper' on bg-forest-950 sections.
-import { group } from '~/data/group'
-import { subsidiaryBySlug } from '~/data/subsidiaries'
+const { group, subsidiaryBySlug } = useContent()
 
 const props = defineProps({
   tone: { type: String, default: 'ink' }, // 'ink' | 'paper'
 })
 
-const steps = group.valueChain.steps
+const steps = computed(() => group.value.valueChain.steps)
 const dark = computed(() => props.tone === 'paper')
 
 // Measured intrinsic PNG dimensions for the clean (-t) logos shown in the stage
@@ -21,10 +20,10 @@ const LOGO_DIMS = {
 }
 
 const active = ref(0)
-const step = computed(() => steps[active.value])
+const step = computed(() => steps.value[active.value])
 const sub = computed(() => subsidiaryBySlug(step.value.slug))
 // progress rule fills from node 01's centre to the active node's centre
-const fill = computed(() => (active.value / (steps.length - 1)) * 100)
+const fill = computed(() => (active.value / (steps.value.length - 1)) * 100)
 
 const root = ref(null)
 const nodeEls = ref([])
@@ -43,7 +42,7 @@ function tick() {
   if (reduced || paused.value || userPaused.value || !inView.value) return
   // the rotating stage only exists in the md+ layout; don't churn it on mobile
   if (!window.matchMedia('(min-width: 768px)').matches) return
-  active.value = (active.value + 1) % steps.length
+  active.value = (active.value + 1) % steps.value.length
 }
 function restart() {
   if (!timer) return
@@ -59,7 +58,7 @@ function jump(i) {
   nodeEls.value[i]?.focus()
 }
 function move(delta) {
-  jump((active.value + delta + steps.length) % steps.length)
+  jump((active.value + delta + steps.value.length) % steps.value.length)
 }
 
 onMounted(() => {

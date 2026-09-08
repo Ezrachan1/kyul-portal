@@ -7,11 +7,12 @@
 <script setup>
 import { site } from '~/data/site'
 
+const { c } = useContent()
 const route = useRoute()
 // Single source of truth for the public URL: NUXT_PUBLIC_SITE_URL (falls back to data/site.js).
 const base = (useRuntimeConfig().public.siteUrl || site.url).replace(/\/$/, '')
 const canonical = computed(() => base + route.path)
-const ogImage = `${base}/og-image.png`
+const ogImage = computed(() => base + c('brand.ogImage'))
 
 // Canonical + absolute OG/Twitter URLs so search and social line up with the live domain.
 useHead({

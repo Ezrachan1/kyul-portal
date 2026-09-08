@@ -3,6 +3,7 @@ import { jobs } from '~/data/careers'
 import { subsidiaries } from '~/data/subsidiaries'
 
 const settings = useSettings()
+const { c } = useContent()
 
 useSeoMeta({
   title: 'Careers',
@@ -18,20 +19,20 @@ const active = ref('all')
 const sorted = [...jobs].sort((a, b) => new Date(b.posted) - new Date(a.posted))
 const filtered = computed(() => (active.value === 'all' ? sorted : sorted.filter((j) => j.entity === active.value)))
 
-const perks = [
-  { icon: 'lucide:trending-up', title: 'Real responsibility, early', text: 'Work on live projects with measurable impact from day one.' },
-  { icon: 'lucide:graduation-cap', title: 'Professional growth', text: 'Mentorship from registered engineers and a path to professional registration.' },
-  { icon: 'lucide:layers', title: 'Cross-Group exposure', text: 'Move and learn across six companies and five sectors.' },
-  { icon: 'lucide:heart-handshake', title: 'Purpose that matters', text: 'Build infrastructure and create jobs across Eastern Africa.' },
-]
+// Perk copy lives in the content registry (careers.perks.<i>.title / .text); icons stay here
+const PERK_ICONS = ['lucide:trending-up', 'lucide:graduation-cap', 'lucide:layers', 'lucide:heart-handshake']
+const perks = computed(() =>
+  PERK_ICONS.map((icon, i) => ({ icon, title: c('careers.perks.' + i + '.title'), text: c('careers.perks.' + i + '.text') })),
+)
 </script>
 
 <template>
   <div>
     <PageHero
-      eyebrow="Careers"
-      title="Build your career with Kyul."
-      lede="We’re assembling the team that will deliver Eastern Africa’s next decade of infrastructure and investment. Find your place across the Group."
+      :eyebrow="c('careers.hero.eyebrow')"
+      :title="c('careers.hero.title')"
+      :lede="c('careers.hero.lede')"
+      :image="c('careers.hero.image')"
       :crumbs="[{ label: 'Home', to: '/' }, { label: 'Careers' }]"
     />
 
@@ -74,8 +75,8 @@ const perks = [
     <section class="shell py-16 md:py-20">
       <div v-reveal class="flex flex-col items-start justify-between gap-6 rounded-2xl border border-ink/[0.07] bg-white p-8 shadow-soft md:flex-row md:items-center md:p-12">
         <div>
-          <h2 class="h-display text-2xl text-forest-950">Don’t see your role?</h2>
-          <p class="mt-2 max-w-xl text-forest-900/65">We’re always glad to hear from exceptional people. Send us your CV and tell us where you’d add value.</p>
+          <h2 class="h-display text-2xl text-forest-950">{{ c('careers.speculative.title') }}</h2>
+          <p class="mt-2 max-w-xl text-forest-900/65">{{ c('careers.speculative.text') }}</p>
         </div>
         <a :href="`mailto:${settings.contact.careersEmail}`" class="btn-primary shrink-0">Send your CV<Icon name="lucide:arrow-right" class="h-4 w-4" /></a>
       </div>

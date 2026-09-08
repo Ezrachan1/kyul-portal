@@ -1,6 +1,8 @@
 <script setup>
 import { categories } from '~/data/news'
 
+const { c } = useContent()
+
 useSeoMeta({
   title: 'News & Insights',
   description: 'Project updates, press releases and thought leadership from across Kyul Group and its six companies.',
@@ -47,9 +49,10 @@ const panelStyle = computed(() => {
 <template>
   <div>
     <PageHero
-      eyebrow="News & insights"
-      title="From across the Group."
-      lede="Project milestones, press releases and perspectives on building and investing in Eastern Africa."
+      :eyebrow="c('news.hero.eyebrow')"
+      :title="c('news.hero.title')"
+      :lede="c('news.hero.lede')"
+      :image="c('news.hero.image')"
       :crumbs="[{ label: 'Home', to: '/' }, { label: 'News & Insights' }]"
     />
 
@@ -61,13 +64,13 @@ const panelStyle = computed(() => {
         aria-label="Filter news by category"
       >
         <button
-          v-for="c in categories" :key="c"
+          v-for="cat in categories" :key="cat"
           type="button"
           class="chip min-h-10 shrink-0"
-          :class="active === c && 'chip-active'"
-          :aria-pressed="active === c"
-          @click="active = c"
-        >{{ c }}</button>
+          :class="active === cat && 'chip-active'"
+          :aria-pressed="active === cat"
+          @click="active = cat"
+        >{{ cat }}</button>
       </div>
       <p class="sr-only" aria-live="polite">{{ list.length }} articles in {{ active === 'All' ? 'all categories' : active }}</p>
 
@@ -158,9 +161,9 @@ const panelStyle = computed(() => {
     </section>
 
     <CtaBand
-      eyebrow="Stay informed"
-      title="Follow the Group’s journey."
-      text="From county infrastructure to investment milestones, keep up with what Kyul is building."
+      :eyebrow="c('news.cta.eyebrow')"
+      :title="c('news.cta.title')"
+      :text="c('news.cta.text')"
       :primary="{ label: 'Contact the Group', to: '/contact' }"
       :secondary="{ label: 'Investor relations', to: '/investors' }"
     />

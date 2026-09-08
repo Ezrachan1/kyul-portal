@@ -3,6 +3,7 @@ import { site } from '~/data/site'
 import { subsidiaryBySlug } from '~/data/subsidiaries'
 
 const settings = useSettings()
+const { c } = useContent()
 const year = new Date().getFullYear()
 
 // Companies listed in the value-chain order (the Group's signature sequence)
@@ -64,12 +65,11 @@ const social = computed(() => (settings.value?.social?.length ? settings.value.s
       <div class="pt-16 md:pt-20">
         <KyulWordmark tone="paper" sub />
         <p class="mt-9 max-w-3xl font-display text-3xl leading-[1.1] tracking-tightish text-paper sm:text-4xl lg:text-[2.85rem]">
-          Building Africa&rsquo;s Future.
-          <em class="font-medium text-gold-300">Together.</em>
+          {{ c('footer.tagline') }}
+          <em class="font-medium text-gold-300">{{ c('footer.taglineAccent') }}</em>
         </p>
         <p class="mt-5 max-w-xl text-[0.95rem] leading-relaxed text-paper/50">
-          An integrated group originating, designing, financing, building and operating bankable
-          projects across Eastern Africa.
+          {{ c('footer.description') }}
         </p>
       </div>
 

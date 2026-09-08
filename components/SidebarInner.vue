@@ -73,6 +73,14 @@ const isActive = (to) => (to === '/dashboard' ? route.path === to : route.path.s
           <Icon name="lucide:sliders-horizontal" class="h-[1.15rem] w-[1.15rem]" :class="isActive('/dashboard/system') ? 'text-gold-300' : 'text-paper/55 group-hover:text-paper'" />
           System & Modules
         </NuxtLink>
+        <NuxtLink
+          to="/dashboard/content"
+          class="group mb-1 flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition"
+          :class="isActive('/dashboard/content') ? 'bg-white/10 text-paper' : 'text-paper/65 hover:bg-white/[0.06] hover:text-paper'"
+        >
+          <Icon name="lucide:pen-line" class="h-[1.15rem] w-[1.15rem]" :class="isActive('/dashboard/content') ? 'text-gold-300' : 'text-paper/55 group-hover:text-paper'" />
+          Site Content
+        </NuxtLink>
       </template>
     </nav>
 

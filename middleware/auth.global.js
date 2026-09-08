@@ -2,6 +2,7 @@
 // so this runs on the client and checks the server session.
 const ROUTE_ROLES = [
   { prefix: '/dashboard/system', roles: ['super-admin'] },
+  { prefix: '/dashboard/content', roles: ['super-admin'] },
   { prefix: '/dashboard/users', roles: ['admin'] },
   { prefix: '/dashboard/settings', roles: ['admin'] },
   { prefix: '/dashboard/invoices', roles: ['admin', 'finance'] },

@@ -1,5 +1,4 @@
 <script setup>
-import { site } from '~/data/site'
 import { subsidiaries } from '~/data/subsidiaries'
 
 useSeoMeta({
@@ -8,6 +7,7 @@ useSeoMeta({
 })
 
 const settings = useSettings()
+const { c } = useContent()
 const channels = computed(() => [
   { icon: 'lucide:mail', label: 'General enquiries', value: settings.value.contact.email, href: `mailto:${settings.value.contact.email}` },
   { icon: 'lucide:trending-up', label: 'Investor relations', value: settings.value.contact.investorEmail, href: `mailto:${settings.value.contact.investorEmail}` },
@@ -19,9 +19,10 @@ const channels = computed(() => [
 <template>
   <div>
     <PageHero
-      eyebrow="Contact"
-      title="Let’s start a conversation."
-      lede="Whether you’re an investor, a partner, a client or a future colleague, reach the right part of the Group below."
+      :eyebrow="c('contact.hero.eyebrow')"
+      :title="c('contact.hero.title')"
+      :lede="c('contact.hero.lede')"
+      :image="c('contact.hero.image')"
       :crumbs="[{ label: 'Home', to: '/' }, { label: 'Contact' }]"
     />
 
@@ -59,7 +60,7 @@ const channels = computed(() => [
 
         <!-- form -->
         <div class="lg:col-span-7">
-          <SectionHeading eyebrow="Send a message" title="How can we help?" />
+          <SectionHeading :eyebrow="c('contact.form.eyebrow')" :title="c('contact.form.title')" />
           <div class="mt-7">
             <EnquiryForm source="Contact page" :subjects="['General enquiry', 'Investor relations', 'Partnership / Joint venture', 'Supplier / RFP', 'Media & press', 'Careers']" cta="Send message" />
           </div>
@@ -70,7 +71,7 @@ const channels = computed(() => [
     <!-- subsidiary directory -->
     <section class="border-t border-ink/[0.06] bg-sand-50/70 py-16 md:py-20">
       <div class="shell">
-        <SectionHeading eyebrow="Company directory" title="Reach a specific company." />
+        <SectionHeading :eyebrow="c('contact.directory.eyebrow')" :title="c('contact.directory.title')" />
         <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <NuxtLink
             v-for="s in subsidiaries" :key="s.slug" :to="`/subsidiaries/${s.slug}`"

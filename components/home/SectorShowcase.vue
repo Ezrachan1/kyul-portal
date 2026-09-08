@@ -2,13 +2,13 @@
 // Five high-growth sectors — vertical numbered index with an editorial detail
 // panel. Dark-canvas only: the parent supplies the bg-forest-950 section and
 // shell; this root is just a column of content.
-import { group } from '~/data/group'
+const { c, group } = useContent()
 
-const sectors = group.sectors
+const sectors = computed(() => group.value.sectors)
 const nn = (i) => String(i + 1).padStart(2, '0')
 
 const active = ref(0)
-const sector = computed(() => sectors[active.value])
+const sector = computed(() => sectors.value[active.value])
 
 const root = ref(null)
 const listWrap = ref(null)
@@ -35,7 +35,7 @@ const userPaused = ref(false) // explicit control — WCAG 2.2.2
 
 function tick() {
   if (reduced || paused.value || userPaused.value || !inView.value) return
-  active.value = (active.value + 1) % sectors.length
+  active.value = (active.value + 1) % sectors.value.length
 }
 function restart() {
   if (!timer) return
@@ -51,7 +51,7 @@ function jump(i) {
   rowEls.value[i]?.focus()
 }
 function move(delta) {
-  jump((active.value + delta + sectors.length) % sectors.length)
+  jump((active.value + delta + sectors.value.length) % sectors.value.length)
 }
 
 onMounted(() => {
@@ -77,8 +77,8 @@ onBeforeUnmount(() => {
     @focusin="paused = true" @focusout="paused = false"
   >
     <SectionHeading
-      eyebrow="Five high-growth sectors"
-      title="We invest and build across the sectors shaping Africa."
+      :eyebrow="c('home.sectors.eyebrow')"
+      :title="c('home.sectors.title')"
       tone="paper"
     />
 

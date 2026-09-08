@@ -1,12 +1,15 @@
 <script setup>
-import { group } from '~/data/group'
 import { subsidiaryBySlug } from '~/data/subsidiaries'
 
+const { group } = useContent()
+
 // Value-chain order is canonical (01 Originates … 06 Governs) — join accents via slug.
-const chain = group.valueChain.steps.map((step) => {
-  const sub = subsidiaryBySlug(step.slug)
-  return { ...step, short: sub?.short || step.entity, accent: sub?.accent || '#d9b962' }
-})
+const chain = computed(() =>
+  group.value.valueChain.steps.map((step) => {
+    const sub = subsidiaryBySlug(step.slug)
+    return { ...step, short: sub?.short || step.entity, accent: sub?.accent || '#d9b962' }
+  }),
+)
 
 const groupMenu = [
   { label: 'About', to: '/about', icon: 'lucide:landmark', text: 'Vision, history, leadership & governance' },

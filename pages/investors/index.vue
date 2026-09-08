@@ -1,6 +1,4 @@
 <script setup>
-import { investors } from '~/data/investors'
-import { group } from '~/data/group'
 import { subsidiaries } from '~/data/subsidiaries'
 import { site } from '~/data/site'
 
@@ -9,6 +7,9 @@ useSeoMeta({
   description:
     'Kyul Group is structured for institutional and diaspora investors: clean ownership, ring-fenced SPVs and audited reporting. Begin your due diligence here.',
 })
+
+// Site Content overrides (Group Portal) — group / investors are computed refs
+const { c, group, investors } = useContent()
 
 const bySlug = (s) => subsidiaries.find((x) => x.slug === s)
 const revenueMix = [
@@ -20,21 +21,26 @@ const revenueMix = [
   { label: 'Holdings', value: 4, color: bySlug('holdings').accent },
 ]
 
-const series = group.turnover
-const turnoverSeries = series.map((d) => ({ label: d.year, value: d.value }))
-const fy = series[series.length - 1]
-const prev = series[series.length - 2]
-const first = series[0]
-const yoy = Math.round(((fy.value - prev.value) / prev.value) * 100)
-const turnoverAlt = `Area chart: Group turnover in KSh millions, ${series.map((d) => `${d.year}: ${d.value}`).join(', ')}.`
+const series = computed(() => group.value.turnover)
+const turnoverSeries = computed(() => series.value.map((d) => ({ label: d.year, value: d.value })))
+const fy = computed(() => series.value[series.value.length - 1])
+const prev = computed(() => series.value[series.value.length - 2])
+const first = computed(() => series.value[0])
+const yoy = computed(() => Math.round(((fy.value.value - prev.value.value) / prev.value.value) * 100))
+const turnoverAlt = computed(() => `Area chart: Group turnover in KSh millions, ${series.value.map((d) => `${d.year}: ${d.value}`).join(', ')}.`)
 
 // The four headline proof points, as an editorial dl (CAGR per investors.highlights)
-const statTiles = [
-  { to: fy.value, prefix: 'KSh ', suffix: 'M', label: `FY${fy.year} turnover`, note: `From KSh ${first.value}M in FY${first.year}` },
-  { to: yoy, prefix: '+', suffix: '%', label: 'YoY growth', note: `FY${prev.year} → FY${fy.year}` },
-  { to: 68, prefix: '~', suffix: '%', label: '3-yr revenue CAGR', note: 'FY2023 → FY2025' },
-  { to: 6, prefix: '', suffix: '', label: 'Operating companies', note: 'One sub-holding structure' },
-]
+const statTiles = computed(() => {
+  const last = fy.value
+  const before = prev.value
+  const start = first.value
+  return [
+    { to: last.value, prefix: 'KSh ', suffix: 'M', label: `FY${last.year} turnover`, note: `From KSh ${start.value}M in FY${start.year}` },
+    { to: yoy.value, prefix: '+', suffix: '%', label: 'YoY growth', note: `FY${before.year} → FY${last.year}` },
+    { to: 68, prefix: '~', suffix: '%', label: '3-yr revenue CAGR', note: 'FY2023 → FY2025' },
+    { to: 6, prefix: '', suffix: '', label: 'Operating companies', note: 'One sub-holding structure' },
+  ]
+})
 const tileClass = (i) => [
   'flex min-w-0 flex-col border-t border-ink/10 py-6',
   i % 2 === 1 ? 'border-l pl-6' : 'pr-6',
@@ -82,6 +88,8 @@ const publicDocs = computed(() => (docsData.value || []).filter((d) => !d.restri
   <div>
     <!-- ── Hero — bespoke capital-markets band ─────────────────────────── -->
     <section class="relative overflow-hidden bg-forest-950 text-paper">
+      <img v-if="c('ir.hero.image')" :src="c('ir.hero.image')" alt="" aria-hidden="true" class="pointer-events-none absolute inset-0 h-full w-full object-cover" />
+      <div v-if="c('ir.hero.image')" class="pointer-events-none absolute inset-0 bg-forest-950/75" />
       <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_55%_at_85%_10%,rgba(45,93,75,0.4),transparent_65%),radial-gradient(45%_40%_at_5%_95%,rgba(189,144,56,0.1),transparent_70%)]" />
       <div class="pointer-events-none absolute inset-0 opacity-[0.05] bg-grain" />
       <div class="pointer-events-none absolute right-0 top-0 h-1 w-full bg-gradient-to-r from-transparent via-gold-500/40 to-transparent" />
@@ -93,9 +101,9 @@ const publicDocs = computed(() => (docsData.value || []).filter((d) => !d.restri
           <span class="text-paper/80">Investors</span>
         </nav>
 
-        <p v-reveal class="eyebrow !text-gold-300">Investor relations</p>
+        <p v-reveal class="eyebrow !text-gold-300">{{ c('ir.hero.eyebrow') }}</p>
         <h1 v-reveal="80" class="h-display mt-4 max-w-4xl text-balance text-4xl text-paper sm:text-5xl lg:text-[4.25rem]">
-          Capital. Transparency. Opportunity.
+          {{ c('ir.hero.title') }}
         </h1>
         <p v-reveal="160" class="mt-6 max-w-2xl text-lg leading-relaxed text-paper/70">
           {{ investors.lede }}
@@ -140,8 +148,8 @@ const publicDocs = computed(() => (docsData.value || []).filter((d) => !d.restri
         <div class="grid gap-14 lg:grid-cols-12 lg:gap-16">
           <div class="min-w-0 lg:col-span-7">
             <SectionHeading
-              eyebrow="The investment case"
-              title="Why investors choose Kyul."
+              :eyebrow="c('ir.case.eyebrow')"
+              :title="c('ir.case.title')"
               :lede="group.narrative"
             />
 
@@ -190,9 +198,9 @@ const publicDocs = computed(() => (docsData.value || []).filter((d) => !d.restri
     <!-- ── Financial performance ───────────────────────────────────────── -->
     <section class="shell py-20 md:py-28">
       <SectionHeading
-        eyebrow="Performance"
-        title="Consolidated Group performance."
-        lede="Illustrative consolidated figures. Audited statements are available in the secure investor data room."
+        :eyebrow="c('ir.performance.eyebrow')"
+        :title="c('ir.performance.title')"
+        :lede="c('ir.performance.lede')"
       />
 
       <div class="mt-12 grid gap-6 lg:grid-cols-12">
@@ -223,8 +231,8 @@ const publicDocs = computed(() => (docsData.value || []).filter((d) => !d.restri
         <div class="grid gap-14 lg:grid-cols-12 lg:gap-16">
           <div class="min-w-0 lg:col-span-5">
             <SectionHeading
-              eyebrow="Governance & structure"
-              title="Clean ownership, by design."
+              :eyebrow="c('ir.governance.eyebrow')"
+              :title="c('ir.governance.title')"
               :lede="group.governance.lede"
             />
 
@@ -282,9 +290,9 @@ const publicDocs = computed(() => (docsData.value || []).filter((d) => !d.restri
       <div class="grid gap-12 lg:grid-cols-12 lg:gap-16">
         <div class="min-w-0 lg:col-span-5">
           <SectionHeading
-            eyebrow="Document library"
-            title="Corporate & governance documents."
-            lede="Public materials are available below. Financial statements and confidential documents are released to verified investors in the secure data room."
+            :eyebrow="c('ir.documents.eyebrow')"
+            :title="c('ir.documents.title')"
+            :lede="c('ir.documents.lede')"
           />
           <NuxtLink to="/investors/data-room" class="mt-8 inline-flex items-center gap-2 rounded-full bg-forest-950 px-5 py-3 text-sm font-semibold text-paper transition hover:bg-forest-900">
             <Icon name="lucide:lock" class="h-4 w-4" aria-hidden="true" /> Enter the data room

@@ -1,5 +1,5 @@
 <script setup>
-import { group } from '~/data/group'
+const { c, group } = useContent()
 
 useSeoMeta({
   title: 'Sustainability & ESG',
@@ -7,23 +7,19 @@ useSeoMeta({
     'Kyul Group’s approach to environmental stewardship, social impact and governance: formal jobs, NEMA-compliant delivery and investor-grade transparency.',
 })
 
-const commitments = [
-  { icon: 'lucide:sun', text: 'Solar-powered boreholes and installations as a standard specification where feasible.' },
-  { icon: 'lucide:recycle', text: 'NEMA-compliant, mercury-free practices across mining and civil works.' },
-  { icon: 'lucide:users-round', text: 'Local employment and procurement that keeps value in the communities we build in.' },
-  { icon: 'lucide:scale', text: 'Anti-bribery, conflict-of-interest and delegated-authority policies, Group-wide.' },
-  { icon: 'lucide:hand-heart', text: 'Community shareholding on selected project SPVs.' },
-  { icon: 'lucide:hard-hat', text: 'A genuine zero-harm safety culture on every site.' },
-]
+// Commitment copy lives in the content registry (esg.commitments.<i>.text); icons stay here
+const ICONS = ['lucide:sun', 'lucide:recycle', 'lucide:users-round', 'lucide:scale', 'lucide:hand-heart', 'lucide:hard-hat']
+const commitments = computed(() => ICONS.map((icon, i) => ({ icon, text: c('esg.commitments.' + i + '.text') })))
 </script>
 
 <template>
   <div>
     <PageHero
       size="lg"
-      eyebrow="Sustainability & ESG"
-      title="Returns, and the resilience we leave behind."
+      :eyebrow="c('esg.hero.eyebrow')"
+      :title="c('esg.hero.title')"
       :lede="group.esg.lede"
+      :image="c('esg.hero.image')"
       :crumbs="[{ label: 'Home', to: '/' }, { label: 'Sustainability' }]"
     />
 
@@ -47,11 +43,11 @@ const commitments = [
     <!-- commitments -->
     <section class="border-y border-ink/[0.06] bg-sand-50/70 py-20 md:py-24">
       <div class="shell">
-        <SectionHeading eyebrow="Our commitments" title="Sustainability, built into delivery." lede="ESG isn’t a report we publish once a year. It’s engineered into how every Kyul project is originated, built and governed." />
+        <SectionHeading :eyebrow="c('esg.commitments.eyebrow')" :title="c('esg.commitments.title')" :lede="c('esg.commitments.lede')" />
         <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          <div v-for="(c, i) in commitments" :key="i" v-reveal="(i % 3) * 70" class="flex gap-4 rounded-2xl border border-ink/[0.07] bg-white p-6 shadow-soft">
-            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-forest-50 text-forest-700"><Icon :name="c.icon" class="h-5 w-5" /></span>
-            <p class="text-sm leading-relaxed text-forest-900/75">{{ c.text }}</p>
+          <div v-for="(item, i) in commitments" :key="i" v-reveal="(i % 3) * 70" class="flex gap-4 rounded-2xl border border-ink/[0.07] bg-white p-6 shadow-soft">
+            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-forest-50 text-forest-700"><Icon :name="item.icon" class="h-5 w-5" /></span>
+            <p class="text-sm leading-relaxed text-forest-900/75">{{ item.text }}</p>
           </div>
         </div>
       </div>
@@ -62,16 +58,15 @@ const commitments = [
       <div v-reveal class="mx-auto max-w-3xl text-center">
         <Icon name="lucide:quote" class="mx-auto h-9 w-9 text-gold-400" />
         <p class="mt-6 font-display text-2xl leading-snug text-forest-950 sm:text-3xl">
-          “We measure success not only in returns, but in the jobs created, the infrastructure built and the communities
-          strengthened along the way.”
+          “{{ c('esg.quote.text') }}”
         </p>
-        <p class="mt-6 text-sm font-medium uppercase tracking-widest2 text-forest-900/70">Office of the Group CEO</p>
+        <p class="mt-6 text-sm font-medium uppercase tracking-widest2 text-forest-900/70">{{ c('esg.quote.by') }}</p>
       </div>
     </section>
 
     <CtaBand
-      eyebrow="Partner on impact"
-      title="Invest in projects that build more than returns."
+      :eyebrow="c('esg.cta.eyebrow')"
+      :title="c('esg.cta.title')"
       :primary="{ label: 'Investor relations', to: '/investors' }"
       :secondary="{ label: 'Contact the Group', to: '/contact' }"
     />

@@ -2,6 +2,8 @@
 import { subsidiaries } from '~/data/subsidiaries'
 import { site } from '~/data/site'
 
+const { c } = useContent()
+
 useSeoMeta({
   title: 'Projects',
   description:
@@ -130,9 +132,10 @@ useHead(() => ({
 <template>
   <div>
     <PageHero
-      eyebrow="Projects"
-      title="Building assets that matter."
-      lede="Proof over promise: infrastructure, water, roads, agribusiness and real estate delivered across 12+ counties in Kenya and Eastern Africa."
+      :eyebrow="c('projects.hero.eyebrow')"
+      :title="c('projects.hero.title')"
+      :lede="c('projects.hero.lede')"
+      :image="c('projects.hero.image')"
       :crumbs="[{ label: 'Home', to: '/' }, { label: 'Projects' }]"
     />
 
@@ -197,9 +200,9 @@ useHead(() => ({
     </section>
 
     <CtaBand
-      eyebrow="Work with the Group"
-      title="Have a project in mind?"
-      text="Tell us what you're building or backing, and the right Kyul company will carry it from concept to handover."
+      :eyebrow="c('projects.cta.eyebrow')"
+      :title="c('projects.cta.title')"
+      :text="c('projects.cta.text')"
       :primary="{ label: 'Get in touch', to: '/contact' }"
       :secondary="{ label: 'Invest with Kyul', to: '/investors' }"
     />

@@ -1,10 +1,10 @@
 <script setup>
-import { group } from '~/data/group'
+const { c, group } = useContent()
 
-const series = group.turnover
-const fy = series[series.length - 1]
-const prev = series[series.length - 2]
-const yoy = Math.round(((fy.value - prev.value) / prev.value) * 100)
+const series = computed(() => group.value.turnover)
+const fy = computed(() => series.value[series.value.length - 1])
+const prev = computed(() => series.value[series.value.length - 2])
+const yoy = computed(() => Math.round(((fy.value.value - prev.value.value) / prev.value.value) * 100))
 
 // Inline area chart: ChartArea's axis text is ink-toned and unreadable on
 // forest-950, so the band draws its own paper-legible series.
@@ -14,19 +14,21 @@ const H = 280
 const pad = { l: 46, r: 16, t: 18, b: 30 }
 const gridlines = 4
 
-const max = (() => {
-  const m = Math.max(...series.map((d) => d.value))
+const max = computed(() => {
+  const m = Math.max(...series.value.map((d) => d.value))
   const step = Math.pow(10, Math.floor(Math.log10(m)))
   return Math.ceil((m * 1.08) / step) * step
-})()
+})
 
 const innerW = W - pad.l - pad.r
 const innerH = H - pad.t - pad.b
-const pts = series.map((d, i) => ({
-  x: pad.l + (i / (series.length - 1)) * innerW,
-  y: pad.t + innerH - (d.value / max) * innerH,
-  ...d,
-}))
+const pts = computed(() =>
+  series.value.map((d, i) => ({
+    x: pad.l + (i / (series.value.length - 1)) * innerW,
+    y: pad.t + innerH - (d.value / max.value) * innerH,
+    ...d,
+  })),
+)
 
 function smoothPath(points) {
   let d = `M ${points[0].x},${points[0].y}`
@@ -40,17 +42,23 @@ function smoothPath(points) {
   return d
 }
 
-const linePath = smoothPath(pts)
+const linePath = computed(() => smoothPath(pts.value))
 const base = H - pad.b
-const areaPath = `${linePath} L ${pts[pts.length - 1].x},${base} L ${pts[0].x},${base} Z`
-const last = pts[pts.length - 1]
+const areaPath = computed(
+  () => `${linePath.value} L ${pts.value[pts.value.length - 1].x},${base} L ${pts.value[0].x},${base} Z`,
+)
+const last = computed(() => pts.value[pts.value.length - 1])
 
-const grid = Array.from({ length: gridlines + 1 }, (_, i) => {
-  const t = i / gridlines
-  return { y: pad.t + innerH * t, value: Math.round(max * (1 - t)) }
-})
+const grid = computed(() =>
+  Array.from({ length: gridlines + 1 }, (_, i) => {
+    const t = i / gridlines
+    return { y: pad.t + innerH * t, value: Math.round(max.value * (1 - t)) }
+  }),
+)
 
-const chartLabel = `Area chart: Group turnover in KSh millions, ${series.map((d) => `${d.year}: ${d.value}`).join(', ')}.`
+const chartLabel = computed(
+  () => `Area chart: Group turnover in KSh millions, ${series.value.map((d) => `${d.year}: ${d.value}`).join(', ')}.`,
+)
 </script>
 
 <template>
@@ -62,13 +70,12 @@ const chartLabel = `Area chart: Group turnover in KSh millions, ${series.map((d)
       <div class="grid items-center gap-14 lg:grid-cols-12 lg:gap-12">
         <!-- Narrative + stats -->
         <div class="min-w-0 lg:col-span-6">
-          <p v-reveal class="eyebrow !text-gold-300">Investor relations</p>
+          <p v-reveal class="eyebrow !text-gold-300">{{ c('home.investors.eyebrow') }}</p>
           <h2 id="investor-band-title" v-reveal="70" class="h-display mt-5 text-balance text-3xl text-paper sm:text-4xl lg:text-[2.9rem]">
-            Strong performance. Disciplined growth.
+            {{ c('home.investors.title') }}
           </h2>
           <p v-reveal="140" class="mt-5 max-w-xl text-lg leading-relaxed text-paper/70">
-            Turnover has grown from KSh 95M in FY2021 to KSh 510M in FY2025 — consolidated under
-            one audit, ring-fenced through Kyul Holdings, and reported to institutional standard.
+            {{ c('home.investors.lede') }}
           </p>
 
           <dl v-reveal="200" class="mt-10 grid grid-cols-2">

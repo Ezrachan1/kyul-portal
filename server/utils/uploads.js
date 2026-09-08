@@ -30,7 +30,9 @@ export async function readUpload(event, name) {
   if (store) {
     const res = await store.getWithMetadata(safe, { type: 'arrayBuffer' })
     if (!res || !res.value) return null
-    return { body: res.value, contentType: res.metadata?.contentType || null }
+    // Wrap in a Uint8Array: h3 only sends typed arrays/Buffers as raw bytes. A bare
+    // ArrayBuffer falls through to JSON.stringify and is served as "{}" (2 bytes).
+    return { body: new Uint8Array(res.value), contentType: res.metadata?.contentType || null }
   }
   try {
     const { readFile } = await import('node:fs/promises')

@@ -1,6 +1,5 @@
 <script setup>
-import { group } from '~/data/group'
-import { subsidiaries } from '~/data/subsidiaries'
+const { c, group, subsidiaries } = useContent()
 
 useSeoMeta({
   title: 'Building Africa’s Future. Together.',
@@ -11,8 +10,10 @@ useSeoMeta({
 })
 
 // Companies presented in value-chain order (01 Originates → 06 Governs)
-const chainOrder = group.valueChain.steps.map((s) => s.slug)
-const companies = chainOrder.map((slug) => subsidiaries.find((s) => s.slug === slug)).filter(Boolean)
+const chainOrder = computed(() => group.value.valueChain.steps.map((s) => s.slug))
+const companies = computed(() =>
+  chainOrder.value.map((slug) => subsidiaries.value.find((s) => s.slug === slug)).filter(Boolean),
+)
 </script>
 
 <template>
@@ -24,7 +25,7 @@ const companies = chainOrder.map((slug) => subsidiaries.find((s) => s.slug === s
       <div class="shell">
         <SectionHeading
           align="center"
-          eyebrow="The Kyul value chain"
+          :eyebrow="c('home.chain.eyebrow')"
           :title="group.valueChain.title"
           :lede="group.valueChain.lede"
         />
@@ -42,9 +43,9 @@ const companies = chainOrder.map((slug) => subsidiaries.find((s) => s.slug === s
       <div class="shell">
         <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <SectionHeading
-            eyebrow="Six specialists"
-            title="One Group. Six specialists."
-            lede="Each company leads its field — and hands the baton to the next, from concept to cashflow."
+            :eyebrow="c('home.companies.eyebrow')"
+            :title="c('home.companies.title')"
+            :lede="c('home.companies.lede')"
           />
           <NuxtLink to="/subsidiaries" class="btn-outline hidden shrink-0 md:inline-flex">Explore the Group</NuxtLink>
         </div>
@@ -75,9 +76,9 @@ const companies = chainOrder.map((slug) => subsidiaries.find((s) => s.slug === s
 
     <!-- ───────────── CTA ───────────── -->
     <CtaBand
-      eyebrow="Partner with Kyul"
-      title="Let’s build something that lasts."
-      text="Have a project, investment opportunity or partnership in mind?"
+      :eyebrow="c('home.cta.eyebrow')"
+      :title="c('home.cta.title')"
+      :text="c('home.cta.text')"
       :primary="{ label: 'Start a project', to: '/contact' }"
       :secondary="{ label: 'Invest with Kyul', to: '/investors' }"
       :tertiary="{ label: 'Partner with us', to: '/contact' }"

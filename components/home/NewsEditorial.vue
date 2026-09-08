@@ -1,4 +1,5 @@
 <script setup>
+const { c } = useContent()
 const { data: articles } = await useFetch('/api/news', { default: () => [] })
 
 // Chips derived from the data itself (API returns newest-first), capped at 5.
@@ -52,7 +53,7 @@ const panelStyle = computed(() => {
   <section v-if="articles.length" class="py-20 md:py-28">
     <div class="shell">
       <div class="flex flex-wrap items-end justify-between gap-6">
-        <SectionHeading eyebrow="News & insights" title="From across the Group" />
+        <SectionHeading :eyebrow="c('home.news.eyebrow')" :title="c('home.news.title')" />
         <NuxtLink to="/news" v-reveal="120" class="btn-outline hidden md:inline-flex">
           All insights<Icon name="lucide:arrow-right" class="h-4 w-4" />
         </NuxtLink>
@@ -67,13 +68,13 @@ const panelStyle = computed(() => {
         aria-label="Filter news by category"
       >
         <button
-          v-for="c in categories" :key="c"
+          v-for="cat in categories" :key="cat"
           type="button"
           class="chip min-h-10 shrink-0"
-          :class="active === c && 'chip-active'"
-          :aria-pressed="active === c"
-          @click="active = c"
-        >{{ c }}</button>
+          :class="active === cat && 'chip-active'"
+          :aria-pressed="active === cat"
+          @click="active = cat"
+        >{{ cat }}</button>
       </div>
       <p class="sr-only" aria-live="polite">{{ list.length }} articles in {{ active === 'All' ? 'all categories' : active }}</p>
 

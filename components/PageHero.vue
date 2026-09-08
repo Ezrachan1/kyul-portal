@@ -7,6 +7,7 @@ const props = defineProps({
   lede: { type: String, default: '' },
   crumbs: { type: Array, default: () => [] }, // [{label, to}]
   size: { type: String, default: 'md' }, // 'md' | 'lg'
+  image: { type: String, default: '' }, // optional background photo (Site Content)
 })
 
 // BreadcrumbList structured data (SEO/AEO) — same base logic as app.vue.
@@ -35,6 +36,9 @@ useHead(() => {
 
 <template>
   <section class="relative overflow-hidden bg-forest-950 text-paper">
+    <!-- optional photo sits under a forest wash so the title stays legible -->
+    <img v-if="image" :src="image" alt="" aria-hidden="true" class="pointer-events-none absolute inset-0 h-full w-full object-cover" />
+    <div v-if="image" class="pointer-events-none absolute inset-0 bg-forest-950/75" />
     <div class="pointer-events-none absolute inset-0 opacity-[0.05] bg-grain" />
     <div class="pointer-events-none absolute -left-32 top-1/2 h-[36rem] w-[36rem] -translate-y-1/2 rounded-full bg-forest-800/30 blur-3xl" />
     <div class="pointer-events-none absolute right-0 top-0 h-1 w-full bg-gradient-to-r from-transparent via-gold-500/40 to-transparent" />

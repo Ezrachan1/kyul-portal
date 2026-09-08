@@ -115,6 +115,8 @@ const SEEDS = {
   submissions: () => [],
   invoices: () => JSON.parse(JSON.stringify(seedInvoices)),
   features: () => ({ finance: false, hr: false, procurement: false, plm: false, legal: false, kpis: false }),
+  // Site Content overrides (see data/content-registry.js) — empty means "as authored".
+  content: () => ({}),
 }
 
 // ── Generic access ───────────────────────────────────────────────────────

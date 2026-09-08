@@ -1,19 +1,21 @@
 <script setup>
 // "Why Kyul" — light editorial section. Plain paper canvas: it sits between
 // the dark footprint/sectors band and the investor/news sections, so no tint.
-import { group } from '~/data/group'
+const { c, group } = useContent()
 
-const advantages = group.advantages
+const advantages = computed(() => group.value.advantages)
 
 // The model as a compact vertical journey. Micro-labels are the stage nouns;
 // entities come from the value chain so the order stays canonical.
 const STAGES = ['Originate', 'Design', 'Capital', 'Build', 'Supply', 'Govern']
-const flow = group.valueChain.steps.map((s, i) => ({ label: STAGES[i], entity: s.entity }))
+const flow = computed(() => group.value.valueChain.steps.map((s, i) => ({ label: STAGES[i], entity: s.entity })))
 
-const flowAlt =
-  'The Kyul model: ' +
-  group.valueChain.steps.map((s) => `${s.entity} ${s.action.toLowerCase()}`).join(', ') +
-  '.'
+const flowAlt = computed(
+  () =>
+    'The Kyul model: ' +
+    group.value.valueChain.steps.map((s) => `${s.entity} ${s.action.toLowerCase()}`).join(', ') +
+    '.',
+)
 </script>
 
 <template>
@@ -23,9 +25,9 @@ const flowAlt =
         <!-- ── Heading + model diagram ─────────────────────────────────── -->
         <div class="min-w-0 lg:col-span-5">
           <SectionHeading
-            eyebrow="Why Kyul"
-            title="One platform. Fewer interfaces."
-            lede="The full value chain under one Group: one accountability chain from feasibility to operations."
+            :eyebrow="c('home.why.eyebrow')"
+            :title="c('home.why.title')"
+            :lede="c('home.why.lede')"
           />
 
           <div v-reveal="200" class="mt-12 max-w-sm">

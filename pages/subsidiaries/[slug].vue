@@ -1,15 +1,15 @@
 <script setup>
-import { subsidiaries, subsidiaryBySlug } from '~/data/subsidiaries'
 import { jobs } from '~/data/careers'
 
 const route = useRoute()
+const { c, subsidiaries, subsidiaryBySlug } = useContent()
 const sub = computed(() => subsidiaryBySlug(route.params.slug))
 
 if (!sub.value) {
   throw createError({ statusCode: 404, statusMessage: 'Company not found', fatal: true })
 }
 
-const others = computed(() => subsidiaries.filter((s) => s.slug !== sub.value.slug))
+const others = computed(() => subsidiaries.value.filter((s) => s.slug !== sub.value.slug))
 const openRoles = computed(() => jobs.filter((j) => j.entity === sub.value.slug))
 
 // Team & portfolio are managed in the Group Portal
@@ -63,8 +63,12 @@ const accentTint = (hex, alpha) => `${hex}${alpha}`
 
         <div class="lg:col-span-5">
           <div class="relative mx-auto max-w-sm">
-            <div class="overflow-hidden rounded-[1.5rem] border border-ink/[0.08] shadow-lift ring-1 ring-black/[0.02]">
-              <SubsidiaryLogo :sub="sub" class="aspect-square w-full" pad="p-[16%]" />
+            <div class="overflow-hidden rounded-[1.5rem] border border-ink/[0.08] shadow-lift ring-1 ring-black/[0.02]" :class="sub.heroImage && 'relative'">
+              <template v-if="sub.heroImage">
+                <img :src="sub.heroImage" :alt="sub.name" class="aspect-square w-full object-cover" />
+                <div class="absolute bottom-4 left-4 w-24 overflow-hidden rounded-xl bg-white/95 shadow-soft"><SubsidiaryLogo :sub="sub" class="aspect-square w-full" pad="p-[12%]" /></div>
+              </template>
+              <SubsidiaryLogo v-else :sub="sub" class="aspect-square w-full" pad="p-[16%]" />
             </div>
             <div class="absolute -bottom-4 -right-4 h-20 w-20 rounded-2xl border" :style="{ borderColor: accentTint(sub.accent, '55'), background: accentTint(sub.accent, '12') }" />
           </div>
@@ -157,7 +161,7 @@ const accentTint = (hex, alpha) => `${hex}${alpha}`
     <!-- TEAM -->
     <section class="border-t border-ink/[0.06] bg-sand-50/70 py-20 md:py-24">
       <div class="shell">
-        <SectionHeading eyebrow="Leadership" :title="`The ${sub.short} team`" lede="Experienced leaders, supported by the shared services and governance of Kyul Holdings." />
+        <SectionHeading eyebrow="Leadership" :title="`The ${sub.short} team`" :lede="c('company.leadership.lede')" />
         <div class="mt-12 grid gap-6 md:grid-cols-3">
           <TeamCard v-for="(m, i) in teamMembers" :key="m.id || i" :person="m" :index="i" :accent="sub.accent" />
         </div>
@@ -173,7 +177,7 @@ const accentTint = (hex, alpha) => `${hex}${alpha}`
     <section id="enquire" class="shell py-20 md:py-24">
       <div class="grid gap-12 lg:grid-cols-12 lg:gap-16">
         <div class="lg:col-span-5">
-          <SectionHeading eyebrow="Get in touch" :title="`Work with ${sub.short}`" lede="Tell us about your project, tender or partnership. We respond within two business days." />
+          <SectionHeading eyebrow="Get in touch" :title="`Work with ${sub.short}`" :lede="c('company.contact.lede')" />
           <ul class="mt-8 space-y-3 text-forest-900/75">
             <li class="flex items-center gap-3"><Icon name="lucide:mail" class="h-4 w-4" :style="{ color: sub.accent }" /><a :href="`mailto:${subContact.email}`" class="link-underline">{{ subContact.email }}</a></li>
             <li v-if="subContact.web" class="flex items-center gap-3"><Icon name="lucide:globe" class="h-4 w-4" :style="{ color: sub.accent }" /><span>{{ subContact.web }}</span></li>

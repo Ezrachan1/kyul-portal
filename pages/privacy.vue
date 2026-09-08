@@ -1,6 +1,8 @@
 <script setup>
 import { site } from '~/data/site'
 
+const { c } = useContent()
+
 useSeoMeta({
   title: 'Privacy & Cookies',
   description: 'How Kyul Group Inc. collects, uses and protects personal data, in line with Kenya’s Data Protection Act (2019).',
@@ -10,9 +12,9 @@ useSeoMeta({
 <template>
   <div>
     <PageHero
-      eyebrow="Legal"
-      title="Privacy & Cookies"
-      lede="How we collect, use and protect your information, in line with Kenya’s Data Protection Act (2019)."
+      :eyebrow="c('privacy.hero.eyebrow')"
+      :title="c('privacy.hero.title')"
+      :lede="c('privacy.hero.lede')"
       :crumbs="[{ label: 'Home', to: '/' }, { label: 'Privacy & Cookies' }]"
     />
 
