@@ -1,7 +1,7 @@
 <script setup>
 // "Concept to Cashflow" — the Group's signature journey (01 Originates → 06 Governs).
 // tone='ink' sits on light canvases (default); tone='paper' on bg-forest-950 sections.
-const { group, subsidiaryBySlug } = useContent()
+const { c, group, subsidiaryBySlug } = useContent()
 
 const props = defineProps({
   tone: { type: String, default: 'ink' }, // 'ink' | 'paper'
@@ -22,6 +22,8 @@ const LOGO_DIMS = {
 const active = ref(0)
 const step = computed(() => steps.value[active.value])
 const sub = computed(() => subsidiaryBySlug(step.value.slug))
+// Optional panel photo per step, set in Site Content (chain.<slug>.image); '' = forest design
+const photo = computed(() => c(`chain.${step.value.slug}.image`))
 // progress rule fills from node 01's centre to the active node's centre
 const fill = computed(() => (active.value / (steps.value.length - 1)) * 100)
 
@@ -176,21 +178,35 @@ onBeforeUnmount(() => {
               >{{ step.text }}</p>
             </div>
 
-            <!-- art-directed panel: forest gradient + contours + mark (no photography) -->
+            <!-- art-directed panel: forest gradient + contours + mark by default; a
+                 Site Content photo (chain.<slug>.image) sits under a forest wash instead -->
             <div
               aria-hidden="true"
               class="relative hidden aspect-[4/5] items-center justify-center overflow-hidden rounded-[1.5rem] bg-gradient-to-br from-forest-700 via-forest-900 to-forest-950 shadow-lift md:flex"
             >
-              <TopoContours tone="paper" :opacity="0.12" />
+              <template v-if="photo">
+                <img :src="photo" alt="" loading="lazy" decoding="async" class="absolute inset-0 h-full w-full object-cover" />
+                <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-forest-950/85 via-forest-950/30 to-forest-950/10" />
+              </template>
+              <TopoContours v-else tone="paper" :opacity="0.12" />
               <div class="pointer-events-none absolute inset-0 opacity-[0.05] bg-grain" />
-              <span class="absolute right-4 top-1 font-display text-8xl leading-none text-paper/10">{{ step.n }}</span>
-              <img
-                v-if="sub?.logo?.clean"
-                :src="sub.logo.src" alt="" loading="lazy" decoding="async"
-                :width="LOGO_DIMS[sub.logo.src]?.w" :height="LOGO_DIMS[sub.logo.src]?.h"
-                class="relative w-[56%] max-w-[160px] object-contain"
-              />
-              <KyulMark v-else class="relative w-16" />
+              <span class="absolute right-4 top-1 font-display text-8xl leading-none" :class="photo ? 'text-paper/25' : 'text-paper/10'">{{ step.n }}</span>
+              <template v-if="photo">
+                <!-- logo badge keeps the mark legible over photography -->
+                <span class="absolute bottom-5 right-5 flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl bg-white/95 p-2.5 shadow-soft">
+                  <img v-if="sub?.logo?.clean" :src="sub.logo.src" alt="" loading="lazy" decoding="async" class="h-full w-full object-contain" />
+                  <KyulMark v-else class="w-9" />
+                </span>
+              </template>
+              <template v-else>
+                <img
+                  v-if="sub?.logo?.clean"
+                  :src="sub.logo.src" alt="" loading="lazy" decoding="async"
+                  :width="LOGO_DIMS[sub.logo.src]?.w" :height="LOGO_DIMS[sub.logo.src]?.h"
+                  class="relative w-[56%] max-w-[160px] object-contain"
+                />
+                <KyulMark v-else class="relative w-16" />
+              </template>
               <span class="absolute bottom-5 left-5 h-1 w-9 rounded-full" :style="{ backgroundColor: sub?.accent }" />
             </div>
           </div>

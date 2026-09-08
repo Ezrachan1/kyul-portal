@@ -49,7 +49,7 @@ const SEEDS = {
     const cfg = useRuntimeConfig()
     return [
       { id: uid(), name: 'Savlicon IT Support', email: 'it@savlicon.co.ke', role: 'super-admin', ...(await hashPassword(seedPassword(cfg.seedSuperadminPassword, 'it@savlicon.co.ke'))), active: true, system: true, createdAt: now },
-      { id: uid(), name: 'Group Administrator', email: 'admin@kyulgroup.com', role: 'admin', ...(await hashPassword(seedPassword(cfg.seedAdminPassword, 'admin@kyulgroup.com'))), active: true, createdAt: now },
+      { id: uid(), name: 'Group Administrator', email: '', role: 'admin', ...(await hashPassword(seedPassword(cfg.seedAdminPassword, 'admin@kyulgroup.com'))), active: true, createdAt: now },
     ]
   },
 
